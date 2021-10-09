@@ -1,10 +1,13 @@
 package menu;
 
+import facade.Facade;
 import util.UserInput;
 
 public class ReviewMenu {
-    private static String s = System.lineSeparator();
-    public static void displayOptionMenu(){
+    private static final String s = System.lineSeparator();
+    private static final Facade facade = new Facade();
+
+    private static void displayOptionMenu(){
         System.out.print("Reviews Option's Menu: "+ s +
                 "0. Return to Main menu. " + s +
                 "1. Create a review for an Item." + s +
@@ -16,21 +19,24 @@ public class ReviewMenu {
                 "7. Print item(s) with most reviews." + s +
                 "8. Print item(s) with least reviews." + s +
                 "9. Print item(s) with best mean review grade." + s +
-                "10. Print item(s) with worst mean review grade." + s +
-                "");
+                "10. Print item(s) with worst mean review grade." + s + s );
     }
 
-    public static void getReviewOptionMenu(){
-        int userOption;
-        int startingOption = 0;
-        int endingOption = 10;
+    public static void getReviewOption(){
+
         displayOptionMenu();
+
+        int userOption;
         do {
             userOption = UserInput.getInputInt("Type an option number: ");
+
             switch (userOption){
-                case 0: break;
-                case 1: break;
-                case 2: break;
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
                 case 3: break;
                 case 4: break;
                 case 5: break;
@@ -42,6 +48,6 @@ public class ReviewMenu {
                 default:
                     System.out.println("Invalid menu option. Please type another option.");
             }
-        }while (userOption < startingOption || userOption > endingOption);
+        }while (userOption != 0);
     }
 }

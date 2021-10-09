@@ -16,18 +16,8 @@ public class Facade {
 
         itemList = new ArrayList<Item>();
     }
-    public String newItem() {
-        String itemID;
-        String itemName;
-        double unitPrice;
-        itemID = UserInput.getInputString("Type item's ID: ");
-        itemName = UserInput.getInputString("Type item's name: ");
-        unitPrice = UserInput.getInputDouble("Type unit price: ");
-        String registered = createItem(itemID, itemName, unitPrice);
-        return registered;
-    }
 
-        public String createItem(String itemID, String itemName, double unitPrice){
+    public String createItem(String itemID, String itemName, double unitPrice){
         Item newItem = new Item (itemID, itemName, unitPrice);
         itemList.add(newItem);
         String itemRegistered = "Item " + itemID + " was registered successfully.";
@@ -35,19 +25,31 @@ public class Facade {
     }
 
     public String printItem(String itemID) {
-
-        return itemID.toString();
+        String result = "";
+        if (itemList.contains(itemID)){
+            result = itemID.toString();
+        }else
+            result = "Item <ID> was not registered yet.";
+        return result ;
     }
 
     public String removeItem(String itemID) {
-        return "";
+        String result = "";
+        if (containsItem(itemID)){
+            itemList.remove(itemID);
+            result = "Item <ID> was successfully removed.";
+        }else result = "Item <ID> could not be removed.";
+        return result;
     }
 
     public boolean containsItem(String itemID) {
-        return false;
+        if (itemList.contains(itemID)){
+            return true;
+        }else return false;
     }
 
     public double buyItem(String itemID, int amount) {
+
         return 0.0;
     }
 
