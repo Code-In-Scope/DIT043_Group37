@@ -3,7 +3,6 @@ package facade;
 import bussinessLogic.Item;
 import util.UserInput;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -80,8 +79,23 @@ public class Facade {
     }
 
     public double buyItem(String itemID, int amount) {
+        if(containsItem(itemID))
+        {
+            double price = items.get(itemID).getUnitPrice();
+            if(amount>3)
+            {
+                double totalPrice = (4*price)+(amount-4)*price*0.7;
+                return totalPrice;
+            }
+            else
+            {
+            double totalPrice = amount*price;
+            return totalPrice;
+            }
+        }
         return 0.0;
     }
+
 
     public String reviewItem(String itemID, String reviewComment, int reviewGrade) {
         return "";
