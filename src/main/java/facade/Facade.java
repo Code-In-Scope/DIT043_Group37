@@ -4,6 +4,7 @@ import bussinessLogic.Item;
 import util.UserInput;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Facade {
@@ -11,10 +12,10 @@ public class Facade {
     // This class only has the skeleton of the methods used by the test.
     // You must fill in this class with your own code. You can (and should) create more classes
     // that implement the functionalities listed in the Facade and in the Test Cases.
-    ArrayList<Item> itemList;
+    HashMap<String,Item> items;
     public Facade(){
 
-        itemList = new ArrayList<Item>();
+        items = new HashMap<String,Item>();
     }
     public String newItem() {
         String itemID;
@@ -27,24 +28,55 @@ public class Facade {
         return registered;
     }
 
-        public String createItem(String itemID, String itemName, double unitPrice){
-        Item newItem = new Item (itemID, itemName, unitPrice);
-        itemList.add(newItem);
-        String itemRegistered = "Item " + itemID + " was registered successfully.";
-        return itemRegistered;
+    public String createItem(String itemID, String itemName, double unitPrice){
+        if(containsItem(itemID))
+        {
+            return ("Enter a Unique ID");
+        }
+        else
+        {
+            Item newItem = new Item(itemName,unitPrice);
+            items.put(itemID,newItem);
+            return ("Item " + itemID + " was registered successfully.");
+        }
     }
 
     public String printItem(String itemID) {
 
-        return itemID.toString();
+       if(containsItem(itemID)) {
+           return items.get(itemID).getItemName();
+       }
+       else
+       {
+           return ("Invalid ID");
+       }
+        //return itemID.toString();
     }
 
     public String removeItem(String itemID) {
-        return "";
+
+        if(containsItem(itemID)) {
+            items.remove(itemID);
+            return itemID+"is removed successfully";
+        }
+        else
+        {
+            return ("Invalid ID");
+        }
+
     }
 
     public boolean containsItem(String itemID) {
-        return false;
+
+        if(items.containsKey(itemID))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
 
     public double buyItem(String itemID, int amount) {
@@ -156,13 +188,15 @@ public class Facade {
     }
 
     public String printAllItems() {
-        String allItems = "" ;
+        final String allItems ;
         String s = System.lineSeparator();
-        for (Item eachItem : itemList
-             ) {
-            allItems += eachItem + s;
-        }
-        return allItems;
+
+
+
+        items.forEach((key,item)-> allItems = s+ item.getItemName());
+
+
+        return allItems[0];
     }
 
     public String printMostProfitableItems() {
