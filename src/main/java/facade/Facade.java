@@ -17,12 +17,9 @@ public class Facade {
         items = new HashMap<>();
     }
     public String newItem() {
-        String itemID;
-        String itemName;
-        double unitPrice;
-        itemID = UserInput.getInputString("Type item's ID: ");
-        itemName = UserInput.getInputString("Type item's name: ");
-        unitPrice = UserInput.getInputDouble("Type unit price: ");
+        String itemID = UserInput.getInputString("Type item's ID: ");
+        String itemName = UserInput.getInputString("Type item's name: ");
+        double unitPrice = UserInput.getInputDouble("Type unit price: ");
         return createItem(itemID, itemName, unitPrice);
     }
 
