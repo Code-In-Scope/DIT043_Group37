@@ -14,7 +14,7 @@ public class Facade {
     HashMap<String,Item> items;
     public Facade(){
 
-        items = new HashMap<String,Item>();
+        items = new HashMap<>();
     }
     public String newItem() {
         String itemID;
@@ -23,8 +23,7 @@ public class Facade {
         itemID = UserInput.getInputString("Type item's ID: ");
         itemName = UserInput.getInputString("Type item's name: ");
         unitPrice = UserInput.getInputDouble("Type unit price: ");
-        String registered = createItem(itemID, itemName, unitPrice);
-        return registered;
+        return createItem(itemID, itemName, unitPrice);
     }
 
     public String createItem(String itemID, String itemName, double unitPrice){
@@ -67,14 +66,7 @@ public class Facade {
 
     public boolean containsItem(String itemID) {
 
-        if(items.containsKey(itemID))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return items.containsKey(itemID);
 
     }
 
@@ -84,13 +76,11 @@ public class Facade {
             double price = items.get(itemID).getUnitPrice();
             if(amount>3)
             {
-                double totalPrice = (4*price)+(amount-4)*price*0.7;
-                return totalPrice;
+                return (4*price)+(amount-4)*price*0.7;
             }
             else
             {
-            double totalPrice = amount*price;
-            return totalPrice;
+            return amount*price;
             }
         }
         return 0.0;
@@ -202,15 +192,16 @@ public class Facade {
     }
 
     public String printAllItems() {
-        final String allItems ;
+        StringBuilder allItems = new StringBuilder();
         String s = System.lineSeparator();
+        var iterator = items.entrySet();
 
+        for(var itemIterator: items.entrySet())
+        {
+            allItems.append(s).append(itemIterator.getValue().getItemName());
+        }
 
-
-        items.forEach((key,item)-> allItems = s+ item.getItemName());
-
-
-        return allItems[0];
+        return allItems.toString();
     }
 
     public String printMostProfitableItems() {
