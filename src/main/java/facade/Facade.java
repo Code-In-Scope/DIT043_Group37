@@ -191,7 +191,6 @@ public class Facade {
     public String printAllItems() {
         StringBuilder allItems = new StringBuilder();
         String s = System.lineSeparator();
-        var iterator = items.entrySet();
 
         for(var itemIterator: items.entrySet())
         {
