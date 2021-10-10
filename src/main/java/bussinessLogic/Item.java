@@ -8,7 +8,7 @@ public class Item {
     private String itemName;
     private double unitPrice;
 
-    public Item( String itemName, double unitPrice){
+    public Item(String itemID, String itemName, double unitPrice){
         this.itemName = itemName;
         this.unitPrice = unitPrice;
     }
