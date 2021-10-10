@@ -4,6 +4,7 @@ import bussinessLogic.Item;
 import util.UserInput;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Facade {
@@ -11,41 +12,48 @@ public class Facade {
     // This class only has the skeleton of the methods used by the test.
     // You must fill in this class with your own code. You can (and should) create more classes
     // that implement the functionalities listed in the Facade and in the Test Cases.
-    ArrayList<Item> itemList;
+    private HashMap<String,Item> itemList;
     public Facade(){
 
-        itemList = new ArrayList<Item>();
-    }
-
-    public String createItem(String itemID, String itemName, double unitPrice){
-        Item newItem = new Item (itemID, itemName, unitPrice);
-        itemList.add(newItem);
-        String itemRegistered = "Item " + itemID + " was registered successfully.";
-        return itemRegistered;
-    }
-
-    public String printItem(String itemID) {
-        String result = "";
-        if (itemList.contains(itemID)){
-            result = itemID.toString();
-        }else
-            result = "Item <ID> was not registered yet.";
-        return result ;
-    }
-
-    public String removeItem(String itemID) {
-        String result = "";
-        if (containsItem(itemID)){
-            itemList.remove(itemID);
-            result = "Item <ID> was successfully removed.";
-        }else result = "Item <ID> could not be removed.";
-        return result;
+        itemList = new HashMap<String,Item>();
     }
 
     public boolean containsItem(String itemID) {
-        if (itemList.contains(itemID)){
-            return true;
-        }else return false;
+        return itemList.containsKey(itemID);
+    }
+
+    public String createItem(String itemID, String itemName, double unitPrice){
+        String createResult = "";
+        if (itemID.isBlank() || itemName.isBlank() || unitPrice <= 0.0){
+            createResult = "Invalid data for item";
+        }else if (containsItem(itemID)){
+            createResult = "Enter unique itemID.";
+        }else {
+           Item newItem = new Item(itemID,itemName,unitPrice);
+           itemList.put(itemID, newItem);
+           createResult = "Item " + itemID + " was registered successfully.";
+        }
+        return createResult;
+    }
+
+    public String printItem(String itemID) {
+        String printResult = "";
+        if (!containsItem(itemID)){
+            printResult = "Item "+ itemID + " was not registered yet.";
+        }else
+            printResult = itemList.get(itemID).ToString();
+        return printResult ;
+    }
+
+    public String removeItem(String itemID) {
+        String removeResult = "";
+        if (!containsItem(itemID)){
+            removeResult = "Item " + itemID + " could not be removed.";
+        }else {
+            itemList.remove(itemID);
+            removeResult = "Item " + itemID + " was successfully removed.";
+        }
+        return removeResult;
     }
 
     public double buyItem(String itemID, int amount) {
@@ -158,11 +166,10 @@ public class Facade {
     }
 
     public String printAllItems() {
-        String allItems = "" ;
         String s = System.lineSeparator();
-        for (Item eachItem : itemList
-             ) {
-            allItems += eachItem + s;
+        String allItems = "All registered items:" + s ;
+        for (String key : itemList.keySet()) {
+            allItems = allItems + itemList.get(key).ToString() + s;
         }
         return allItems;
     }

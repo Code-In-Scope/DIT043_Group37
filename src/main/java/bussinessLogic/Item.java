@@ -3,8 +3,11 @@ package bussinessLogic;
 import facade.Facade;
 import util.UserInput;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 public class Item {
-    private final String itemID;
+    private String itemID;
     private String itemName;
     private double unitPrice;
 
@@ -28,7 +31,9 @@ public class Item {
     }
 
     public String ToString(){
-        String printItem = this.itemID + ": " + this.itemName + ". " + this.unitPrice + "SEK.";
+        DecimalFormat decimalFormat = new DecimalFormat(".00");
+        decimalFormat.setRoundingMode(RoundingMode.DOWN);
+        String printItem = this.itemID + ": " + this.itemName + ". " + decimalFormat.format(this.unitPrice) + " SEK";
         return printItem ;
     }
 
