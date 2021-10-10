@@ -15,7 +15,7 @@ public class Facade {
 
     public Facade(){
 
-        itemList = new HashMap<String,Item>();
+        itemList = new HashMap<>();
     }
 
     public boolean containsItem(String itemID) {
@@ -23,9 +23,9 @@ public class Facade {
     }
 
     public String createItem(String itemID, String itemName, double unitPrice){
-        String createResult = "";
+        String createResult;
         if (itemID.isBlank() || itemName.isBlank() || unitPrice <= 0.0){
-            createResult = "Invalid data for item";
+            createResult = "Invalid data for item.";
         }else if (containsItem(itemID)){
             createResult = "Enter unique itemID.";
         }else {
@@ -37,7 +37,7 @@ public class Facade {
     }
 
     public String printItem(String itemID) {
-        String printResult = "";
+        String printResult;
         if (!containsItem(itemID)){
             printResult = "Item "+ itemID + " was not registered yet.";
         }else
@@ -46,7 +46,7 @@ public class Facade {
     }
 
     public String removeItem(String itemID) {
-        String removeResult = "";
+        String removeResult;
         if (!containsItem(itemID)){
             removeResult = "Item " + itemID + " could not be removed.";
         }else {
@@ -57,7 +57,7 @@ public class Facade {
     }
 
     public double buyItem(String itemID, int amount) {
-        double buyResult = 0.0;
+        double buyResult;
         if (!containsItem(itemID)){
             buyResult = -1.0;
         }else {
@@ -74,7 +74,7 @@ public class Facade {
                 buyResult = buyResult + Calculate.getTotalAmount(extraAmount, discountPrice) ;
             }
         }
-        return buyResult ;
+        return Calculate.toTruncate(buyResult) ;
     }
 
     public String reviewItem(String itemID, String reviewComment, int reviewGrade) {
@@ -174,11 +174,39 @@ public class Facade {
     }
 
     public String updateItemName(String itemID, String newName) {
-        return "";
+        if(containsItem(itemID))
+        {
+            if(!newName.isBlank())
+            {
+                itemList.get(itemID).setItemName(newName);
+                return "Item " + itemID + " was updated successfully.";
+            }
+            else
+            {
+                return "Invalid data for item.";
+            }
+
+
+        }
+        return "Item " + itemID + " was not registered yet.";
     }
 
     public String updateItemPrice(String itemID, double newPrice) {
-        return "";
+        if(containsItem(itemID))
+        {
+            if(newPrice>0.0)
+            {
+                itemList.get(itemID).setUnitPrice(newPrice);
+                return "Item " + itemID + " was updated successfully.";
+            }
+            else
+            {
+                return "Invalid data for item.";
+            }
+
+
+        }
+        return "Item " + itemID + " was not registered yet.";
     }
 
     public String printAllItems() {
@@ -187,7 +215,12 @@ public class Facade {
         for (String key : itemList.keySet()) {
             allItems = allItems + itemList.get(key).ToString() + s;
         }*/
-        return "";
+        if(itemList.isEmpty()) {
+            return "No items registered yet.";
+        }
+        else{
+            return  "" ;
+        }
     }
 
     public String printMostProfitableItems() {
