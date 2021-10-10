@@ -9,6 +9,7 @@ public class Item {
     private double unitPrice;
 
     public Item(String itemID, String itemName, double unitPrice){
+        this.itemID = itemID;
         this.itemName = itemName;
         this.unitPrice = unitPrice;
     }
@@ -21,7 +22,7 @@ public class Item {
     public void setItemName(String name){
         this.itemName = name;
     }
-    public void setUnitPrice(float price){
+    public void setUnitPrice(double price){
         this.unitPrice = price;
     }
 
