@@ -1,9 +1,6 @@
 package facade;
 
 import bussinessLogic.Item;
-import util.UserInput;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,6 +10,7 @@ public class Facade {
     // You must fill in this class with your own code. You can (and should) create more classes
     // that implement the functionalities listed in the Facade and in the Test Cases.
     private HashMap<String,Item> itemList;
+  
     public Facade(){
 
         itemList = new HashMap<String,Item>();
@@ -57,9 +55,21 @@ public class Facade {
     }
 
     public double buyItem(String itemID, int amount) {
-
+        if(containsItem(itemID))
+        {
+            double price = items.get(itemID).getUnitPrice();
+            if(amount>3)
+            {
+                return (4*price)+(amount-4)*price*0.7;
+            }
+            else
+            {
+            return amount*price;
+            }
+        }
         return 0.0;
     }
+
 
     public String reviewItem(String itemID, String reviewComment, int reviewGrade) {
         return "";

@@ -1,8 +1,5 @@
 package bussinessLogic;
 
-import facade.Facade;
-import util.UserInput;
-
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
@@ -11,8 +8,7 @@ public class Item {
     private String itemName;
     private double unitPrice;
 
-    public Item(String itemID, String itemName, double unitPrice){
-        this.itemID = itemID;
+    public Item( String itemName, double unitPrice){
         this.itemName = itemName;
         this.unitPrice = unitPrice;
     }
@@ -26,7 +22,7 @@ public class Item {
     public void setItemName(String name){
         this.itemName = name;
     }
-    public void setUnitPrice(double price){
+    public void setUnitPrice(float price){
         this.unitPrice = price;
     }
 
@@ -36,7 +32,5 @@ public class Item {
         String printItem = this.itemID + ": " + this.itemName + ". " + decimalFormat.format(this.unitPrice) + " SEK";
         return printItem ;
     }
-
-
 
 }
