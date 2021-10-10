@@ -1,9 +1,8 @@
 package facade;
 
 import bussinessLogic.Item;
-import util.UserInput;
+import util.Calculate;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,6 +12,7 @@ public class Facade {
     // You must fill in this class with your own code. You can (and should) create more classes
     // that implement the functionalities listed in the Facade and in the Test Cases.
     private HashMap<String,Item> itemList;
+
     public Facade(){
 
         itemList = new HashMap<String,Item>();
@@ -57,8 +57,24 @@ public class Facade {
     }
 
     public double buyItem(String itemID, int amount) {
+        double buyResult = 0.0;
+        if (!containsItem(itemID)){
+            buyResult = -1.0;
+        }else {
+            double itemPrice = itemList.get(itemID).getUnitPrice();
+            if (amount<=4){
+                 buyResult = Calculate.getTotalAmount(amount,itemPrice);
+            }else {
+                int normalAmount = 4;
+                int extraAmount = amount - normalAmount;
+                double discountRate = 0.7;
+                double discountPrice = Calculate.getDiscount(itemPrice,discountRate);
 
-        return 0.0;
+                buyResult = Calculate.getTotalAmount(normalAmount,itemPrice);
+                buyResult = buyResult + Calculate.getTotalAmount(extraAmount, discountPrice) ;
+            }
+        }
+        return buyResult ;
     }
 
     public String reviewItem(String itemID, String reviewComment, int reviewGrade) {
@@ -166,12 +182,12 @@ public class Facade {
     }
 
     public String printAllItems() {
-        String s = System.lineSeparator();
+        /*String s = System.lineSeparator();
         String allItems = "All registered items:" + s ;
         for (String key : itemList.keySet()) {
             allItems = allItems + itemList.get(key).ToString() + s;
-        }
-        return allItems;
+        }*/
+        return "";
     }
 
     public String printMostProfitableItems() {

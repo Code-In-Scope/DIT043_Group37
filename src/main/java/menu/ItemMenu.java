@@ -77,5 +77,4 @@ public class ItemMenu {
         System.out.println(totalPrice);
     }
 
-
 }
