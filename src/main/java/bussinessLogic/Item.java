@@ -17,8 +17,7 @@ public class Item {
     public String getItemName(){
         return itemName;
     }
-    public double getUnitPrice(){ return unitPrice;
-    }
+    public double getUnitPrice(){ return unitPrice; }
     public void setItemName(String name){
         this.itemName = name;
     }
