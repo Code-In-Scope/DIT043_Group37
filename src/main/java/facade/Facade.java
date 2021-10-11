@@ -2,6 +2,7 @@ package facade;
 
 import bussinessLogic.Item;
 import bussinessLogic.ReviewItem;
+import bussinessLogic.Transaction;
 import util.Calculate;
 
 import java.util.HashMap;
@@ -14,11 +15,13 @@ public class Facade {
     // that implement the functionalities listed in the Facade and in the Test Cases.
     private HashMap<String,Item> itemList;
     private HashMap<String, ReviewItem> reviewList;
+    private HashMap<String, Transaction> transactionHistory;
 
     public Facade(){
 
-        itemList = new HashMap<String,Item>();
-        reviewList = new HashMap<>();
+        this.itemList = new HashMap<String,Item>();
+       this.reviewList = new HashMap<>();
+       this.transactionHistory = new HashMap<>();
     }
 
     public boolean containsItem(String itemID) {
@@ -60,26 +63,33 @@ public class Facade {
     }
 
     public double buyItem(String itemID, int amount) {
-        double buyResult = 0.0;
+        double totalPrice = 0.0;
         int normalAmount = 4;
         double discountRate = 0.7;
         int truncateDecimal = 2;
 
         if (!containsItem(itemID)){
-            buyResult = -1.0;
+            totalPrice = -1.0;
         }else {
             double itemPrice = itemList.get(itemID).getUnitPrice();
             if (amount<=normalAmount){
-                 buyResult = Calculate.getTotalAmount(amount,itemPrice);
+                 totalPrice = Calculate.getTotalAmount(amount,itemPrice);
             }else {
                 int extraAmount = amount - normalAmount;
                 double discountPrice = Calculate.getDiscount(itemPrice,discountRate);
 
-                buyResult = Calculate.getTotalAmount(normalAmount,itemPrice);
-                buyResult = buyResult + Calculate.getTotalAmount(extraAmount, discountPrice) ;
+                totalPrice = Calculate.getTotalAmount(normalAmount,itemPrice);
+                totalPrice = totalPrice + Calculate.getTotalAmount(extraAmount, discountPrice);
+                totalPrice = Calculate.truncateDouble(totalPrice, truncateDecimal);
+                registerTransaction(itemID, amount, totalPrice);
             }
         }
-        return Calculate.truncateDouble(buyResult, truncateDecimal) ;
+        return totalPrice ;
+    }
+
+    public void registerTransaction(String itemID, int amount, double totalPrice){
+        Transaction newTransaction = new Transaction(itemID, amount, totalPrice);
+        transactionHistory.put(itemID, newTransaction);
     }
 
     public String reviewItem(String itemID, String reviewComment, int reviewGrade) {

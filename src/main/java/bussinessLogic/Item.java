@@ -9,6 +9,7 @@ public class Item {
     private double unitPrice;
 
     public Item(String itemID, String itemName, double unitPrice){
+        this.itemID = itemID;
         this.itemName = itemName;
         this.unitPrice = unitPrice;
     }
