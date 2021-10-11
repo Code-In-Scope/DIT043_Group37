@@ -1,6 +1,7 @@
 package facade;
 
 import bussinessLogic.Item;
+import bussinessLogic.ReviewItem;
 import util.Calculate;
 
 import java.util.HashMap;
@@ -12,10 +13,12 @@ public class Facade {
     // You must fill in this class with your own code. You can (and should) create more classes
     // that implement the functionalities listed in the Facade and in the Test Cases.
     private HashMap<String,Item> itemList;
+    private HashMap<String, ReviewItem> reviewList;
 
     public Facade(){
 
         itemList = new HashMap<String,Item>();
+        reviewList = new HashMap<>();
     }
 
     public boolean containsItem(String itemID) {
@@ -58,31 +61,45 @@ public class Facade {
 
     public double buyItem(String itemID, int amount) {
         double buyResult = 0.0;
+        int normalAmount = 4;
+        double discountRate = 0.7;
+        int truncateDecimal = 2;
+
         if (!containsItem(itemID)){
             buyResult = -1.0;
         }else {
             double itemPrice = itemList.get(itemID).getUnitPrice();
-            if (amount<=4){
+            if (amount<=normalAmount){
                  buyResult = Calculate.getTotalAmount(amount,itemPrice);
             }else {
-                int normalAmount = 4;
                 int extraAmount = amount - normalAmount;
-                double discountRate = 0.7;
                 double discountPrice = Calculate.getDiscount(itemPrice,discountRate);
 
                 buyResult = Calculate.getTotalAmount(normalAmount,itemPrice);
                 buyResult = buyResult + Calculate.getTotalAmount(extraAmount, discountPrice) ;
             }
         }
-        return buyResult ;
+        return Calculate.truncateDouble(buyResult, truncateDecimal) ;
     }
 
     public String reviewItem(String itemID, String reviewComment, int reviewGrade) {
-        return "";
+        String reviewResult = "";
+        if (!containsItem(itemID)){
+            reviewResult = "Item " + itemID + " is not registered yet.";
+        }else {
+            if (reviewGrade < 1 || reviewGrade > 5){
+                reviewResult = "Grade values must be between 1 and 5.";
+            }else {
+                ReviewItem newReview = new ReviewItem(reviewComment, reviewGrade);
+                reviewList.put(itemID, newReview);
+                reviewResult = "Your item review was registered successfully.";
+            }
+        }
+        return reviewResult;
     }
 
     public String reviewItem(String itemID, int reviewGrade) {
-        return "";
+        return reviewItem(itemID, "", reviewGrade);
     }
 
     public String getItemCommentsPrinted(String itemID) {
@@ -174,11 +191,33 @@ public class Facade {
     }
 
     public String updateItemName(String itemID, String newName) {
-        return "";
+        String updateResult;
+        if(!containsItem(itemID)) {
+            updateResult = "Item " + itemID + " was not registered yet.";
+        }else if(newName.isBlank()) {
+            updateResult = "Invalid data for item.";
+        }
+        else {
+            itemList.get(itemID).setItemName(newName);
+            updateResult = "Item " + itemID + " was updated successfully.";
+        }
+        return updateResult;
     }
 
     public String updateItemPrice(String itemID, double newPrice) {
-        return "";
+        if(containsItem(itemID))
+        {
+            if(newPrice>0.0)
+            {
+                itemList.get(itemID).setUnitPrice(newPrice);
+                return "Item " + itemID + " was updated successfully.";
+            }
+            else
+            {
+                return "Invalid data for item.";
+            }
+        }
+        return "Item " + itemID + " was not registered yet.";
     }
 
     public String printAllItems() {

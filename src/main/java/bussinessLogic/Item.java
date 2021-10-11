@@ -21,7 +21,7 @@ public class Item {
     public void setItemName(String name){
         this.itemName = name;
     }
-    public void setUnitPrice(float price){
+    public void setUnitPrice(double price){
         this.unitPrice = price;
     }
 

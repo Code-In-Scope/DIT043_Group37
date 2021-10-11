@@ -32,8 +32,10 @@ public class ReviewMenu {
 
             switch (userOption){
                 case 0:
+                    //Exit
                     break;
                 case 1:
+                    reviewItem();
                     break;
                 case 2:
                     break;
@@ -50,4 +52,18 @@ public class ReviewMenu {
             }
         }while (userOption != 0);
     }
+
+    public static void reviewItem(){
+        String itemID = UserInput.getInputString("Enter the ID of the item you want to review: ");
+        String comment = UserInput.getInputString("Type your comment about the item: ");
+        int grade = UserInput.getInputInt("Grade item between 1 to 5: ");
+        String message = "";
+        if (comment == null){
+            message = facade.reviewItem(itemID,grade);
+        }else {
+            message = facade.reviewItem(itemID, comment, grade);
+        }
+        System.out.println(message);
+    }
+
 }
