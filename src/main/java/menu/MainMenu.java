@@ -14,10 +14,9 @@ public class MainMenu {
     }
 
     public static void getMainMenuOption(){
-        displayOptionMenu();
-
         int userOption;
         do {
+            displayOptionMenu();
             userOption = UserInput.getInputInt("Type an option number: ");
             switch (userOption){
                 case 0:

@@ -14,7 +14,8 @@ public class ItemMenu {
                 "3. Print all registered Items." + s +
                 "4. Buy an Item." + s +
                 "5. Update an item's name." + s +
-                "6. Update an item's price." + s + s );
+                "6. Update an item's price." + s +
+                "7. Print a specific item."+ s +s );
     }
 
     public static void getItemOption(){
@@ -36,7 +37,7 @@ public class ItemMenu {
                     removeItem();
                     break;
                 case 3:
-                    printItem();
+                    facade.printAllItems();
                     break;
                 case 4:
                     buyItem();
@@ -46,6 +47,9 @@ public class ItemMenu {
                     break;
                 case 6:
                     updateItemPrice();
+                    break;
+                case 7:
+                    printItem();
                     break;
                 default:
                     System.out.println("Invalid menu option. Please type another option.");
@@ -62,35 +66,33 @@ public class ItemMenu {
     }
 
     public static void printItem(){
-        String inputID = UserInput.getInputString("Enter item ID to print item: ");
+        String inputID = UserInput.getInputString("Enter item ID to print item.");
         String message = facade.printItem(inputID);
         System.out.println(message);
     }
 
     public static void removeItem(){
-        String input = UserInput.getInputString("Enter item ID to remove item: ");
+        String input = UserInput.getInputString("Enter item ID to remove item.");
         String message = facade.removeItem(input);
         System.out.println(message);
     }
 
     public static void buyItem(){
-        String inputID = UserInput.getInputString("Enter item ID to buy an item: ");
-        int inputAmount = UserInput.getInputInt("Enter amount of the items to buy: ");
+        String inputID = UserInput.getInputString("Enter item ID to buy an item.");
+        int inputAmount = UserInput.getInputInt("Enter amount of the items to buy.");
         double totalPrice = facade.buyItem(inputID, inputAmount);
         System.out.println(totalPrice);
     }
-
     public static void updateItemName(){
-        String inputID = UserInput.getInputString("Enter item ID to update an item's name: ");
-        String newName = UserInput.getInputString("Enter item's new name: ");
-        String message = facade.updateItemName(inputID, newName);
-        System.out.println(message);
+        String inputID = UserInput.getInputString("Enter item ID to update the name of the item.");
+        String itemName= UserInput.getInputString("Enter item name.");
+        String message = facade.updateItemName(inputID,itemName);
+        System.out.print(message);
     }
-
     public static void updateItemPrice(){
-        String inputID = UserInput.getInputString("Enter item ID to update an item's price: ");
-        double newPrice = UserInput.getInputDouble("Enter item's new price: ");
-        String message = facade.updateItemPrice(inputID, newPrice);
+        String itemID = UserInput.getInputString("Enter item ID to update the price of the item. ");
+        double itemPrice = UserInput.getInputDouble("Enter price of the item.");
+        String message = facade.updateItemPrice(itemID,itemPrice);
         System.out.println(message);
     }
 
