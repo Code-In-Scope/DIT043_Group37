@@ -3,23 +3,30 @@ package facade;
 import bussinessLogic.Item;
 import util.Calculate;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Facade {
 
     // This class only has the skeleton of the methods used by the test.
     // You must fill in this class with your own code. You can (and should) create more classes
     // that implement the functionalities listed in the Facade and in the Test Cases.
-    private HashMap<String,Item> itemList;
+    private ArrayList<Item> itemList;
 
     public Facade(){
 
-        itemList = new HashMap<>();
+        itemList = new ArrayList<>();
     }
 
     public boolean containsItem(String itemID) {
-        return itemList.containsKey(itemID);
+
+        if(Calculate.itemIndexExists(itemList,itemID)==-1)
+        {
+            return false;
+        }
+        return true;
+
     }
 
     public String createItem(String itemID, String itemName, double unitPrice){
@@ -30,7 +37,7 @@ public class Facade {
             createResult = "Enter unique itemID.";
         }else {
            Item newItem = new Item(itemID,itemName,unitPrice);
-           itemList.put(itemID, newItem);
+           itemList.add(newItem);
            createResult = "Item " + itemID + " was registered successfully.";
         }
         return createResult;
@@ -38,19 +45,21 @@ public class Facade {
 
     public String printItem(String itemID) {
         String printResult;
-        if (!containsItem(itemID)){
+        int index = Calculate.itemIndexExists(itemList,itemID);
+        if (index == -1){
             printResult = "Item "+ itemID + " was not registered yet.";
         }else
-            printResult = itemList.get(itemID).ToString();
+            printResult = itemList.get(index).printItem();
         return printResult ;
     }
 
     public String removeItem(String itemID) {
         String removeResult;
-        if (!containsItem(itemID)){
+        int index = Calculate.itemIndexExists(itemList,itemID);
+        if (index== -1){
             removeResult = "Item " + itemID + " could not be removed.";
         }else {
-            itemList.remove(itemID);
+            itemList.remove(index);
             removeResult = "Item " + itemID + " was successfully removed.";
         }
         return removeResult;
@@ -58,10 +67,11 @@ public class Facade {
 
     public double buyItem(String itemID, int amount) {
         double buyResult;
-        if (!containsItem(itemID)){
+        int index = Calculate.itemIndexExists(itemList,itemID);
+        if (index == -1){
             buyResult = -1.0;
         }else {
-            double itemPrice = itemList.get(itemID).getUnitPrice();
+            double itemPrice = itemList.get(index).getUnitPrice();
             if (amount<=4){
                  buyResult = Calculate.getTotalAmount(amount,itemPrice);
             }else {
@@ -174,29 +184,29 @@ public class Facade {
     }
 
     public String updateItemName(String itemID, String newName) {
-        if(containsItem(itemID))
+        int index = Calculate.itemIndexExists(itemList,itemID);
+        if(index!=-1)
         {
             if(!newName.isBlank())
             {
-                itemList.get(itemID).setItemName(newName);
+                itemList.get(index).setItemName(newName);
                 return "Item " + itemID + " was updated successfully.";
             }
             else
             {
                 return "Invalid data for item.";
             }
-
-
         }
         return "Item " + itemID + " was not registered yet.";
     }
 
     public String updateItemPrice(String itemID, double newPrice) {
-        if(containsItem(itemID))
+        int index = Calculate.itemIndexExists(itemList,itemID);
+        if(index!=-1)
         {
             if(newPrice>0.0)
             {
-                itemList.get(itemID).setUnitPrice(newPrice);
+                itemList.get(index).setUnitPrice(newPrice);
                 return "Item " + itemID + " was updated successfully.";
             }
             else
@@ -210,20 +220,100 @@ public class Facade {
     }
 
     public String printAllItems() {
-        /*String s = System.lineSeparator();
-        String allItems = "All registered items:" + s ;
-        for (String key : itemList.keySet()) {
-            allItems = allItems + itemList.get(key).ToString() + s;
-        }*/
+        StringBuilder output = new StringBuilder();
+        String s = System.lineSeparator();
+        output.append( "All registered items:");
+        output.append(s);
         if(itemList.isEmpty()) {
             return "No items registered yet.";
         }
         else{
-            return  "" ;
+            for (Item item:itemList) {
+                output.append(item.printItem());
+                output.append(s);
+            }
+            return output.toString();
         }
     }
 
     public String printMostProfitableItems() {
+        return "";
+    }
+
+    public String createEmployee(String employeeID, String employeeName, double grossSalary) throws Exception {
+        return "";
+    }
+
+    public String printEmployee(String employeeID) throws Exception {
+        return "";
+    }
+
+    public String createEmployee(String employeeID, String employeeName, double grossSalary, String degree) throws Exception {
+        return "";
+    }
+
+    public String createEmployee(String employeeID, String employeeName, double grossSalary, int gpa) throws Exception {
+        return "";
+    }
+
+    public double getNetSalary(String employeeID) throws Exception {
+        return -1.0;
+    }
+
+    public String createEmployee(String employeeID, String employeeName, double grossSalary, String degree, String dept) throws Exception {
+        return "";
+    }
+
+    public String removeEmployee(String empID) throws Exception {
+        return "";
+    }
+
+    public String printAllEmployees() throws Exception {
+        return "";
+    }
+
+    public double getTotalNetSalary() throws Exception {
+        return -1.0;
+    }
+
+    public String printSortedEmployees() throws Exception {
+        return "";
+    }
+
+    public String updateEmployeeName(String empID, String newName) throws Exception {
+        return "";
+    }
+
+    public String updateInternGPA(String empID, int newGPA) throws Exception {
+        return "";
+    }
+
+    public String updateManagerDegree(String empID, String newDegree) throws Exception {
+        return "";
+    }
+
+    public String updateDirectorDept(String empID, String newDepartment) throws Exception {
+        return "";
+    }
+
+    public String updateGrossSalary(String empID, double newSalary) throws Exception {
+        return "";
+    }
+
+    public Map<String, Integer> mapEachDegree() throws Exception {
+        return null;
+    }
+
+    public String promoteToManager(String empID, String degree) throws Exception {
+        return "";
+
+    }
+
+    public String promoteToDirector(String empID, String degree, String department) throws Exception {
+        return "";
+    }
+
+    public String promoteToIntern(String empID, int gpa) throws Exception {
         return "";
     }
 }

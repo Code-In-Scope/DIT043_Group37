@@ -1,7 +1,10 @@
 package bussinessLogic;
 
+import util.Calculate;
+
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class Item {
     private String itemID;
@@ -13,11 +16,11 @@ public class Item {
         this.itemName = itemName;
         this.unitPrice = unitPrice;
     }
-
+    public String getItemID() { return itemID; }
     public String getItemName(){
         return itemName;
     }
-    public double getUnitPrice(){ return unitPrice; }
+    public double getUnitPrice() { return unitPrice; }
     public void setItemName(String name){
         this.itemName = name;
     }
@@ -25,11 +28,14 @@ public class Item {
         this.unitPrice = price;
     }
 
-    public String ToString(){
+    public String printItem(){
         DecimalFormat decimalFormat = new DecimalFormat(".00");
         decimalFormat.setRoundingMode(RoundingMode.DOWN);
+
         String printItem = this.itemID + ": " + this.itemName + ". " + decimalFormat.format(this.unitPrice) + " SEK";
         return printItem ;
     }
+
+
 
 }

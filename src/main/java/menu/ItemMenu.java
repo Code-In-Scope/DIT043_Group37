@@ -14,7 +14,8 @@ public class ItemMenu {
                 "3. Print all registered Items." + s +
                 "4. Buy an Item." + s +
                 "5. Update an item's name." + s +
-                "6. Update an item's price." + s + s );
+                "6. Update an item's price." + s +
+                "7. Print a specific item."+ s +s );
     }
 
     public static void getItemOption(){
@@ -36,7 +37,7 @@ public class ItemMenu {
                     removeItem();
                     break;
                 case 3:
-                    printItem();
+                    facade.printAllItems();
                     break;
                 case 4:
                     buyItem();
@@ -46,6 +47,9 @@ public class ItemMenu {
                     break;
                 case 6:
                     updateItemPrice();
+                    break;
+                case 7:
+                    printItem();
                     break;
                 default:
                     System.out.println("Invalid menu option. Please type another option.");
