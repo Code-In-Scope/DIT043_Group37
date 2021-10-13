@@ -14,16 +14,19 @@ public class ReviewItem {
     public ReviewItem(String itemID, String name, double unitPrice)
     {
         this.reviewComment = new StringBuilder();
+        this.reviewGrade = new ArrayList<>();
+        this.writtenComments = new ArrayList<>();
         this.reviewComment.append("Review(s) for ").append(itemID).append(":").append(name).append(unitPrice).append("\n");
         this.isReviewed = false;
     }
 
-    public void addReviewComment(int reviewGrade, String reviewComment)
+    public String addReviewComment(int reviewGrade, String reviewComment)
     {
         this.reviewGrade.add(reviewGrade);
         this.writtenComments.add(reviewComment);
         this.reviewComment.append(reviewGrade).append(".").append(reviewComment).append("\n");
         this.isReviewed = true;
+        return "Your item review was registered successfully";
     }
 
     public  boolean isItemReviewed(){
