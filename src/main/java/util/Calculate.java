@@ -20,14 +20,14 @@ public class Calculate{
     {
         for (int i=0;i< itemList.size();i++)
         {
-            if(itemList.get(i).getItemID()==itemID)
+            if(itemList.get(i).getItemID().equals(itemID))
                 return i;
         }
         return -1;
     }
 
     public static double truncateDouble(double number, int decimalPlace){
-        number = number * Math.pow(10,2);
+        number = number * Math.pow(10,decimalPlace);
         number = Math.floor(number);
         number = number / Math.pow(10, decimalPlace);
         return number;

@@ -6,12 +6,13 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class Item {
+public class Item extends ReviewItem{
     private String itemID;
     private String itemName;
     private double unitPrice;
 
     public Item(String itemID, String itemName, double unitPrice){
+        super(itemID,itemName,unitPrice);
         this.itemID = itemID;
         this.itemName = itemName;
         this.unitPrice = unitPrice;
@@ -32,8 +33,7 @@ public class Item {
         DecimalFormat decimalFormat = new DecimalFormat(".00");
         decimalFormat.setRoundingMode(RoundingMode.DOWN);
 
-        String printItem = this.itemID + ": " + this.itemName + ". " + decimalFormat.format(this.unitPrice) + " SEK";
-        return printItem ;
+        return this.itemID + ": " + this.itemName + ". " + decimalFormat.format(this.unitPrice) + " SEK";
     }
 
 
