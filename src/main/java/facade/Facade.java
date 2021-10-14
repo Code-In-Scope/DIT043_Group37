@@ -115,15 +115,42 @@ public class Facade {
     }
 
     public String reviewItem(String itemID, String reviewComment, int reviewGrade) {
-        return "";
+        int index = Calculate.itemIndexExists(itemList,itemID);
+        if (index == -1){
+            return "Item "+itemID+" was not registered yet.";
+        }
+        else if(reviewGrade <1 || reviewGrade > 5)
+        {
+            return "Grade values must be between 1 and 5.";
+        }
+        else
+        {
+            return itemList.get(index).addReviewComment(reviewGrade,reviewComment);
+        }
     }
 
     public String reviewItem(String itemID, int reviewGrade) {
-        return "";
+        return reviewItem(itemID,null,reviewGrade);
     }
 
     public String getItemCommentsPrinted(String itemID) {
-        return "";
+        int index = Calculate.itemIndexExists(itemList,itemID);
+        if (index == -1){
+            return "Item "+itemID+" was not registered yet.";
+        }
+        else
+        {
+            String itemComments = itemList.get(index).printAllReviews();
+            if(itemList.get(index).isItemReviewed())
+            {
+                return itemComments;
+            }
+            else
+            {
+                return itemComments + "\nItem "+itemList.get(index).getItemName()+"has not been reviewed yet";
+            }
+
+        }
     }
 
     public List<String> getItemComments(String itemID) {
