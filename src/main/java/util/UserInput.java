@@ -26,6 +26,5 @@ public class UserInput {
         userInput = scan.nextDouble();
         scan.nextLine();
         return userInput;
-
     }
 }

@@ -1,4 +1,4 @@
-package bussinessLogic;
+package menu;
 
 public class ReviewItem {
     private String reviewComment;

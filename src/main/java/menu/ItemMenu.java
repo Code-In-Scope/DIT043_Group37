@@ -49,7 +49,7 @@ public class ItemMenu {
                     updateItemPrice();
                     break;
                 case 7:
-                    printItem();
+                    printAllItem();
                     break;
                 default:
                     System.out.println("Invalid menu option. Please type another option.");
@@ -93,6 +93,11 @@ public class ItemMenu {
         String itemID = UserInput.getInputString("Enter item ID to update the price of the item. ");
         double itemPrice = UserInput.getInputDouble("Enter price of the item.");
         String message = facade.updateItemPrice(itemID,itemPrice);
+        System.out.println(message);
+    }
+
+    public static void printAllItem(){
+        String message = facade.printAllItems();
         System.out.println(message);
     }
 

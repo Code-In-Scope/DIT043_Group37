@@ -16,20 +16,5 @@ public class Calculate{
     {
         return (Math.floor(number*100)/100);
     }
-    public static int itemIndexExists(ArrayList<Item> itemList , String itemID)
-    {
-        for (int i=0;i< itemList.size();i++)
-        {
-            if(itemList.get(i).getItemID()==itemID)
-                return i;
-        }
-        return -1;
-    }
 
-    public static double truncateDouble(double number, int decimalPlace){
-        number = number * Math.pow(10,2);
-        number = Math.floor(number);
-        number = number / Math.pow(10, decimalPlace);
-        return number;
-    }
 }

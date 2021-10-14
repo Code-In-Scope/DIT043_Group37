@@ -38,11 +38,19 @@ public class ReviewMenu {
                     reviewItem();
                     break;
                 case 2:
+                    specificReview();
                     break;
-                case 3: break;
-                case 4: break;
-                case 5: break;
-                case 6: break;
+                case 3:
+                    break;
+                case 4:
+                    meanGrade();
+                    break;
+                case 5:
+                    printItemsComments();
+                    break;
+                case 6:
+                    printReviews();
+                    break;
                 case 7: break;
                 case 8: break;
                 case 9: break;
@@ -65,5 +73,36 @@ public class ReviewMenu {
         }
         System.out.println(message);
     }
+
+    public static void printItemsComments(){
+        String itemID = UserInput.getInputString("Enter item's ID to see item's comments: ");
+        String itemComments = facade.getItemCommentsPrinted(itemID);
+        System.out.println(itemComments);
+    }
+
+    public static void meanGrade(){
+        String itemID = UserInput.getInputString("Enter item's ID to see item's mean grade: ");
+        double meanGrade = facade.getItemMeanGrade(itemID);
+        System.out.println(meanGrade);
+    }
+
+    public static void specificReview(){
+        String itemID = UserInput.getInputString("Enter item's ID to see a review: ");
+        int reviewNumber = UserInput.getInputInt("Enter no. of the review:");
+        String specificReview = facade.getPrintedItemReview(itemID, reviewNumber);
+        System.out.println(specificReview);
+    }
+
+    public static void printItemsReviews(){
+        
+    }
+
+    public static void printReviews(){
+        String itemID = UserInput.getInputString("Enter item's ID to see reviews: ");
+        String reviews = facade.getPrintedReviews(itemID);
+        System.out.println(reviews);
+    }
+
+
 
 }

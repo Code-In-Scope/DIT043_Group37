@@ -1,6 +1,8 @@
 package facade;
 
 import bussinessLogic.Item;
+import bussinessLogic.Transaction;
+import bussinessLogic.TransactionManager;
 import util.Calculate;
 
 import java.util.ArrayList;
@@ -13,20 +15,43 @@ public class Facade {
     // You must fill in this class with your own code. You can (and should) create more classes
     // that implement the functionalities listed in the Facade and in the Test Cases.
     private ArrayList<Item> itemList;
+    TransactionManager transactionManager;
 
     public Facade(){
 
         itemList = new ArrayList<>();
+        transactionManager = new TransactionManager();
     }
 
     public boolean containsItem(String itemID) {
 
-        if(Calculate.itemIndexExists(itemList,itemID)==-1)
+        if(itemIndexExists(itemList,itemID)==-1)
         {
             return false;
         }
         return true;
+    }
 
+    public static int itemIndexExists(ArrayList<Item> itemList , String itemID)
+    {
+        for (int i=0;i< itemList.size();i++)
+        {
+            Item currentItem = itemList.get(i);
+            if(currentItem.getItemID()==itemID)
+                return i;
+        }
+        return -1;
+    }
+
+    public String getItemInfo(String itemID){
+        String itemInfo = "";
+        for (int i = 0; i < itemList.size(); i++){
+            Item currentItem = itemList.get(i);
+            if (currentItem.getItemID()==itemID){
+                itemInfo = currentItem.printItem();
+            }
+        }
+        return itemInfo;
     }
 
     public String createItem(String itemID, String itemName, double unitPrice){
@@ -45,7 +70,7 @@ public class Facade {
 
     public String printItem(String itemID) {
         String printResult;
-        int index = Calculate.itemIndexExists(itemList,itemID);
+        int index = itemIndexExists(itemList,itemID);
         if (index == -1){
             printResult = "Item "+ itemID + " was not registered yet.";
         }else
@@ -55,7 +80,7 @@ public class Facade {
 
     public String removeItem(String itemID) {
         String removeResult;
-        int index = Calculate.itemIndexExists(itemList,itemID);
+        int index = itemIndexExists(itemList,itemID);
         if (index== -1){
             removeResult = "Item " + itemID + " could not be removed.";
         }else {
@@ -66,25 +91,27 @@ public class Facade {
     }
 
     public double buyItem(String itemID, int amount) {
-        double buyResult;
-        int index = Calculate.itemIndexExists(itemList,itemID);
+        double totalPrice;
+        int amountThreshold = 4;
+        double discountRate = 0.7;
+        int index = itemIndexExists(itemList,itemID);
         if (index == -1){
-            buyResult = -1.0;
+            totalPrice = -1.0;
         }else {
             double itemPrice = itemList.get(index).getUnitPrice();
-            if (amount<=4){
-                 buyResult = Calculate.getTotalAmount(amount,itemPrice);
+            if (amount <= amountThreshold){
+                 totalPrice = Calculate.getTotalAmount(amount,itemPrice);
             }else {
-                int normalAmount = 4;
-                int extraAmount = amount - normalAmount;
-                double discountRate = 0.7;
+                int extraAmount = amount - amountThreshold;
                 double discountPrice = Calculate.getDiscount(itemPrice,discountRate);
 
-                buyResult = Calculate.getTotalAmount(normalAmount,itemPrice);
-                buyResult = buyResult + Calculate.getTotalAmount(extraAmount, discountPrice) ;
+                totalPrice = Calculate.getTotalAmount(amountThreshold,itemPrice);
+                totalPrice = totalPrice + Calculate.getTotalAmount(extraAmount, discountPrice);
+                totalPrice = Calculate.toTruncate(totalPrice);
+                transactionManager.registerTransaction(itemID, amount, totalPrice, getItemInfo(itemID));
             }
         }
-        return Calculate.toTruncate(buyResult) ;
+        return totalPrice ;
     }
 
     public String reviewItem(String itemID, String reviewComment, int reviewGrade) {
@@ -140,7 +167,9 @@ public class Facade {
     }
 
     public String printItemTransactions(String itemID) {
-        return "";
+
+        String transactions = transactionManager.printItemTransaction(itemID);
+        return transactions;
     }
 
     public int getTotalUnitsSold() {
@@ -184,7 +213,7 @@ public class Facade {
     }
 
     public String updateItemName(String itemID, String newName) {
-        int index = Calculate.itemIndexExists(itemList,itemID);
+        int index = itemIndexExists(itemList,itemID);
         if(index!=-1)
         {
             if(!newName.isBlank())
@@ -201,7 +230,7 @@ public class Facade {
     }
 
     public String updateItemPrice(String itemID, double newPrice) {
-        int index = Calculate.itemIndexExists(itemList,itemID);
+        int index = itemIndexExists(itemList,itemID);
         if(index!=-1)
         {
             if(newPrice>0.0)
@@ -213,8 +242,6 @@ public class Facade {
             {
                 return "Invalid data for item.";
             }
-
-
         }
         return "Item " + itemID + " was not registered yet.";
     }
