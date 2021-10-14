@@ -29,19 +29,25 @@ public class TransactionMenu {
 
             switch (userOption){
                 case 0:
-                    //Exit
+                    MainMenu.getMainMenuOption();
                     break;
                 case 1:
+                    printTotalProfit();
                     break;
                 case 2:
+                    printTotalSold();
                     break;
                 case 3:
+                    totalItemTransactions();
                     break;
                 case 4:
+                    printAllTransactions();
                     break;
                 case 5:
+                    printItemProfit();
                     break;
                 case 6:
+                    printItemSoldUnits();
                     break;
                 case 7:
                     printItemTransaction();
@@ -52,11 +58,42 @@ public class TransactionMenu {
         }while (userOption != 0);
     }
 
+    public static void printTotalProfit(){
+        double profit = facade.getTotalProfit();
+        System.out.println(profit);
+    }
+
+    public static void printTotalSold(){
+        int totalSold = facade.getTotalUnitsSold();
+        System.out.println(totalSold);
+    }
+
+    public static void totalItemTransactions(){
+        String itemID = UserInput.getInputString("Enter item ID to print total number of transaction: ");
+        int itemTransactions = facade.numberOfItemTransactions(itemID);
+        System.out.println(itemTransactions);
+    }
     public static void printItemTransaction(){
         String itemID = UserInput.getInputString("Enter item ID to print all transactions: ");
         String printTransaction = facade.printItemTransactions(itemID);
         System.out.println(printTransaction);
     }
 
+    public static void printAllTransactions(){
+        String allTransactions = facade.printAllTransactions();
+        System.out.println(allTransactions);
+    }
+
+    public static void printItemProfit(){
+        String itemID = UserInput.getInputString("Enter item ID to print item's total profit: ");
+        double itemProfit = facade.getProfit(itemID);
+        System.out.println(itemProfit);
+    }
+
+    public static void printItemSoldUnits(){
+        String itemID = UserInput.getInputString("Enter item ID to print item's total sold units: ");
+        int soldUnits = facade.getUnitsSolds(itemID);
+        System.out.println(soldUnits);
+    }
 
 }

@@ -25,19 +25,19 @@ public class Facade {
 
     public boolean containsItem(String itemID) {
 
-        if(itemIndexExists(itemList,itemID)==-1)
+        if(itemIndexExists(itemID)==-1)
         {
             return false;
         }
         return true;
     }
 
-    public static int itemIndexExists(ArrayList<Item> itemList , String itemID)
+    public int itemIndexExists(String itemID)
     {
-        for (int i=0;i< itemList.size();i++)
+        for (int i=0;i<itemList.size();i++)
         {
             Item currentItem = itemList.get(i);
-            if(currentItem.getItemID()==itemID)
+            if(currentItem.getItemID().equals(itemID))
                 return i;
         }
         return -1;
@@ -47,7 +47,7 @@ public class Facade {
         String itemInfo = "";
         for (int i = 0; i < itemList.size(); i++){
             Item currentItem = itemList.get(i);
-            if (currentItem.getItemID()==itemID){
+            if (currentItem.getItemID().equals(itemID)){
                 itemInfo = currentItem.printItem();
             }
         }
@@ -70,7 +70,7 @@ public class Facade {
 
     public String printItem(String itemID) {
         String printResult;
-        int index = itemIndexExists(itemList,itemID);
+        int index = itemIndexExists(itemID);
         if (index == -1){
             printResult = "Item "+ itemID + " was not registered yet.";
         }else
@@ -80,7 +80,7 @@ public class Facade {
 
     public String removeItem(String itemID) {
         String removeResult;
-        int index = itemIndexExists(itemList,itemID);
+        int index = itemIndexExists(itemID);
         if (index== -1){
             removeResult = "Item " + itemID + " could not be removed.";
         }else {
@@ -94,7 +94,7 @@ public class Facade {
         double totalPrice;
         int amountThreshold = 4;
         double discountRate = 0.7;
-        int index = itemIndexExists(itemList,itemID);
+        int index = itemIndexExists(itemID);
         if (index == -1){
             totalPrice = -1.0;
         }else {
@@ -115,8 +115,8 @@ public class Facade {
         return totalPrice ;
     }
 
-    public String reviewItem(String itemID, String reviewComment, int reviewGrade) {
-        int index = itemIndexExists(itemList,itemID);
+    /*public String reviewItem(String itemID, String reviewComment, int reviewGrade) {
+        int index = itemIndexExists(itemID);
         if (index == -1){
             return "Item "+itemID+" was not registered yet.";
         }
@@ -135,7 +135,7 @@ public class Facade {
     }
 
     public String getItemCommentsPrinted(String itemID) {
-        int index = itemIndexExists(itemList,itemID);
+        int index = itemIndexExists(itemID);
         if (index == -1){
             return "Item "+itemID+" was not registered yet.";
         }
@@ -152,7 +152,7 @@ public class Facade {
             }
 
         }
-    }
+    }*/
 
     public List<String> getItemComments(String itemID) {
         return null;
@@ -191,33 +191,52 @@ public class Facade {
     }
 
     public double getTotalProfit() {
-        return -1.0;
+        double totalProfit = transactionManager.getTotalProfit();
+        return totalProfit;
+    }
+
+    public int numberOfItemTransactions(String itemID){
+        int transactions = transactionManager.totalNumberOfTransaction(itemID);
+        return transactions;
     }
 
     public String printItemTransactions(String itemID) {
-
-        String transactions = transactionManager.printItemTransaction(itemID);
+        String transactions ="";
+        if (!containsItem(itemID)){
+            transactions = "Item " + itemID + " was not registered yet.";
+        }
+        transactions = transactionManager.printItemTransaction(itemID);
         return transactions;
     }
 
     public int getTotalUnitsSold() {
-        return -1;
+        int soldItems = transactionManager.getTotalSoldItems();
+        return soldItems;
     }
 
     public int getTotalTransactions() {
-        return -1;
+        int totalTransaction = transactionManager.getTotalTransactions();
+        return totalTransaction;
     }
 
     public double getProfit(String itemID) {
-        return -1.0;
+        double profit = 0.0;
+        if (!containsItem(itemID)){
+            profit = 0;
+        }else {
+            profit = transactionManager.getTotalProfitOfItem(itemID);
+        }
+        return profit;
     }
 
     public int getUnitsSolds(String itemID) {
-        return -1;
+        int soldUnits = transactionManager.getTotalSoldUnits(itemID);
+        return soldUnits;
     }
 
     public String printAllTransactions() {
-        return "";
+        String allTransactions = transactionManager.printAllTransactions();
+        return allTransactions;
     }
 
     public String printWorseReviewedItems() {
@@ -241,7 +260,7 @@ public class Facade {
     }
 
     public String updateItemName(String itemID, String newName) {
-        int index = itemIndexExists(itemList,itemID);
+        int index = itemIndexExists(itemID);
         if(index!=-1)
         {
             if(!newName.isBlank())
@@ -258,7 +277,7 @@ public class Facade {
     }
 
     public String updateItemPrice(String itemID, double newPrice) {
-        int index = itemIndexExists(itemList,itemID);
+        int index = itemIndexExists(itemID);
         if(index!=-1)
         {
             if(newPrice>0.0)
