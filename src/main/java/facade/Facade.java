@@ -1,196 +1,112 @@
 package facade;
 
-import bussinessLogic.Item;
-import bussinessLogic.Transaction;
-import bussinessLogic.TransactionManager;
-import util.Calculate;
-
-import java.util.ArrayList;
+import bussinessLogic.FacadeWrapper;
 import java.util.List;
 import java.util.Map;
+import bussinessLogic.TransactionManager;
 
-public class Facade {
+public class Facade
+{
 
-    // This class only has the skeleton of the methods used by the test.
-    // You must fill in this class with your own code. You can (and should) create more classes
-    // that implement the functionalities listed in the Facade and in the Test Cases.
-    private ArrayList<Item> itemList;
-    TransactionManager transactionManager;
+	// This class only has the skeleton of the methods used by the test.
+	// You must fill in this class with your own code. You can (and should) create more classes
+	// that implement the functionalities listed in the Facade and in the Test Cases.
 
-    public Facade(){
+	FacadeWrapper wrapper;
+	TransactionManager transactionManager;
 
-        itemList = new ArrayList<>();
-        transactionManager = new TransactionManager();
-    }
+	public Facade()
+	{
+		wrapper = new FacadeWrapper();
+		transactionManager = new TransactionManager();
+	}
 
-    public boolean containsItem(String itemID) {
+	public boolean containsItem(String itemID)
+	{
+		return wrapper.containsItem(itemID);
+	}
 
-        if(itemIndexExists(itemID)==-1)
-        {
-            return false;
-        }
-        return true;
-    }
+	public String createItem(String itemID, String itemName, double unitPrice)
+	{
+		return wrapper.createItem(itemID, itemName, unitPrice);
+	}
 
-    public int itemIndexExists(String itemID)
-    {
-        for (int i=0;i<itemList.size();i++)
-        {
-            Item currentItem = itemList.get(i);
-            if(currentItem.getItemID().equals(itemID))
-                return i;
-        }
-        return -1;
-    }
-    //Taking item information to store with transaction
-    public String getItemInfo(String itemID){
-        String itemInfo = "";
-        for (int i = 0; i < itemList.size(); i++){
-            Item currentItem = itemList.get(i);
-            if (currentItem.getItemID().equals(itemID)){
-                itemInfo = currentItem.printItem();
-            }
-        }
-        return itemInfo;
-    }
+	public String printItem(String itemID)
+	{
+		return wrapper.printItem(itemID);
+	}
 
-    public String createItem(String itemID, String itemName, double unitPrice){
-        String createResult;
-        if (itemID.isBlank() || itemName.isBlank() || unitPrice <= 0.0){
-            createResult = "Invalid data for item.";
-        }else if (containsItem(itemID)){
-            createResult = "Enter unique itemID.";
-        }else {
-           Item newItem = new Item(itemID,itemName,unitPrice);
-           itemList.add(newItem);
-           createResult = "Item " + itemID + " was registered successfully.";
-        }
-        return createResult;
-    }
+	public String removeItem(String itemID)
+	{
+		return wrapper.removeItem(itemID);
+	}
 
-    public String printItem(String itemID) {
-        String printResult;
-        int index = itemIndexExists(itemID);
-        if (index == -1){
-            printResult = "Item "+ itemID + " was not registered yet.";
-        }else
-            printResult = itemList.get(index).printItem();
-        return printResult ;
-    }
+	public double buyItem(String itemID, int amount)
+	{
+		return wrapper.buyItem(itemID, amount);
+	}
 
-    public String removeItem(String itemID) {
-        String removeResult;
-        int index = itemIndexExists(itemID);
-        if (index== -1){
-            removeResult = "Item " + itemID + " could not be removed.";
-        }else {
-            itemList.remove(index);
-            removeResult = "Item " + itemID + " was successfully removed.";
-        }
-        return removeResult;
-    }
+	public String reviewItem(String itemID, String reviewComment, int reviewGrade)
+	{
+		return wrapper.reviewItem(itemID, reviewComment, reviewGrade);
+	}
 
-    public double buyItem(String itemID, int amount) {
-        double totalPrice;
-        int amountThreshold = 4;
-        double discountRate = 0.7;
-        int index = itemIndexExists(itemID);
-        if (index == -1){
-            totalPrice = -1.0;
-        }else {
-            double itemPrice = itemList.get(index).getUnitPrice();
-            if (amount <= amountThreshold){
-                 totalPrice = Calculate.getTotalAmount(amount,itemPrice);
-            }else {
-                int extraAmount = amount - amountThreshold;
-                double discountPrice = Calculate.getDiscount(itemPrice,discountRate);
+	public String reviewItem(String itemID, int reviewGrade)
+	{
+		return reviewItem(itemID, null, reviewGrade);
+	}
 
-                totalPrice = Calculate.getTotalAmount(amountThreshold,itemPrice);
-                totalPrice = totalPrice + Calculate.getTotalAmount(extraAmount, discountPrice);
-                totalPrice = Calculate.truncateDouble(totalPrice, 2);
-                //Register transaction and store ItemID and itemInfo with transaction
-                transactionManager.registerTransaction(itemID, amount, totalPrice, getItemInfo(itemID));
-            }
-        }
-        return totalPrice ;
-    }
+	public String getItemCommentsPrinted(String itemID)
+	{
+		return wrapper.getItemCommentsPrinted(itemID);
+	}
 
-    /*public String reviewItem(String itemID, String reviewComment, int reviewGrade) {
-        int index = itemIndexExists(itemID);
-        if (index == -1){
-            return "Item "+itemID+" was not registered yet.";
-        }
-        else if(reviewGrade <1 || reviewGrade > 5)
-        {
-            return "Grade values must be between 1 and 5.";
-        }
-        else
-        {
-            return itemList.get(index).addReviewComment(reviewGrade,reviewComment);
-        }
-    }
+	public List<String> getItemComments(String itemID)
+	{
+		return wrapper.getItemComments(itemID);
+	}
 
-    public String reviewItem(String itemID, int reviewGrade) {
-        return reviewItem(itemID,null,reviewGrade);
-    }
+	public double getItemMeanGrade(String itemID)
+	{
+		return wrapper.getItemMeanGrade(itemID);
+	}
 
-    public String getItemCommentsPrinted(String itemID) {
-        int index = itemIndexExists(itemID);
-        if (index == -1){
-            return "Item "+itemID+" was not registered yet.";
-        }
-        else
-        {
-            String itemComments = itemList.get(index).printAllReviews();
-            if(itemList.get(index).isItemReviewed())
-            {
-                return itemComments;
-            }
-            else
-            {
-                return itemComments + "\nItem "+itemList.get(index).getItemName()+"has not been reviewed yet";
-            }
+	public int getNumberOfReviews(String itemID)
+	{
+		return -1;
+	}
 
-        }
-    }*/
+	public String getPrintedItemReview(String itemID, int reviewNumber)
+	{
+		return "";
+	}
 
-    public List<String> getItemComments(String itemID) {
-        return null;
-    }
+	public String getPrintedReviews(String itemID)
+	{
+		return "";
+	}
 
-    public double getItemMeanGrade(String itemID) {
-        return -1.0;
-    }
+	public String printMostReviewedItems()
+	{
+		return "";
+	}
 
-    public int getNumberOfReviews(String itemID) {
-        return -1;
-    }
+	public List<String> getMostReviewedItems()
+	{
+		return null;
+	}
 
-    public String getPrintedItemReview(String itemID, int reviewNumber) {
-        return "";
-    }
+	public List<String> getLeastReviewedItems()
+	{
+		return null;
+	}
 
-    public String getPrintedReviews(String itemID) {
-        return "";
-    }
+	public String printLeastReviewedItems()
+	{
+		return "";
+	}
 
-    public String printMostReviewedItems() {
-        return "";
-    }
-
-    public List<String> getMostReviewedItems() {
-        return null;
-    }
-
-    public List<String> getLeastReviewedItems() {
-        return null;
-    }
-
-    public String printLeastReviewedItems() {
-        return "";
-    }
-
-    public double getTotalProfit() {
+	public double getTotalProfit() {
         double totalProfit = transactionManager.getTotalProfit();
         return totalProfit;
     }
@@ -239,155 +155,144 @@ public class Facade {
         return allTransactions;
     }
 
-    public String printWorseReviewedItems() {
-        return "";
-    }
+	public String printWorseReviewedItems()
+	{
+		return "";
+	}
 
-    public String printBestReviewedItems() {
-        return "";
-    }
+	public String printBestReviewedItems()
+	{
+		return "";
+	}
 
-    public List<String> getWorseReviewedItems() {
-        return null;
-    }
+	public List<String> getWorseReviewedItems()
+	{
+		return null;
+	}
 
-    public List<String> getBestReviewedItems() {
-        return null;
-    }
+	public List<String> getBestReviewedItems()
+	{
+		return null;
+	}
 
-    public String printAllReviews() {
-        return "";
-    }
+	public String printAllReviews()
+	{
+		return "";
+	}
 
-    public String updateItemName(String itemID, String newName) {
-        int index = itemIndexExists(itemID);
-        if(index!=-1)
-        {
-            if(!newName.isBlank())
-            {
-                itemList.get(index).setItemName(newName);
-                return "Item " + itemID + " was updated successfully.";
-            }
-            else
-            {
-                return "Invalid data for item.";
-            }
-        }
-        return "Item " + itemID + " was not registered yet.";
-    }
+	public String updateItemName(String itemID, String newName)
+	{
+		return wrapper.updateItemName(itemID, newName);
+	}
 
-    public String updateItemPrice(String itemID, double newPrice) {
-        int index = itemIndexExists(itemID);
-        if(index!=-1)
-        {
-            if(newPrice>0.0)
-            {
-                itemList.get(index).setUnitPrice(newPrice);
-                return "Item " + itemID + " was updated successfully.";
-            }
-            else
-            {
-                return "Invalid data for item.";
-            }
-        }
-        return "Item " + itemID + " was not registered yet.";
-    }
+	public String updateItemPrice(String itemID, double newPrice)
+	{
+		return wrapper.updateItemPrice(itemID, newPrice);
+	}
 
-    public String printAllItems() {
-        StringBuilder output = new StringBuilder();
-        String s = System.lineSeparator();
-        output.append( "All registered items:");
-        output.append(s);
-        if(itemList.isEmpty()) {
-            return "No items registered yet.";
-        }
-        else{
-            for (Item item:itemList) {
-                output.append(item.printItem());
-                output.append(s);
-            }
-            return output.toString();
-        }
-    }
+	public String printAllItems()
+	{
+		return wrapper.printAllItems();
+	}
 
-    public String printMostProfitableItems() {
-        return "";
-    }
+	public String printMostProfitableItems()
+	{
+		return "";
+	}
 
-    public String createEmployee(String employeeID, String employeeName, double grossSalary) throws Exception {
-        return "";
-    }
+	public String createEmployee(String employeeID, String employeeName, double grossSalary) throws Exception
+	{
+		return "";
+	}
 
-    public String printEmployee(String employeeID) throws Exception {
-        return "";
-    }
+	public String printEmployee(String employeeID) throws Exception
+	{
+		return "";
+	}
 
-    public String createEmployee(String employeeID, String employeeName, double grossSalary, String degree) throws Exception {
-        return "";
-    }
+	public String createEmployee(String employeeID, String employeeName, double grossSalary, String degree) throws Exception
+	{
+		return "";
+	}
 
-    public String createEmployee(String employeeID, String employeeName, double grossSalary, int gpa) throws Exception {
-        return "";
-    }
+	public String createEmployee(String employeeID, String employeeName, double grossSalary, int gpa) throws Exception
+	{
+		return "";
+	}
 
-    public double getNetSalary(String employeeID) throws Exception {
-        return -1.0;
-    }
+	public double getNetSalary(String employeeID) throws Exception
+	{
+		return -1.0;
+	}
 
-    public String createEmployee(String employeeID, String employeeName, double grossSalary, String degree, String dept) throws Exception {
-        return "";
-    }
+	public String createEmployee(String employeeID, String employeeName, double grossSalary, String degree, String dept) throws Exception
+	{
+		return "";
+	}
 
-    public String removeEmployee(String empID) throws Exception {
-        return "";
-    }
+	public String removeEmployee(String empID) throws Exception
+	{
+		return "";
+	}
 
-    public String printAllEmployees() throws Exception {
-        return "";
-    }
+	public String printAllEmployees() throws Exception
+	{
+		return "";
+	}
 
-    public double getTotalNetSalary() throws Exception {
-        return -1.0;
-    }
+	public double getTotalNetSalary() throws Exception
+	{
+		return -1.0;
+	}
 
-    public String printSortedEmployees() throws Exception {
-        return "";
-    }
+	public String printSortedEmployees() throws Exception
+	{
+		return "";
+	}
 
-    public String updateEmployeeName(String empID, String newName) throws Exception {
-        return "";
-    }
+	public String updateEmployeeName(String empID, String newName) throws Exception
+	{
+		return "";
+	}
 
-    public String updateInternGPA(String empID, int newGPA) throws Exception {
-        return "";
-    }
+	public String updateInternGPA(String empID, int newGPA) throws Exception
+	{
+		return "";
+	}
 
-    public String updateManagerDegree(String empID, String newDegree) throws Exception {
-        return "";
-    }
+	public String updateManagerDegree(String empID, String newDegree) throws Exception
+	{
+		return "";
+	}
 
-    public String updateDirectorDept(String empID, String newDepartment) throws Exception {
-        return "";
-    }
+	public String updateDirectorDept(String empID, String newDepartment) throws Exception
+	{
+		return "";
+	}
 
-    public String updateGrossSalary(String empID, double newSalary) throws Exception {
-        return "";
-    }
+	public String updateGrossSalary(String empID, double newSalary) throws Exception
+	{
+		return "";
+	}
 
-    public Map<String, Integer> mapEachDegree() throws Exception {
-        return null;
-    }
+	public Map<String, Integer> mapEachDegree() throws Exception
+	{
+		return null;
+	}
 
-    public String promoteToManager(String empID, String degree) throws Exception {
-        return "";
+	public String promoteToManager(String empID, String degree) throws Exception
+	{
+		return "";
 
-    }
+	}
 
-    public String promoteToDirector(String empID, String degree, String department) throws Exception {
-        return "";
-    }
+	public String promoteToDirector(String empID, String degree, String department) throws Exception
+	{
+		return "";
+	}
 
-    public String promoteToIntern(String empID, int gpa) throws Exception {
-        return "";
-    }
+	public String promoteToIntern(String empID, int gpa) throws Exception
+	{
+		return "";
+	}
 }
