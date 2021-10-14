@@ -42,7 +42,7 @@ public class Facade {
         }
         return -1;
     }
-
+    //Taking item information to store with transaction
     public String getItemInfo(String itemID){
         String itemInfo = "";
         for (int i = 0; i < itemList.size(); i++){
@@ -107,7 +107,8 @@ public class Facade {
 
                 totalPrice = Calculate.getTotalAmount(amountThreshold,itemPrice);
                 totalPrice = totalPrice + Calculate.getTotalAmount(extraAmount, discountPrice);
-                totalPrice = Calculate.toTruncate(totalPrice);
+                totalPrice = Calculate.truncateDouble(totalPrice, 2);
+                //Register transaction and store ItemID and itemInfo with transaction
                 transactionManager.registerTransaction(itemID, amount, totalPrice, getItemInfo(itemID));
             }
         }
@@ -115,7 +116,7 @@ public class Facade {
     }
 
     public String reviewItem(String itemID, String reviewComment, int reviewGrade) {
-        int index = Calculate.itemIndexExists(itemList,itemID);
+        int index = itemIndexExists(itemList,itemID);
         if (index == -1){
             return "Item "+itemID+" was not registered yet.";
         }
@@ -134,7 +135,7 @@ public class Facade {
     }
 
     public String getItemCommentsPrinted(String itemID) {
-        int index = Calculate.itemIndexExists(itemList,itemID);
+        int index = itemIndexExists(itemList,itemID);
         if (index == -1){
             return "Item "+itemID+" was not registered yet.";
         }

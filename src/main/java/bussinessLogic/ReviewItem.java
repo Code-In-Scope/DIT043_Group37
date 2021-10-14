@@ -1,4 +1,4 @@
-package menu;
+package bussinessLogic;
 
 import util.Calculate;
 

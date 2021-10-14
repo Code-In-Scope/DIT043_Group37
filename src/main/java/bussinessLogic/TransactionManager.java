@@ -30,7 +30,7 @@ public class TransactionManager {
         }
         return totalTransaction;
     }
-
+    //Concatenate printing information such as printing message, item info and all transactions for that item
     public String printItemTransaction(String itemID){
         String s = System.lineSeparator();
         String printTransaction = "Transactions for item: ";
@@ -41,7 +41,7 @@ public class TransactionManager {
 
         return printTransaction;
     }
-
+    //Taking index of transaction in transaction list to grab item info
     public int getIndexOfTransaction(String itemID){
         int index = 0;
         for (int i = 0; i < transactionList.size(); i++){
@@ -52,7 +52,7 @@ public class TransactionManager {
         }
         return index;
     }
-
+    //Collecting all transactions for specific item
     public String collectItemTransactions(String itemID){
         String itemTransactions = "";
         String s = System.lineSeparator();
