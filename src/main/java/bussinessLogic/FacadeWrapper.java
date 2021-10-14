@@ -111,7 +111,7 @@ public class FacadeWrapper
 				buyResult = buyResult + Calculate.getTotalAmount(extraAmount, discountPrice);
 			}
 		}
-		return Calculate.toTruncate(buyResult);
+		return Calculate.truncateDouble(buyResult,2);
 	}
 
 	public String reviewItem(String itemID, String reviewComment, int reviewGrade)
@@ -203,54 +203,5 @@ public class FacadeWrapper
 			return output.toString();
 		}
 	}
-	
-	public double getTotalProfit() {
-        double totalProfit = transactionManager.getTotalProfit();
-        return totalProfit;
-    }
-
-    public int numberOfItemTransactions(String itemID){
-        int transactions = transactionManager.totalNumberOfTransaction(itemID);
-        return transactions;
-    }
-
-    public String printItemTransactions(String itemID) {
-        String transactions ="";
-        if (!containsItem(itemID)){
-            transactions = "Item " + itemID + " was not registered yet.";
-        }
-        transactions = transactionManager.printItemTransaction(itemID);
-        return transactions;
-    }
-
-    public int getTotalUnitsSold() {
-        int soldItems = transactionManager.getTotalSoldItems();
-        return soldItems;
-    }
-
-    public int getTotalTransactions() {
-        int totalTransaction = transactionManager.getTotalTransactions();
-        return totalTransaction;
-    }
-
-    public double getProfit(String itemID) {
-        double profit = 0.0;
-        if (!containsItem(itemID)){
-            profit = 0;
-        }else {
-            profit = transactionManager.getTotalProfitOfItem(itemID);
-        }
-        return profit;
-    }
-
-    public int getUnitsSolds(String itemID) {
-        int soldUnits = transactionManager.getTotalSoldUnits(itemID);
-        return soldUnits;
-    }
-
-    public String printAllTransactions() {
-        String allTransactions = transactionManager.printAllTransactions();
-        return allTransactions;
-    }
 }
 

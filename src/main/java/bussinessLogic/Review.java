@@ -1,10 +1,5 @@
 package bussinessLogic;
 
-import util.Calculate;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class Review {
 
     private String comment;
