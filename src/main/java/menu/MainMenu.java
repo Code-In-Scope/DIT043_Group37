@@ -1,6 +1,6 @@
 package menu;
 
-import util.UserInput;
+import utility.UserInput;
 
 public class MainMenu {
     private static String s = System.lineSeparator();
@@ -10,7 +10,8 @@ public class MainMenu {
                 "0. Close system. " + s +
                 "1. Open Item options." + s +
                 "2. Open Review options." + s +
-                "3. Open Transaction History option" +s + s);
+                "3. Open Transaction History option" +s +
+                "4. Open Employee options" + s);
     }
 
     public static void getMainMenuOption(){
@@ -30,6 +31,9 @@ public class MainMenu {
                     break;
                 case 3:
                     TransactionMenu.getTransactionOption();
+                    break;
+                case 4:
+                    EmployeeMenu.getEmployeeMenuOption();
                     break;
                 default:
                     System.out.println("Invalid menu option. Please type another option.");

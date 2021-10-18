@@ -1,6 +1,6 @@
 package bussinessLogic;
 
-import menu.Calculate;
+import utility.Calculate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 public class FacadeWrapper
 {
 	private ArrayList<Item> itemList;
-	private TransactionManager transactionManager;
+	private final TransactionManager transactionManager;
 
 	public FacadeWrapper()
 	{

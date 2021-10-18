@@ -1,7 +1,7 @@
 package menu;
 
 import facade.Facade;
-import util.UserInput;
+import utility.UserInput;
 
 public class ReviewMenu {
     private static final String s = System.lineSeparator();

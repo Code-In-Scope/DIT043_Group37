@@ -43,4 +43,8 @@ public class Transaction {
         sumPurchase += totalPrice;
         return sumPurchase;
     }
+
+    public boolean checkItemID(String itemID){
+        return this.itemID.equals(itemID);
+    }
 }

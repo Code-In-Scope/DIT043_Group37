@@ -1,4 +1,4 @@
-package util;
+package utility;
 
 public class Calculate{
     public static double getDiscount(double unitPrice, double discountRate){

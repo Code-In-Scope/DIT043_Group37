@@ -1,7 +1,7 @@
 package menu;
 
 import facade.Facade;
-import util.UserInput;
+import utility.UserInput;
 
 public class TransactionMenu {
     private static final String s = System.lineSeparator();
@@ -51,6 +51,8 @@ public class TransactionMenu {
                     break;
                 case 7:
                     printItemTransaction();
+                    break;
+                case 8:
                     break;
                 default:
                     System.out.println("Invalid menu option. Please type another option.");

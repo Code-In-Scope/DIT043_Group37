@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class TransactionManager {
 
-    private final ArrayList<Transaction> transactionList;
+    private ArrayList<Transaction> transactionList;
     private int totalSoldItems;
     private int totalTransactions;
     private double totalProfit;
@@ -14,7 +14,7 @@ public class TransactionManager {
         transactionList = new ArrayList<>();
         totalSoldItems = 0;
         totalTransactions = 0;
-        totalProfit = 0;
+        totalProfit = 0.0;
     }
 
     public int getTotalTransactions(){
@@ -33,8 +33,16 @@ public class TransactionManager {
         Transaction newTransaction = new Transaction(itemID, amountOfItem, totalPrice, itemInfo);
         transactionList.add(newTransaction);
         totalTransactions++;
-        totalSoldItems += amountOfItem;
-        totalProfit += totalPrice;
+        addSoldItems(amountOfItem);
+        addProfit(totalPrice);
+    }
+
+    public void addProfit(double price){
+        this.totalProfit = this.totalProfit + price;
+    }
+
+    public void addSoldItems(int purchasedAmount){
+        this.totalSoldItems = this.totalSoldItems + purchasedAmount;
     }
 
     //Total transaction of specific item
@@ -42,7 +50,7 @@ public class TransactionManager {
         int itemTransactions = 0;
         for (int i = 0; i < transactionList.size(); i++){
             Transaction currentTransaction = transactionList.get(i);
-            if (currentTransaction.getItemID().equals(itemID)){
+            if (currentTransaction.checkItemID(itemID)){
                 itemTransactions++;
             }
         }
@@ -53,7 +61,7 @@ public class TransactionManager {
         int itemSold = 0;
         for (int i = 0; i < transactionList.size(); i++ ){
             Transaction currentTransaction = transactionList.get(i);
-            if (currentTransaction.getItemID().equals(itemID)){
+            if (currentTransaction.checkItemID(itemID)){
                 itemSold += currentTransaction.getAmountOfItem();
             }
         }
@@ -64,7 +72,7 @@ public class TransactionManager {
         double itemProfit = 0.0;
         for (int i = 0; i < transactionList.size(); i++){
             Transaction currentTransaction = transactionList.get(i);
-            if (currentTransaction.getItemID().equals(itemID)){
+            if (currentTransaction.checkItemID(itemID)){
                 itemProfit += currentTransaction.getTotalPrice();
             }
         }
@@ -90,7 +98,7 @@ public class TransactionManager {
         int index = 0;
         for (int i = 0; i < transactionList.size(); i++){
             Transaction currentTransaction = transactionList.get(i);
-            if (currentTransaction.getItemID() == itemID){
+            if (currentTransaction.checkItemID(itemID)){
                 index = i;
             }
         }
@@ -102,9 +110,8 @@ public class TransactionManager {
         String s = System.lineSeparator();
         for (int i = 0; i < transactionList.size(); i++ ){
             Transaction currentTransaction = transactionList.get(i);
-            if (currentTransaction.getItemID().equals(itemID) ){
+            if (currentTransaction.checkItemID(itemID) ){
                 itemTransactions = itemTransactions + currentTransaction + s;
-                System.out.println( itemTransactions.toString());
             }
         }
         return itemTransactions;
@@ -124,7 +131,7 @@ public class TransactionManager {
         String printTransactions = "All purchases made:" + s +
                 "Total profit: " + totalProfit + " SEK" + s +
                 "Total items sold: " + totalSoldItems + " units" + s +
-                "Total purchases made: " + totalTransactions + "transactions" + s +
+                "Total purchases made: " + totalTransactions + " transactions" + s +
                 "------------------------------------";
         if (!getAllTransactions().isEmpty()){
             printTransactions += getAllTransactions();

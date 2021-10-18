@@ -1,6 +1,6 @@
 package menu;
 import facade.Facade;
-import util.UserInput;
+import utility.UserInput;
 
 public class ItemMenu {
     private static final String s = System.lineSeparator();
