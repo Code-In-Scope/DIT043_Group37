@@ -1,6 +1,6 @@
 package bussinessLogic;
 
-import util.Calculate;
+import menu.Calculate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public class FacadeWrapper
 	{
 		for (int i = 0; i < this.itemList.size(); i++)
 		{
-			if (this.itemList.get(i).getItemID().equals(itemID))
+			if (this.itemList.get(i).checkItemID(itemID))
 			{
 				return i;
 			}

@@ -5,7 +5,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import util.Calculate;
+import menu.Calculate;
 
 public class Item {
     private final String itemID;
@@ -50,6 +50,10 @@ public class Item {
             return "Invalid data for item.";
         }
 
+    }
+
+    public boolean checkItemID(String itemID){
+        return this.itemID.equals(itemID);
     }
 
     public String addReviewComment(int grade, String comment) {
