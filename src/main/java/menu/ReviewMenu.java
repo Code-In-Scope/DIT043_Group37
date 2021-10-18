@@ -102,7 +102,4 @@ public class ReviewMenu {
         String reviews = facade.getPrintedReviews(itemID);
         System.out.println(reviews);
     }
-
-
-
 }
