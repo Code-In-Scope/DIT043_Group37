@@ -132,4 +132,15 @@ public class TransactionManager {
         return printTransactions;
     }
 
+    public String getMostProfitableItem(){
+        double mostProfitableItem;
+        for (int i = 0; i < transactionList.size(); i++){
+            Transaction currentTransaction = transactionList.get(i);
+            if (currentTransaction.getSumPurchase() < transactionList.get(i+1).getSumPurchase()){
+
+            }
+        }
+        return"";
+    }
+
 }
