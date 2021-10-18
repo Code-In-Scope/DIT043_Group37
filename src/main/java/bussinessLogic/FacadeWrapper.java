@@ -8,10 +8,12 @@ import java.util.List;
 public class FacadeWrapper
 {
 	private ArrayList<Item> itemList;
+	private TransactionManager transactionManager;
 
 	public FacadeWrapper()
 	{
 		itemList = new ArrayList<>();
+		transactionManager = new TransactionManager();
 	}
 
 	public int itemIndexExists(String itemID)
@@ -105,13 +107,22 @@ public class FacadeWrapper
 				int normalAmount = 4;
 				int extraAmount = amount - normalAmount;
 				double discountRate = 0.7;
+				int decimalPlace = 2;
 				double discountPrice = Calculate.getDiscount(itemPrice, discountRate);
 
 				buyResult = Calculate.getTotalAmount(normalAmount, itemPrice);
 				buyResult = buyResult + Calculate.getTotalAmount(extraAmount, discountPrice);
+				buyResult = Calculate.truncateDouble(buyResult, decimalPlace);
+				transactionManager.registerTransaction(itemID, amount, buyResult, getItemInfo(itemID));
 			}
 		}
-		return Calculate.truncateDouble(buyResult,2);
+		return buyResult;
+	}
+
+	public String getItemInfo(String itemId){
+		int index = itemIndexExists(itemId);
+		String itemInfo = itemList.get(index).toString();
+		return itemInfo;
 	}
 
 	public String reviewItem(String itemID, String reviewComment, int reviewGrade)

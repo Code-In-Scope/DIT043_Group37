@@ -32,10 +32,10 @@ public class ReviewMenu {
 
             switch (userOption){
                 case 0:
-                    //Exit
+                    MainMenu.getMainMenuOption();
                     break;
                 case 1:
-                    reviewItem();
+                    //reviewItem();
                     break;
                 case 2:
                     specificReview();
@@ -46,7 +46,7 @@ public class ReviewMenu {
                     meanGrade();
                     break;
                 case 5:
-                    printItemsComments();
+                    //printItemsComments();
                     break;
                 case 6:
                     printReviews();

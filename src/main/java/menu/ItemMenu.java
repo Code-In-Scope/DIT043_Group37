@@ -28,7 +28,7 @@ public class ItemMenu {
 
             switch (userOption){
                 case 0:
-                    //Exit
+                    MainMenu.getMainMenuOption();
                     break;
                 case 1:
                     createNewItem();
@@ -37,7 +37,7 @@ public class ItemMenu {
                     removeItem();
                     break;
                 case 3:
-                    facade.printAllItems();
+                    printAllItem();
                     break;
                 case 4:
                     buyItem();
@@ -49,7 +49,7 @@ public class ItemMenu {
                     updateItemPrice();
                     break;
                 case 7:
-                    printAllItem();
+                    printItem();
                     break;
                 default:
                     System.out.println("Invalid menu option. Please type another option.");
