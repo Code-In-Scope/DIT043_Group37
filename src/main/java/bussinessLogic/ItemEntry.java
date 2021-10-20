@@ -7,17 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-class SortByLeastReviews implements Comparator<Item> {
-  // Used for sorting in ascending order of
-  // name
-  public int compare(Item a, Item b) {
-    return a.getNumberOfReviews() - b.getNumberOfReviews();
-  }
-}
-
 class SortByMostReviews implements Comparator<Item> {
-  // Used for sorting in ascending order of
-  // name
   public int compare(Item a, Item b) {
     return b.getNumberOfReviews() - a.getNumberOfReviews();
   }
@@ -214,6 +204,51 @@ public class ItemEntry {
       return itemList.get(index).printReview(reviewIndex);
     }
 
+    public List<Item> getLeastReviewedItems(){
+        List<Item> leastReviewedList = new ArrayList<>();
+
+
+        int numberOfReviews;
+        if (atLeastOneItemReviewed() && !itemList.isEmpty())
+        {
+            // create a copy of the item references
+            leastReviewedList.addAll(itemList);
+            // remove the items which are not reviewed at least once
+            leastReviewedList.removeIf(item -> (item.getNumberOfReviews() == -1 ));
+            // sort the items based on least reviews
+            leastReviewedList.sort(new SortByMostReviews().reversed());
+            // take the lowest review
+            numberOfReviews = leastReviewedList.get(0).getNumberOfReviews();
+            // remove the reviews which are higher than the lowest review
+            leastReviewedList.removeIf(item -> (item.getNumberOfReviews() > numberOfReviews ));
+        }
+
+        return leastReviewedList;
+    }
+
+    public List<Item> getMostReviewedItems(){
+        List<Item> mostReviewedList = new ArrayList<>();
+
+
+        int numberOfReviews;
+        if (atLeastOneItemReviewed() && !itemList.isEmpty())
+        {
+            // create a copy of the item references
+            mostReviewedList.addAll(itemList);
+            // remove the items which are not reviewed at least once
+            mostReviewedList.removeIf(item -> (item.getNumberOfReviews() == -1 ));
+            // sort the items based on most reviews
+            mostReviewedList.sort(new SortByMostReviews());
+            // take the lowest review
+            numberOfReviews = mostReviewedList.get(0).getNumberOfReviews();
+            // remove the reviews which are lower than the highest review
+            mostReviewedList.removeIf(item -> (item.getNumberOfReviews() < numberOfReviews ));
+        }
+
+        return mostReviewedList;
+    }
+
+
     public String printLeastReviewedItem() {
       StringBuilder stringGenerator = new StringBuilder();
       String output;
@@ -222,29 +257,18 @@ public class ItemEntry {
       if (itemList.isEmpty()) {
         output = "No items registered yet.";
       } else if (atLeastOneItemReviewed()) {
-        Collections.sort(itemList, new SortByMostReviews().reversed());
-        int i;
-        for (i = 0; i < itemList.size(); i++) {
-          if (itemList.get(i).getNumberOfReviews() == -1) {
-            continue;
+          List<Item> leastReviewedList = getLeastReviewedItems();
+          numberOfReviews = leastReviewedList.get(0).getNumberOfReviews();
+          stringGenerator.append("Least reviews: " + numberOfReviews + " review(s) each." + s);
+          for (Item item:leastReviewedList)
+          {
+              stringGenerator.append(item + s);
           }
-          break;
-
+          output = stringGenerator.toString();
         }
-        numberOfReviews = itemList.get(i).getNumberOfReviews();
-        stringGenerator.append("Least reviews: " + numberOfReviews + " review(s) each." + s);
-        for (int j = i; j < itemList.size(); j++) {
-          if (itemList.get(j).getNumberOfReviews() != numberOfReviews) {
-            break;
-          }
-          stringGenerator.append(itemList.get(j) + s);
-        }
-        output = stringGenerator.toString();
-
-      } else {
+      else {
         output = "No items were reviewed yet.";
       }
-
       return output;
     }
 
@@ -256,14 +280,10 @@ public class ItemEntry {
       if (itemList.isEmpty()) {
         output = "No items registered yet.";
       } else if (atLeastOneItemReviewed()) {
-
-        Collections.sort(itemList, new SortByMostReviews());
-        numberOfReviews = itemList.get(0).getNumberOfReviews();
+          List<Item> mostReviewedList = getMostReviewedItems();
+        numberOfReviews = mostReviewedList.get(0).getNumberOfReviews();
         stringGenerator.append("Most reviews: " + numberOfReviews + " review(s) each." + s);
-        for (Item item : itemList) {
-          if (item.getNumberOfReviews() != numberOfReviews) {
-            break;
-          }
+        for (Item item : mostReviewedList) {
           stringGenerator.append(item + s);
         }
         output = stringGenerator.toString();
