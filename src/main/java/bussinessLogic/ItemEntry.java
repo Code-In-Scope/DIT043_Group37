@@ -235,6 +235,8 @@ public class ItemEntry {
         {
             // create a copy of the item references
             mostReviewedList.addAll(itemList);
+            // remove the items which are not reviewed at least once
+            mostReviewedList.removeIf(item -> (item.getNumberOfReviews() == -1 ));
             // sort the items based on most reviews
             mostReviewedList.sort(new SortByMostReviews());
             // take the lowest review
