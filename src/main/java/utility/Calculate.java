@@ -10,9 +10,8 @@ public class Calculate{
     }
 
     public static double truncateDouble(double number, int decimalPlace){
-        number = number * Math.pow(10, decimalPlace);
-        number = Math.floor(number);
-        number = number / Math.pow(10, decimalPlace);
-        return number;
+        int truncateNum = (int)(number * Math.pow(10, decimalPlace));
+        double truncatedNumber = (double)(truncateNum / Math.pow(10, decimalPlace));
+        return truncatedNumber;
     }
 }
