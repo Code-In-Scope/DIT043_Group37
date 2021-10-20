@@ -2,7 +2,26 @@ package bussinessLogic;
 
 import utility.Calculate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+
+class SortByTotalProfit implements Comparator<ItemRegister>{
+   public int compare(ItemRegister a, ItemRegister b)
+   {
+       if(b.getTotalProfit() > a.getTotalProfit())
+       {
+           return 1;
+       }
+       else if(b.getTotalProfit()< a.getTotalProfit())
+       {
+           return -1;
+       }
+       else
+       {
+           return 0;
+       }
+   }
+}
 
 public class TransactionManager {
 
@@ -164,15 +183,29 @@ public class TransactionManager {
     }
     //INCOMPLETE METHOD_______________________
     public String getMostProfitableItem(){
-        String profitableItems = "";
-        double mostProfitableItem;
-        mostProfitableItem = registerItemList.get(0).getTotalProfit();
-        for (int i = 1; i < registerItemList.size(); i++){
-            double nextItemProfit = registerItemList.get(i).getTotalProfit();
+        StringBuilder stringBuilder = new StringBuilder();
+        String s = System.lineSeparator();
+        stringBuilder.append("Most profitable items: "+ s);
+        List<ItemRegister> mostProfitableRegisteredItems =new ArrayList<>();
+        if(!registerItemList.isEmpty())
+        {
+            mostProfitableRegisteredItems.addAll(registerItemList);
+            mostProfitableRegisteredItems.sort(new SortByTotalProfit());
+            double highestProfit = mostProfitableRegisteredItems.get(0).getTotalProfit();
+            stringBuilder.append("Total profit: "+ highestProfit + " SEK");
+            for (ItemRegister item: mostProfitableRegisteredItems)
+            {
+                if(item.getTotalProfit() < highestProfit)
+                {
+                    break;
+                }
+                // add the output string here
+
+            }
+            return stringBuilder.toString();
+
         }
-
-
-        return"";
+        return "";
     }
 
 }

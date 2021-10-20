@@ -11,7 +11,6 @@ public class Item {
   private final String itemID;
   private String itemName;
   private double unitPrice;
-  private String itemNotReviewed;
   private ArrayList<Review> reviewList;
   private DecimalFormat decimalFormat;
 
@@ -20,7 +19,6 @@ public class Item {
     this.itemID = itemID;
     this.itemName = itemName;
     this.unitPrice = unitPrice;
-    this.itemNotReviewed = "Item " + this.itemName + " has not been reviewed yet.";
     this.decimalFormat = new DecimalFormat(".00");
     decimalFormat.setRoundingMode(RoundingMode.DOWN);
   }
@@ -64,13 +62,13 @@ public class Item {
       reviewList.add(new Review(grade, comment));
       return "Your item review was registered successfully.";
     } else {
-      return "Grade values must be between 1 and 5";
+      return "Grade values must be between 1 and 5.";
     }
   }
 
   public String printReview(int reviewIndex) {
     if (reviewList.isEmpty()) {
-      return itemNotReviewed;
+      return "Item " + this.itemName + " has not been reviewed yet.";
     } else if (reviewIndex > 0 && reviewIndex <= reviewList.size()) {
       return reviewList.get(reviewIndex - 1).toString();
     } else {
@@ -86,56 +84,58 @@ public class Item {
     if (isItemReviewed()) {
       return reviewList.size();
     } else {
-      return -1;
+      return 0;
     }
   }
 
   public String printAllReview() {
     StringBuilder result = new StringBuilder();
+    String newLine = System.lineSeparator();
     result.append("Review(s) for " + this.itemID + ": " + this.itemName + ". " + decimalFormat.format(this.unitPrice)
-        + " SEK" + "\n");
+        + " SEK" + newLine);
     if (reviewList.isEmpty()) {
-      result.append(itemNotReviewed);
+      result.append("The item " + this.itemName + " has not been reviewed yet.");
 
     } else {
       for (int i = 0; i < reviewList.size(); i++) {
         result.append(reviewList.get(i));
-        result.append("\n");
+        result.append(newLine);
       }
     }
     return result.toString();
   }
 
   public double meanGrade() {
-    if (reviewList.isEmpty()) {
-      return -1.0;
-
-    } else {
-      double temp = 0;
-
-      for (Review review : reviewList) {
+    if(!reviewList.isEmpty())
+    {
+      double temp = 0.0;
+      for (Review review : reviewList)
+      {
         temp += review.getGrade();
       }
-
       double mean = temp / reviewList.size();
       mean = Calculate.truncateDouble(mean, 1);
       return mean;
     }
+    else
+    {
+      return 0.0;
+    }
   }
 
   public List<String> retrieveComment() {
-    if (reviewList.isEmpty()) {
-      return null;
-    } else {
-      List<String> writtenComments = new ArrayList<>();
-
-      for (Review review : reviewList) {
-        if (review.getComment() != "") {
+    List<String> writtenComments = new ArrayList<>();
+    if (!reviewList.isEmpty())
+    {
+      for (Review review : reviewList)
+      {
+        if (review.hasComment())
+        {
           writtenComments.add(review.getComment());
         }
       }
-      return writtenComments;
     }
+    return writtenComments;
   }
 
   public boolean equals(Object anotherObject) {

@@ -3,7 +3,6 @@ package bussinessLogic;
 import utility.Calculate;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -11,6 +10,23 @@ class SortByMostReviews implements Comparator<Item> {
   public int compare(Item a, Item b) {
     return b.getNumberOfReviews() - a.getNumberOfReviews();
   }
+}
+
+class SortByMostGrades implements Comparator<Item> {
+    public int compare(Item a, Item b) {
+        if(b.meanGrade() > a.meanGrade())
+        {
+            return 1;
+        }
+        else if(b.meanGrade()< a.meanGrade())
+        {
+            return -1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
 }
 
 public class ItemEntry {
@@ -23,7 +39,7 @@ public class ItemEntry {
       itemList = new ArrayList<>();
       transactionManager = new TransactionManager();
       this.s = System.lineSeparator();
-      this.line = s + "------------------------------------" + s;
+      this.line ="------------------------------------" + s;
     }
 
     public int itemIndexExists(String itemID) {
@@ -120,6 +136,11 @@ public class ItemEntry {
 
 	public String getItemInfo(String itemId){
 		int index = itemIndexExists(itemId);
+        if (index == -1)
+        {
+            return "";
+        }
+
 		String itemInfo = itemList.get(index).toString();
 		return itemInfo;
 	}
@@ -127,7 +148,7 @@ public class ItemEntry {
     public String reviewItem(String itemID, String reviewComment, int reviewGrade) {
       int index = itemIndexExists(itemID);
       if (index == -1) {
-        return "Item " + itemID + " was not registered yet.";
+        return "Item " + itemID + " not found.";
       } else {
         return itemList.get(index).addReviewComment(reviewGrade, reviewComment);
       }
@@ -154,7 +175,7 @@ public class ItemEntry {
     public double getItemMeanGrade(String itemID) {
       int index = itemIndexExists(itemID);
       if (index == -1) {
-        return -1.0;
+        return 0.0;
       } else {
         return itemList.get(index).meanGrade();
       }
@@ -194,14 +215,19 @@ public class ItemEntry {
 
     public String printSpecificItemReview(String itemID) {
       int index = itemIndexExists(itemID);
-
-      return itemList.get(index).printAllReview();
+        if (index != -1) {
+            return itemList.get(index).printAllReview();
+        }
+        return "Item " + itemID + " was not registered yet.";
     }
 
     public String printSpecificReview(String itemID, int reviewIndex) {
       int index = itemIndexExists(itemID);
-
-      return itemList.get(index).printReview(reviewIndex);
+        if (index != -1)
+        {
+            return itemList.get(index).printReview(reviewIndex);
+        }
+        return "Item " + itemID + " was not registered yet.";
     }
 
     public List<Item> getLeastReviewedItems(){
@@ -214,7 +240,7 @@ public class ItemEntry {
             // create a copy of the item references
             leastReviewedList.addAll(itemList);
             // remove the items which are not reviewed at least once
-            leastReviewedList.removeIf(item -> (item.getNumberOfReviews() == -1 ));
+            leastReviewedList.removeIf(item -> (item.getNumberOfReviews() == 0 ));
             // sort the items based on least reviews
             leastReviewedList.sort(new SortByMostReviews().reversed());
             // take the lowest review
@@ -224,6 +250,48 @@ public class ItemEntry {
         }
 
         return leastReviewedList;
+    }
+
+    public List<Item> getBestReviewedItems(){
+        List<Item> bestReviewedList = new ArrayList<>();
+
+
+        double meanGrade;
+        if (atLeastOneItemReviewed() && !itemList.isEmpty())
+        {
+            // create a copy of the item references
+            bestReviewedList.addAll(itemList);
+            // remove the items which are not reviewed at least once
+            bestReviewedList.removeIf(item -> (item.meanGrade() == 0.0 ));
+            // sort the items based on Most graded
+            bestReviewedList.sort(new SortByMostGrades());
+            // take the lowest review
+            meanGrade = bestReviewedList.get(0).meanGrade();
+            // remove the reviews which are lower than the best mean grade
+            bestReviewedList.removeIf(item -> (item.meanGrade() < meanGrade ));
+        }
+
+        return bestReviewedList;
+    }
+
+    public List<Item> getWorstReviewedItems(){
+        List<Item> worstReviewedList = new ArrayList<>();
+        double meanGrade;
+        if (atLeastOneItemReviewed() && !itemList.isEmpty())
+        {
+            // create a copy of the item references
+            worstReviewedList.addAll(itemList);
+            // remove the items which are not reviewed at least once
+            worstReviewedList.removeIf(item -> (item.meanGrade() == 0.0 ));
+            // sort the items based on worst graded
+            worstReviewedList.sort(new SortByMostGrades().reversed());
+            // take the lowest review
+            meanGrade = worstReviewedList.get(0).meanGrade();
+            // remove the reviews which are higher than the worst mean grade
+            worstReviewedList.removeIf(item -> (item.meanGrade() > meanGrade ));
+        }
+
+        return worstReviewedList;
     }
 
     public List<Item> getMostReviewedItems(){
@@ -236,7 +304,7 @@ public class ItemEntry {
             // create a copy of the item references
             mostReviewedList.addAll(itemList);
             // remove the items which are not reviewed at least once
-            mostReviewedList.removeIf(item -> (item.getNumberOfReviews() == -1 ));
+            mostReviewedList.removeIf(item -> (item.getNumberOfReviews() == 0 ));
             // sort the items based on most reviews
             mostReviewedList.sort(new SortByMostReviews());
             // take the lowest review
@@ -246,6 +314,52 @@ public class ItemEntry {
         }
 
         return mostReviewedList;
+    }
+
+    public String printWorstReviewedItem() {
+        StringBuilder stringGenerator = new StringBuilder();
+        String output;
+        double meanGrade;
+
+        if (itemList.isEmpty()) {
+            output = "No items registered yet.";
+        } else if (atLeastOneItemReviewed()) {
+            List<Item> worstReviewedItemList = getWorstReviewedItems();
+            meanGrade = worstReviewedItemList.get(0).meanGrade();
+            stringGenerator.append("Items with worst mean reviews:" + s + "Grade: "+ meanGrade + s);
+            for (Item item:worstReviewedItemList)
+            {
+                stringGenerator.append(item + s);
+            }
+            output = stringGenerator.toString();
+        }
+        else {
+            output = "No items were reviewed yet.";
+        }
+        return output;
+    }
+
+    public String printBestReviewedItems() {
+        StringBuilder stringGenerator = new StringBuilder();
+        String output;
+        double meanGrade;
+
+        if (itemList.isEmpty()) {
+            output = "No items registered yet.";
+        } else if (atLeastOneItemReviewed()) {
+            List<Item> bestReviewedItemList = getBestReviewedItems();
+            meanGrade = bestReviewedItemList.get(0).meanGrade();
+            stringGenerator.append("Items with best mean reviews:" + s + "Grade: "+ meanGrade + s);
+            for (Item item:bestReviewedItemList)
+            {
+                stringGenerator.append(item + s);
+            }
+            output = stringGenerator.toString();
+        }
+        else {
+            output = "No items were reviewed yet.";
+        }
+        return output;
     }
 
 
@@ -297,7 +411,7 @@ public class ItemEntry {
 
     public String printAllReviews() {
       StringBuilder stringGenerator = new StringBuilder();
-      stringGenerator.append("All registered reviews:");
+      stringGenerator.append("All registered reviews:"+ s);
       stringGenerator.append(line);
       String output;
       if (itemList.isEmpty()) {

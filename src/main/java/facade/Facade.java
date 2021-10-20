@@ -4,6 +4,7 @@ import bussinessLogic.ItemEntry;
 import java.util.List;
 import java.util.Map;
 import bussinessLogic.TransactionManager;
+import utility.Utilities;
 
 public class Facade {
 
@@ -49,7 +50,7 @@ public class Facade {
 
 	public String reviewItem(String itemID, int reviewGrade)
 	{
-		return reviewItem(itemID, null, reviewGrade);
+		return reviewItem(itemID, "", reviewGrade);
 	}
 
 	public String getItemCommentsPrinted(String itemID)
@@ -83,14 +84,14 @@ public class Facade {
     return itemEntry.printMostReviewedItems();
   }
 
-	public List<String> getMostReviewedItems()
+  public List<String> getMostReviewedItems()
 	{
-		return itemEntry.getMostReviewedItems();
+		return  Utilities.retrieveItemIDs(itemEntry.getMostReviewedItems());
 	}
 
 	public List<String> getLeastReviewedItems()
 	{
-		return null;
+		return  Utilities.retrieveItemIDs(itemEntry.getLeastReviewedItems());
 	}
 
   public String printLeastReviewedItems() {
@@ -148,19 +149,19 @@ public class Facade {
     }
 
     public String printWorseReviewedItems() {
-        return "";
+        return itemEntry.printWorstReviewedItem();
     }
 
     public String printBestReviewedItems() {
-        return "";
+        return itemEntry.printBestReviewedItems();
     }
 
     public List<String> getWorseReviewedItems() {
-        return null;
+	    return Utilities.retrieveItemIDs(itemEntry.getWorstReviewedItems());
     }
 
     public List<String> getBestReviewedItems() {
-        return null;
+        return Utilities.retrieveItemIDs(itemEntry.getBestReviewedItems());
     }
 
   public String printAllReviews() {
