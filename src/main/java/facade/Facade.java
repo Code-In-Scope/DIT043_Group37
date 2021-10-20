@@ -85,7 +85,7 @@ public class Facade {
 
 	public List<String> getMostReviewedItems()
 	{
-		return null;
+		return itemEntry.getMostReviewedItems();
 	}
 
 	public List<String> getLeastReviewedItems()
