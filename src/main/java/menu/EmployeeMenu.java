@@ -1,9 +1,11 @@
 package menu;
 
+import facade.Facade;
 import utility.UserInput;
 
 public class EmployeeMenu {
     private static String s = System.lineSeparator();
+    private static final Facade facade = new Facade();
 
     public static void displayMenu(){
         System.out.println("Employee options menu: " + s +
@@ -16,7 +18,7 @@ public class EmployeeMenu {
                 "6. Print specific employee." + s +
                 "7. Print all registered employees." + s +
                 "8. Print the total expense with net salary." + s +
-                "9. Print all employees sorted by gross salary." + s);
+                "9. Print all employees sorted by gross salary." + s + s);
     }
 
     public static void getEmployeeMenuOption(){
@@ -52,4 +54,13 @@ public class EmployeeMenu {
             }
         }while (userOption != 0);
     }
+
+    public static void addRegularEmployee(){
+        String employeeId = UserInput.getInputString("Enter employee's ID: ");
+        String employeeName = UserInput.getInputString("Enter employee's name: ");
+        double grossSalary = UserInput.getInputInt("Enter employee's gross salary: ");
+        //String message = facade.createEmployee(employeeId, employeeName, grossSalary);
+    }
+
+
 }

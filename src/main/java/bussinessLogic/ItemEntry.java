@@ -128,10 +128,10 @@ public class ItemEntry {
 
 				buyResult = Calculate.getTotalAmount(normalAmount, itemPrice);
 				buyResult = buyResult + Calculate.getTotalAmount(extraAmount, discountPrice);
-				buyResult = Calculate.truncateDouble(buyResult, decimalPlace);
 			}
 		}
-		return buyResult;
+        buyResult = Calculate.truncateDouble(buyResult, decimalPlace);
+        return buyResult;
 	}
 
 	public String getItemInfo(String itemId){

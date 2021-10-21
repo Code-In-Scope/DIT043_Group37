@@ -11,7 +11,7 @@ public class MainMenu {
                 "1. Open Item options." + s +
                 "2. Open Review options." + s +
                 "3. Open Transaction History option" +s +
-                "4. Open Employee options" + s);
+                "4. Open Employee options" + s + s);
     }
 
     public static void getMainMenuOption(){

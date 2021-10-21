@@ -12,12 +12,12 @@ public class Calculate{
 
     public static double truncateDouble(double number, int decimalPlace){
         int truncateNum = (int)(number * Math.pow(10, decimalPlace));
-        double truncatedNumber = (double)(truncateNum / Math.pow(10, decimalPlace));
+        double truncatedNumber = (double) truncateNum / Math.pow(10, decimalPlace);
         return truncatedNumber;
     }
 
     public static double deductTax(double salary, double tax){
-        double deduction = (salary * 0.1);
+        double deduction = (salary * tax );
         return deduction;
     }
 }

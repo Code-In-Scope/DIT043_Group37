@@ -57,22 +57,8 @@ public class TransactionManager {
         totalTransactions++;
         addSoldItems(amountOfItem);
         addProfit(totalPrice);
-        updateItemRegister(itemID,amountOfItem,totalPrice,itemInfo);
     }
 
-    public void updateItemRegister(String itemID, int amount, double price, String itemInfo){
-        if (!registerItemList.contains(itemID)){
-            registerItemList.add(new ItemRegister(itemID, amount, price, itemInfo));
-        }else {
-            for (ItemRegister currentEntry : registerItemList){
-                if (currentEntry.equals(itemID)){
-                    currentEntry.addProfit(totalProfit);
-                    currentEntry.addSoldUnit(amount);
-                }
-            }
-        }
-
-    }
 
     private void addProfit(double price){
         this.totalProfit = this.totalProfit + price;
@@ -86,17 +72,13 @@ public class TransactionManager {
     //Total transaction of specific item
     public int totalNumberOfTransaction(String itemID){
         int itemTransactions = 0;
-        if (!transactionList.contains(itemID)){
-            return -1;
-        }else {
-            for (int i = 0; i < transactionList.size(); i++){
-                Transaction currentTransaction = transactionList.get(i);
-                if (currentTransaction.checkItemID(itemID)){
-                    itemTransactions++;
-                }
+        for (int i = 0; i < transactionList.size(); i++) {
+            Transaction currentTransaction = transactionList.get(i);
+            if (currentTransaction.checkItemID(itemID)) {
+                itemTransactions = itemTransactions + 1;
             }
-            return itemTransactions;
         }
+        return itemTransactions;
     }
     //Count sold units for specific item
     public int getTotalSoldUnits(String itemID){
@@ -118,29 +100,32 @@ public class TransactionManager {
                 itemProfit += currentTransaction.getTotalPrice();
             }
         }
+        itemProfit = Calculate.truncateDouble(itemProfit,2);
         return itemProfit;
     }
     //Concatenate printing information such as printing message, item info and all transactions for that item
-    public String printItemTransaction(String itemID, String itemEntryInfo){
+    public String printItemTransaction(String itemID, String itemInfo){
         String s = System.lineSeparator();
         String printTransaction = "Transactions for item: ";
-        int index = getIndexOfTransaction(itemID);
-        if (index == -1){
-            printTransaction = printTransaction + itemEntryInfo + s +
+
+        if (totalNumberOfTransaction(itemID) == 0){
+
+            printTransaction = printTransaction + itemInfo + s +
                     "No transactions have been registered for item " + itemID + " yet.";
-        } else {
-            String itemInfo = transactionList.get(index).getItemInfo();
+        }else {
+            int index = getIndexOfTransaction(itemID);
+            String info = transactionList.get(index).getItemInfo();
             String allTransactions = collectItemTransactions(itemID);
-            printTransaction = printTransaction + itemInfo + s + allTransactions;
+            printTransaction = printTransaction + info + s + allTransactions;
         }
         return printTransaction;
     }
     //Taking index of transaction in transaction list to grab item info
     public int getIndexOfTransaction(String itemID){
-        int index = -1;
-        for (int i = 0; i < transactionList.size(); i++){
+        int index = 0;
+        for (int i = 0; i < transactionList.size(); i++) {
             Transaction currentTransaction = transactionList.get(i);
-            if (currentTransaction.checkItemID(itemID)){
+            if (currentTransaction.checkItemID(itemID)) {
                 index = i;
             }
         }
@@ -176,12 +161,10 @@ public class TransactionManager {
                 "Total items sold: " + totalSoldItems + " units" + s +
                 "Total purchases made: " + totalTransactions + " transactions" + s +
                 line;
-        if (!getAllTransactions().isEmpty()){
-            printTransactions += getAllTransactions() + line;
-        }
+        printTransactions += getAllTransactions() + line;
         return printTransactions;
     }
-    //INCOMPLETE METHOD_______________________
+    //Getting all items that have higher sum of profits
     public String getMostProfitableItem(){
         StringBuilder stringBuilder = new StringBuilder();
         String s = System.lineSeparator();
@@ -192,7 +175,8 @@ public class TransactionManager {
             mostProfitableRegisteredItems.addAll(registerItemList);
             mostProfitableRegisteredItems.sort(new SortByTotalProfit());
             double highestProfit = mostProfitableRegisteredItems.get(0).getTotalProfit();
-            stringBuilder.append("Total profit: "+ highestProfit + " SEK");
+            String itemInfo = mostProfitableRegisteredItems.get(0).getItemInfo();
+            stringBuilder.append("Total profit: "+ highestProfit + " SEK" + s + itemInfo);
             for (ItemRegister item: mostProfitableRegisteredItems)
             {
                 if(item.getTotalProfit() < highestProfit)
@@ -205,7 +189,7 @@ public class TransactionManager {
             return stringBuilder.toString();
 
         }
-        return "";
+        return stringBuilder.toString();
     }
 
 }

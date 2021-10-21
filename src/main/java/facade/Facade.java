@@ -4,6 +4,7 @@ import bussinessLogic.ItemEntry;
 import java.util.List;
 import java.util.Map;
 import bussinessLogic.TransactionManager;
+import utility.Calculate;
 import utility.Utilities;
 
 public class Facade {
@@ -36,8 +37,7 @@ public class Facade {
 		return itemEntry.removeItem(itemID);
 	}
 
-	public double buyItem(String itemID, int amount)
-	{
+	public double buyItem(String itemID, int amount){
         double totalPrice = itemEntry.buyItem(itemID, amount);
         String itemInfo = itemEntry.getItemInfo(itemID);
         transactionManager.registerTransaction(itemID, amount, totalPrice, itemInfo);
@@ -112,9 +112,9 @@ public class Facade {
         String transactions;
         if (!containsItem(itemID)){
             transactions = "Item " + itemID + " was not registered yet.";
-        } else {
-            String itemEntryInfo = itemEntry.getItemInfo(itemID);
-            transactions = transactionManager.printItemTransaction(itemID,itemEntryInfo);
+        }else {
+            String itemInfo = itemEntry.getItemInfo(itemID);
+            transactions = transactionManager.printItemTransaction(itemID, itemInfo);
         }
         return transactions;
     }

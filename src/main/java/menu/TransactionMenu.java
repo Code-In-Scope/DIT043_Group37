@@ -73,8 +73,12 @@ public class TransactionMenu {
     public static void totalItemTransactions(){
         String itemID = UserInput.getInputString("Enter item ID to print total number of transaction: ");
         int itemTransactions = facade.numberOfItemTransactions(itemID);
+        if (itemTransactions == -1){
+            System.out.println("Item" + itemID + " was not registered yet.");
+        }else
         System.out.println(itemTransactions);
     }
+
     public static void printItemTransaction(){
         String itemID = UserInput.getInputString("Enter item ID to print all transactions: ");
         String printTransaction = facade.printItemTransactions(itemID);
