@@ -102,4 +102,9 @@ public class TransactionMenu {
         System.out.println(soldUnits);
     }
 
+    public static void printHighestProfit(){
+        String print = facade.printMostProfitableItems();
+        System.out.println(print);
+    }
+
 }

@@ -2,13 +2,13 @@ package bussinessLogic;
 
 import java.util.Objects;
 
-public class ItemRegister {
+public class ItemRegistration {
     private String itemID;
     private int soldUnits;
     private double totalProfit;
     private String itemInfo;
 
-    public ItemRegister(String itemID, int amount, double totalProfit, String itemInfo){
+    public ItemRegistration(String itemID, int amount, double totalProfit, String itemInfo){
         this.itemID = itemID;
         this.soldUnits = amount;
         this.totalProfit = totalProfit;
@@ -40,10 +40,10 @@ public class ItemRegister {
         if (this == anotherObject) {
             return true;
         }
-        if (anotherObject == null || !(anotherObject instanceof ItemRegister)) {
+        if (anotherObject == null || !(anotherObject instanceof ItemRegistration)) {
             return false;
         } else {
-            ItemRegister itemProfit = (ItemRegister) anotherObject;
+            ItemRegistration itemProfit = (ItemRegistration) anotherObject;
             return itemID == itemProfit.itemID;
         }
     }

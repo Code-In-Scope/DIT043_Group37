@@ -186,7 +186,7 @@ public class Facade {
 
 	public String printMostProfitableItems()
 	{
-		return "";
+        return transactionManager.getMostProfitableItem();
 	}
 
     public String createEmployee(String employeeID, String employeeName, double grossSalary) throws Exception {

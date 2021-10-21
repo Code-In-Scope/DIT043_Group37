@@ -1,12 +1,14 @@
 package bussinessLogic;
 
 import utility.Calculate;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-class SortByTotalProfit implements Comparator<ItemRegister>{
-   public int compare(ItemRegister a, ItemRegister b)
+class SortByTotalProfit implements Comparator<ItemRegistration>{
+   public int compare(ItemRegistration a, ItemRegistration b)
    {
        if(b.getTotalProfit() > a.getTotalProfit())
        {
@@ -29,14 +31,16 @@ public class TransactionManager {
     private int totalSoldItems;
     private int totalTransactions;
     private double totalProfit;
-    private ArrayList<ItemRegister> registerItemList;
+    private ArrayList<ItemRegistration> registerItemList;
+    private DecimalFormat decimalFormat;
 
     public TransactionManager(){
         transactionList = new ArrayList<>();
         totalSoldItems = 0;
         totalTransactions = 0;
-        totalProfit = 0.00;
+        totalProfit = 0;
         registerItemList = new ArrayList<>();
+        decimalFormat = new DecimalFormat();
     }
 
     public int getTotalTransactions(){
@@ -48,21 +52,43 @@ public class TransactionManager {
     }
 
     public double getTotalProfit(){
-        return this.totalProfit;
+        return Calculate.truncateDouble(this.totalProfit, 2);
     }
 
     public void registerTransaction(String itemID, int amountOfItem, double totalPrice, String itemInfo ){
-        //Transaction newTransaction = new Transaction(itemID, amountOfItem, totalPrice, itemInfo);
         transactionList.add(new Transaction(itemID, amountOfItem, totalPrice, itemInfo));
         totalTransactions++;
         addSoldItems(amountOfItem);
         addProfit(totalPrice);
+        updateItemRegister(itemID,amountOfItem,totalPrice,itemInfo);
     }
 
+    public boolean containItem(String itemId){
+        for (ItemRegistration registration : registerItemList){
+            if (registration.getItemID() == itemId ){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void updateItemRegister(String itemID, int amount, double price, String itemInfo){
+        if (!containItem(itemID)){
+            registerItemList.add(new ItemRegistration(itemID, amount, price, itemInfo));
+        }else {
+            for (ItemRegistration currentRegistration : registerItemList){
+                if (currentRegistration.equals(itemID)){
+                    currentRegistration.addProfit(totalProfit);
+                    currentRegistration.addSoldUnit(amount);
+                }
+            }
+        }
+
+    }
 
     private void addProfit(double price){
         this.totalProfit = this.totalProfit + price;
-        this.totalProfit = Calculate.truncateDouble(totalProfit, 2);
+        //this.totalProfit = Calculate.truncateDouble(totalProfit, 2);
     }
 
     private void addSoldItems(int purchasedAmount){
@@ -157,7 +183,7 @@ public class TransactionManager {
         String s = System.lineSeparator();
         String line = "------------------------------------" + s;
         String printTransactions = "All purchases made: " + s +
-                "Total profit: " + totalProfit + " SEK" + s +
+                "Total profit: " + getTotalProfit() + " SEK" + s +
                 "Total items sold: " + totalSoldItems + " units" + s +
                 "Total purchases made: " + totalTransactions + " transactions" + s +
                 line;
@@ -169,7 +195,7 @@ public class TransactionManager {
         StringBuilder stringBuilder = new StringBuilder();
         String s = System.lineSeparator();
         stringBuilder.append("Most profitable items: "+ s);
-        List<ItemRegister> mostProfitableRegisteredItems =new ArrayList<>();
+        List<ItemRegistration> mostProfitableRegisteredItems =new ArrayList<>();
         if(!registerItemList.isEmpty())
         {
             mostProfitableRegisteredItems.addAll(registerItemList);
@@ -177,19 +203,8 @@ public class TransactionManager {
             double highestProfit = mostProfitableRegisteredItems.get(0).getTotalProfit();
             String itemInfo = mostProfitableRegisteredItems.get(0).getItemInfo();
             stringBuilder.append("Total profit: "+ highestProfit + " SEK" + s + itemInfo);
-            for (ItemRegister item: mostProfitableRegisteredItems)
-            {
-                if(item.getTotalProfit() < highestProfit)
-                {
-                    break;
-                }
-                // add the output string here
-
-            }
-            return stringBuilder.toString();
 
         }
         return stringBuilder.toString();
     }
-
 }
