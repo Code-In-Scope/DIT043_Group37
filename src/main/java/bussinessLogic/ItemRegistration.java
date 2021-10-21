@@ -27,16 +27,19 @@ public class ItemRegistration {
         return this.totalProfit;
     }
 
-    public double addProfit(double totalPrice){
+    public void addProfit(double totalPrice){
         this.totalProfit = this.totalProfit + totalPrice;
-        return totalProfit;
     }
 
     public void addSoldUnit(int soldUnits){
         this.soldUnits = this.soldUnits + soldUnits;
     }
 
-    public boolean equals(Object anotherObject) {
+    public boolean checkItemID(String itemID){
+        return this.itemID.equals(itemID);
+    }
+
+    /*public boolean equals(Object anotherObject) {
         if (this == anotherObject) {
             return true;
         }
@@ -50,6 +53,6 @@ public class ItemRegistration {
 
     public int hashCode() {
         return Objects.hash(itemID);
-    }
+    }*/
 
 }

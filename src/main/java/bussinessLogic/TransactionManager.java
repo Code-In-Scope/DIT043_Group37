@@ -27,20 +27,20 @@ class SortByTotalProfit implements Comparator<ItemRegistration>{
 
 public class TransactionManager {
 
-    private ArrayList<Transaction> transactionList;
+    private final ArrayList<Transaction> transactionList;
     private int totalSoldItems;
     private int totalTransactions;
     private double totalProfit;
-    private ArrayList<ItemRegistration> registerItemList;
-    private DecimalFormat decimalFormat;
+    private final ArrayList<ItemRegistration> registrationList;
+    private final DecimalFormat decimalFormat;
 
     public TransactionManager(){
-        transactionList = new ArrayList<>();
-        totalSoldItems = 0;
-        totalTransactions = 0;
-        totalProfit = 0.00;
-        registerItemList = new ArrayList<>();
-        decimalFormat = new DecimalFormat("0.00");
+        this.transactionList = new ArrayList<>();
+        this.totalSoldItems = 0;
+        this.totalTransactions = 0;
+        this.totalProfit = 0.00;
+        this.registrationList = new ArrayList<>();
+        this.decimalFormat = new DecimalFormat("0.00");
     }
 
     public int getTotalTransactions(){
@@ -56,50 +56,41 @@ public class TransactionManager {
     }
 
     public void registerTransaction(String itemID, int amountOfItem, double totalPrice, String itemInfo ){
-        transactionList.add(new Transaction(itemID, amountOfItem, totalPrice, itemInfo));
-        totalTransactions++;
-        addSoldItems(amountOfItem);
-        addProfit(totalPrice);
+        this.transactionList.add(new Transaction(itemID, amountOfItem, totalPrice, itemInfo));
+        this.totalTransactions++;
+        this.totalSoldItems = this.totalSoldItems + amountOfItem;
+        this.totalProfit = this.totalProfit + totalPrice;
         updateItemRegister(itemID,amountOfItem,totalPrice,itemInfo);
     }
 
-    public boolean containItem(String itemId){
-        for (ItemRegistration registration : registerItemList){
-            if (registration.getItemID() == itemId ){
-                return true;
+    public boolean containRegistration(String itemId){
+        return getRegistrationIndex(itemId) == -1;
+    }
+
+    public int getRegistrationIndex(String itemID){
+        for (int i = 0; i < registrationList.size(); i++){
+            ItemRegistration current = registrationList.get(i);
+            if (current.checkItemID(itemID)){
+                return  i ;
             }
         }
-        return false;
+        return -1;
     }
 
     public void updateItemRegister(String itemID, int amount, double price, String itemInfo){
-        if (!containItem(itemID)){
-            registerItemList.add(new ItemRegistration(itemID, amount, price, itemInfo));
+        if (containRegistration(itemID) && getRegistrationIndex(itemID) >= 0){
+            int index = getRegistrationIndex(itemID);
+            registrationList.get(index).addProfit(price);
+            registrationList.get(index).addSoldUnit(amount);
         }else {
-            for (ItemRegistration currentRegistration : registerItemList){
-                if (currentRegistration.equals(itemID)){
-                    currentRegistration.addProfit(totalProfit);
-                    currentRegistration.addSoldUnit(amount);
-                }
-            }
+            registrationList.add(new ItemRegistration(itemID, amount, price, itemInfo));
         }
-
-    }
-
-    private void addProfit(double price){
-        this.totalProfit = this.totalProfit + price;
-        //this.totalProfit = Calculate.truncateDouble(totalProfit, 2);
-    }
-
-    private void addSoldItems(int purchasedAmount){
-        this.totalSoldItems = this.totalSoldItems + purchasedAmount;
     }
 
     //Total transaction of specific item
     public int totalNumberOfTransaction(String itemID){
         int itemTransactions = 0;
-        for (int i = 0; i < transactionList.size(); i++) {
-            Transaction currentTransaction = transactionList.get(i);
+        for (Transaction currentTransaction : transactionList) {
             if (currentTransaction.checkItemID(itemID)) {
                 itemTransactions = itemTransactions + 1;
             }
@@ -120,9 +111,8 @@ public class TransactionManager {
     //Sum all transactions of specific item
     public double getTotalProfitOfItem(String itemID){
         double itemProfit = 0.00;
-        for (int i = 0; i < transactionList.size(); i++){
-            Transaction currentTransaction = transactionList.get(i);
-            if (currentTransaction.checkItemID(itemID)){
+        for (Transaction currentTransaction : transactionList) {
+            if (currentTransaction.checkItemID(itemID)) {
                 itemProfit += currentTransaction.getTotalPrice();
             }
         }
@@ -195,15 +185,14 @@ public class TransactionManager {
         StringBuilder stringBuilder = new StringBuilder();
         String s = System.lineSeparator();
         stringBuilder.append("Most profitable items: "+ s);
-        List<ItemRegistration> mostProfitableRegisteredItems =new ArrayList<>();
-        if(!registerItemList.isEmpty())
+        List<ItemRegistration> mostProfitableRegisteredItems = new ArrayList<>();
+        if(!registrationList.isEmpty())
         {
-            mostProfitableRegisteredItems.addAll(registerItemList);
+            mostProfitableRegisteredItems.addAll(registrationList);
             mostProfitableRegisteredItems.sort(new SortByTotalProfit());
             double highestProfit = mostProfitableRegisteredItems.get(0).getTotalProfit();
             String itemInfo = mostProfitableRegisteredItems.get(0).getItemInfo();
             stringBuilder.append("Total profit: "+ highestProfit + " SEK" + s + itemInfo);
-
         }
         return stringBuilder.toString();
     }
