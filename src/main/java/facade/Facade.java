@@ -112,8 +112,9 @@ public class Facade {
         String transactions;
         if (!containsItem(itemID)){
             transactions = "Item " + itemID + " was not registered yet.";
-        }else {
-            transactions = transactionManager.printItemTransaction(itemID);
+        } else {
+            String itemEntryInfo = itemEntry.getItemInfo(itemID);
+            transactions = transactionManager.printItemTransaction(itemID,itemEntryInfo);
         }
         return transactions;
     }

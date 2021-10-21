@@ -121,15 +121,15 @@ public class TransactionManager {
         return itemProfit;
     }
     //Concatenate printing information such as printing message, item info and all transactions for that item
-    public String printItemTransaction(String itemID){
+    public String printItemTransaction(String itemID, String itemEntryInfo){
         String s = System.lineSeparator();
         String printTransaction = "Transactions for item: ";
         int index = getIndexOfTransaction(itemID);
-        String itemInfo = transactionList.get(index).getItemInfo();
-        if (totalNumberOfTransaction(itemID) == 0){
-            printTransaction = printTransaction + itemInfo + s +
-                    "No transactions have been registered for item " + itemID + " yet";
-        }else {
+        if (index == -1){
+            printTransaction = printTransaction + itemEntryInfo + s +
+                    "No transactions have been registered for item " + itemID + " yet.";
+        } else {
+            String itemInfo = transactionList.get(index).getItemInfo();
             String allTransactions = collectItemTransactions(itemID);
             printTransaction = printTransaction + itemInfo + s + allTransactions;
         }
@@ -137,7 +137,7 @@ public class TransactionManager {
     }
     //Taking index of transaction in transaction list to grab item info
     public int getIndexOfTransaction(String itemID){
-        int index = 0;
+        int index = -1;
         for (int i = 0; i < transactionList.size(); i++){
             Transaction currentTransaction = transactionList.get(i);
             if (currentTransaction.checkItemID(itemID)){
