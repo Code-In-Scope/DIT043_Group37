@@ -38,9 +38,9 @@ public class TransactionManager {
         transactionList = new ArrayList<>();
         totalSoldItems = 0;
         totalTransactions = 0;
-        totalProfit = 0;
+        totalProfit = 0.00;
         registerItemList = new ArrayList<>();
-        decimalFormat = new DecimalFormat();
+        decimalFormat = new DecimalFormat("0.00");
     }
 
     public int getTotalTransactions(){
@@ -183,7 +183,7 @@ public class TransactionManager {
         String s = System.lineSeparator();
         String line = "------------------------------------" + s;
         String printTransactions = "All purchases made: " + s +
-                "Total profit: " + getTotalProfit() + " SEK" + s +
+                "Total profit: " + decimalFormat.format(getTotalProfit()) + " SEK" + s +
                 "Total items sold: " + totalSoldItems + " units" + s +
                 "Total purchases made: " + totalTransactions + " transactions" + s +
                 line;
