@@ -7,7 +7,7 @@ public class Director extends Manager {
     private String department;
     private final double additionalSalary = 5000;
 
-    public Director(String id, String name, double grossSalary,String degree, String department){
+    public Director(String id, String name, double grossSalary,String degree, String department) throws Exception{
         super(id, name, grossSalary, degree);
         this.department = department;
     }
@@ -33,7 +33,7 @@ public class Director extends Manager {
         }
         return netSalary;
     }
-
+    @Override
     public String toString(){
         String print = super.toString();
         print = print + " Dept: " + department;

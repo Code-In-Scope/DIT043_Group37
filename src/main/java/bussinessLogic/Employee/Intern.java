@@ -5,7 +5,7 @@ public class Intern extends Employee{
     private int GPA;
     private final double reward = 1000;
 
-    public Intern(String id, String name, double grossSalary, int GPA){
+    public Intern(String id, String name, double grossSalary, int GPA) throws Exception{
         super(id, name, grossSalary);
         this.GPA = GPA;
     }
@@ -22,6 +22,7 @@ public class Intern extends Employee{
         return netSalary;
     }
 
+    @Override
     public String toString(){
         return this.EmployeeName + "'s gross salary is " + this.grossSalary + " SEK per month. GPA: " + GPA;
     }

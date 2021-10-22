@@ -6,7 +6,7 @@ public class Manager extends Employee{
 
     private String degree;
 
-    public Manager(String id, String name, double salary, String degree){
+    public Manager(String id, String name, double salary, String degree) throws Exception{
         super(id, name, salary);
         this.degree = degree;
     }
@@ -30,6 +30,7 @@ public class Manager extends Employee{
         return netSalary;
     }
 
+    @Override
     public String toString(){
         return degree + " " + getEmployeeName() + "'s grossSalary is " + getGrossSalary() + " SEK per month.";
     }
