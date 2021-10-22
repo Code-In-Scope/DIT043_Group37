@@ -1,46 +1,83 @@
 package bussinessLogic.Employee;
 
 import utility.Calculate;
-
 import java.util.Objects;
+import utility.Utilities;
 
 public class Employee {
-  protected String EmployeeID;
-  protected String EmployeeName;
-  protected double grossSalary;
-  protected double tax = 0.1;
+  private String employeeID;
+  private String employeeName;
+  private double grossSalary;
+  private double netSalary;
+  public double tax = 0.1;
+  private String updateMessage;
 
-  public Employee(String id, String name, double grossSalary)throws InvalidDataException{
-    if (id.isBlank()){
-      throw new InvalidDataException("ID cannot be blank.");
-    }
-    if (name.isBlank()){
-      throw new InvalidDataException("Name cannot be blank.");
-    }
-    if (grossSalary < 0){
-      throw new InvalidDataException("Salary must be greater than zero.");
-    }
-    this.EmployeeID = id;
-    this.EmployeeName = name;
+  public Employee(String id, String name, double grossSalary) throws Exception {
+    checkID(id);
+    checkName(name);
+    checkSalary(grossSalary);
+    calculateIncome();
+
+    this.employeeID = id;
+    this.employeeName = name;
     this.grossSalary = grossSalary;
+    this.updateMessage = "Employee " + this.employeeID + " was updated successfully";
 
   }
 
-  public String getEmployeeID() { return this.EmployeeID; }
+  public void checkName(String employeeName) throws Exception {
+    if (employeeName.isBlank()) {
+      throw new Exception("Name cannot be blank.");
+    }
+  }
 
-  public String getEmployeeName() { return this.EmployeeName; }
+  public void checkID(String id) throws Exception {
+    if (id.isBlank()) {
+      throw new Exception("ID cannot be blank.");
+    }
+  }
 
-  public void setEmployeeName(String newName) { this.EmployeeName = newName; }
+  public void checkSalary(double salary) throws Exception {
+    if (salary <= 0.0) {
+      throw new Exception("Salary must be greater than zero.");
+    }
+  }
 
-  public double getGrossSalary() { return this.grossSalary; }
+  public String getEmployeeID() {
+    return this.employeeID;
+  }
 
-  public void setGrossSalary(double newGrossSalary) {
+  public String getEmployeeName() {
+    return this.employeeName;
+  }
+
+  public String setEmployeeName(String newName) throws Exception {
+    checkName(newName);
+    this.employeeName = newName;
+    return updateMessage;
+  }
+
+  public double getGrossSalary() {
+    return this.grossSalary;
+  }
+
+  public String setGrossSalary(double newGrossSalary) throws Exception {
+    checkSalary(newGrossSalary);
     this.grossSalary = newGrossSalary;
+    calculateIncome();
+    return updateMessage;
   }
 
-  public double calculateNetIncome(){
-    double netSalary = grossSalary - Calculate.deductTax(grossSalary, tax);
+  public void calculateIncome() {
+    netSalary = grossSalary - Calculate.deductTax(grossSalary, tax);
+  }
+
+  public double getNetIncome() {
     return netSalary;
+  }
+
+  public boolean checkEmployeeId(String employeeID) {
+    return (this.employeeID.equals(employeeID));
   }
 
   public boolean equals(Object anotherObject) {
@@ -50,15 +87,16 @@ public class Employee {
     if (anotherObject == null || !(anotherObject instanceof Employee)) {
       return false;
     } else {
-      Employee employee = (Employee)anotherObject;
-      return EmployeeID == employee.EmployeeID;
+      Employee employee = (Employee) anotherObject;
+      return employeeID == employee.employeeID;
     }
   }
 
-  public int hashCode() { return Objects.hash(EmployeeID); }
+  public int hashCode() {
+    return Objects.hash(employeeID);
+  }
 
   public String toString() {
-    return EmployeeName + " 's gross salary is " + grossSalary +
-        " SEK per month.";
+    return employeeName + "'s gross salary is " + Utilities.formatDouble(grossSalary) + " SEK per month.";
   }
 }

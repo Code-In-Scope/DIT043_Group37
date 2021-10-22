@@ -67,7 +67,7 @@ public class EmployeeMenu {
         try {
             String message = facade.createEmployee(employeeId, employeeName, grossSalary);
             System.out.println(message);
-        }catch (InvalidDataException exception){
+        }catch (Exception exception){
             System.out.println("Invalid values for Employee."+ exception);
         }
     }
@@ -80,7 +80,7 @@ public class EmployeeMenu {
         try {
             String message = facade.createEmployee(employeeId, employeeName, grossSalary, degree);
             System.out.println(message);
-        }catch (InvalidDataException exception){
+        }catch (Exception exception){
             System.out.println("Invalid values for Employee." + exception);
         }
 
@@ -95,7 +95,7 @@ public class EmployeeMenu {
         try {
             String message = facade.createEmployee(employeeId, employeeName, grossSalary, degree, dept);
             System.out.println(message);
-        }catch (InvalidDataException exception){
+        }catch (Exception exception){
             System.out.println("Invalid values for Employee." + exception);
         }
     }
@@ -108,7 +108,7 @@ public class EmployeeMenu {
         try {
             String message = facade.createEmployee(employeeId, employeeName, grossSalary, gpa);
             System.out.println(message);
-        }catch (InvalidDataException exception){
+        }catch (Exception exception){
             System.out.println("Invalid values for Employee." + exception);
         }
     }

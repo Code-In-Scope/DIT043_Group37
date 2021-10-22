@@ -192,27 +192,27 @@ public class Facade {
         return transactionManager.getMostProfitableItem();
 	}
 
-    public String createEmployee(String employeeID, String employeeName, double grossSalary) throws InvalidDataException {
-        return staff.createEmployee(employeeID, employeeName, grossSalary);
+    public String createEmployee(String employeeID, String employeeName, double grossSalary) throws Exception {
+            return staff.createEmployee(employeeID, employeeName, grossSalary);
     }
 
     public String printEmployee(String employeeID) throws Exception {
-        return "";
+        return staff.printEmployee(employeeID);
     }
 
-    public String createEmployee(String employeeID, String employeeName, double grossSalary, String degree) throws InvalidDataException {
+    public String createEmployee(String employeeID, String employeeName, double grossSalary, String degree) throws Exception {
         return staff.createEmployee(employeeID, employeeName, grossSalary, degree);
     }
 
-    public String createEmployee(String employeeID, String employeeName, double grossSalary, int gpa) throws InvalidDataException {
+    public String createEmployee(String employeeID, String employeeName, double grossSalary, int gpa) throws Exception {
         return staff.createEmployee(employeeID, employeeName, grossSalary, gpa);
     }
 
     public double getNetSalary(String employeeID) throws Exception {
-        return -1.0;
+        return staff.getNetSalary(employeeID);
     }
 
-    public String createEmployee(String employeeID, String employeeName, double grossSalary, String degree, String dept) throws InvalidDataException {
+    public String createEmployee(String employeeID, String employeeName, double grossSalary, String degree, String dept) throws Exception {
         return staff.createEmployee(employeeID, employeeName, grossSalary, degree, dept);
     }
 
@@ -233,7 +233,7 @@ public class Facade {
     }
 
     public String updateEmployeeName(String empID, String newName) throws Exception {
-        return "";
+        return staff.updateEmployeeName(empID, newName);
     }
 
     public String updateInternGPA(String empID, int newGPA) throws Exception {
@@ -249,7 +249,7 @@ public class Facade {
     }
 
     public String updateGrossSalary(String empID, double newSalary) throws Exception {
-        return "";
+        return staff.updateGrossSalary(empID, newSalary);
     }
 
     public Map<String, Integer> mapEachDegree() throws Exception {

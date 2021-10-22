@@ -1,28 +1,47 @@
 package bussinessLogic.Employee;
 
-public class Intern extends Employee{
+import utility.Utilities;
+
+public class Intern extends Employee {
 
     private int GPA;
     private final double reward = 1000;
+    private double grossSalary;
+    private double netSalary;
 
-    public Intern(String id, String name, double grossSalary, int GPA) throws InvalidDataException{
+    public Intern(String id, String name, double grossSalary, int GPA) throws Exception {
         super(id, name, grossSalary);
         this.GPA = GPA;
+        calculateIncome();
     }
 
-    public double calculateNetIncome(){
-        double netSalary = 0;
-        if (GPA <= 5){
-            netSalary = 0;
-        }else if (GPA < 8){
-            netSalary = this.grossSalary;
-        }else if (GPA < 11){
-            netSalary = this.grossSalary + reward;
+    public void calculateIncome() {
+        if (GPA <= 5) {
+            grossSalary = 0;
+        } else if (GPA < 8) {
+            grossSalary = super.getGrossSalary();
+        } else if (GPA < 11) {
+            grossSalary = super.getGrossSalary() + reward;
         }
+        netSalary = grossSalary;
+    }
+
+    public String setGrossSalary(double newGrossSalary) throws Exception {
+        String message = super.setGrossSalary(newGrossSalary);
+        calculateIncome();
+        return message;
+    }
+
+    public double getGrossSalary() {
+        return grossSalary;
+    }
+
+    public double getNetIncome() {
         return netSalary;
     }
 
-    public String toString(){
-        return this.EmployeeName + "'s gross salary is " + this.grossSalary + " SEK per month. GPA: " + GPA;
+    public String toString() {
+        return getEmployeeName() + "'s gross salary is " + Utilities.formatDouble(getGrossSalary())
+                + " SEK per month. GPA: " + GPA;
     }
 }

@@ -1,10 +1,10 @@
 package bussinessLogic.Item;
 
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import utility.Utilities;
 
 import utility.Calculate;
 
@@ -13,15 +13,12 @@ public class Item {
   private String itemName;
   private double unitPrice;
   private ArrayList<Review> reviewList;
-  private DecimalFormat decimalFormat;
 
   public Item(String itemID, String itemName, double unitPrice) {
     this.reviewList = new ArrayList<>();
     this.itemID = itemID;
     this.itemName = itemName;
     this.unitPrice = unitPrice;
-    this.decimalFormat = new DecimalFormat(".00");
-    decimalFormat.setRoundingMode(RoundingMode.DOWN);
   }
 
   public String getItemID() {
@@ -92,7 +89,7 @@ public class Item {
   public String printAllReview() {
     StringBuilder result = new StringBuilder();
     String newLine = System.lineSeparator();
-    result.append("Review(s) for " + this.itemID + ": " + this.itemName + ". " + decimalFormat.format(this.unitPrice)
+    result.append("Review(s) for " + this.itemID + ": " + this.itemName + ". " + Utilities.formatDouble(this.unitPrice)
         + " SEK" + newLine);
     if (reviewList.isEmpty()) {
       result.append("The item " + this.itemName + " has not been reviewed yet.");
@@ -158,7 +155,7 @@ public class Item {
   @Override
   public String toString() {
 
-    String printItem = this.itemID + ": " + this.itemName + ". " + decimalFormat.format(this.unitPrice) + " SEK";
+    String printItem = this.itemID + ": " + this.itemName + ". " + Utilities.formatDouble(this.unitPrice) + " SEK";
     return printItem;
   }
 }

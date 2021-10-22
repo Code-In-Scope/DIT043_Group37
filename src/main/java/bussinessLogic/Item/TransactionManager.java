@@ -2,11 +2,10 @@ package bussinessLogic.Item;
 
 import utility.Calculate;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
+import utility.Utilities;
 class SortByTotalProfit implements Comparator<ItemRegistration>{
    public int compare(ItemRegistration a, ItemRegistration b)
    {
@@ -32,7 +31,6 @@ public class TransactionManager {
     private int totalTransactions;
     private double totalProfit;
     private final ArrayList<ItemRegistration> registrationList;
-    private final DecimalFormat decimalFormat;
 
     public TransactionManager(){
         this.transactionList = new ArrayList<>();
@@ -40,7 +38,6 @@ public class TransactionManager {
         this.totalTransactions = 0;
         this.totalProfit = 0.00;
         this.registrationList = new ArrayList<>();
-        this.decimalFormat = new DecimalFormat("0.00");
     }
 
     public int getTotalTransactions(){
@@ -173,7 +170,7 @@ public class TransactionManager {
         String s = System.lineSeparator();
         String line = "------------------------------------" + s;
         String printTransactions = "All purchases made: " + s +
-                "Total profit: " + decimalFormat.format(getTotalProfit()) + " SEK" + s +
+                "Total profit: " + Utilities.formatDouble(getTotalProfit()) + " SEK" + s +
                 "Total items sold: " + totalSoldItems + " units" + s +
                 "Total purchases made: " + totalTransactions + " transactions" + s +
                 line;
