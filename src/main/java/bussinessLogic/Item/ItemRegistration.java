@@ -1,6 +1,4 @@
-package bussinessLogic;
-
-import java.util.Objects;
+package bussinessLogic.Item;
 
 public class ItemRegistration {
     private String itemID;

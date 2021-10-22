@@ -67,7 +67,7 @@ public class EmployeeMenu {
             String message = facade.createEmployee(employeeId, employeeName, grossSalary);
             System.out.println(message);
         }catch (Exception e){
-            System.out.println("Invalid values for Employee.");
+            System.out.println("Invalid values for Employee."+ e);
         }
 
     }
@@ -81,7 +81,7 @@ public class EmployeeMenu {
             String message = facade.createEmployee(employeeId, employeeName, grossSalary, degree);
             System.out.println(message);
         }catch (Exception e){
-            System.out.println("Invalid values for Employee.");
+            System.out.println("Invalid values for Employee." + e);
         }
 
     }
@@ -96,9 +96,8 @@ public class EmployeeMenu {
             String message = facade.createEmployee(employeeId, employeeName, grossSalary, degree, dept);
             System.out.println(message);
         }catch (Exception e){
-            System.out.println("Invalid values for Employee.");
+            System.out.println("Invalid values for Employee." + e);
         }
-
     }
 
     public static void addInternEmployee(){
@@ -110,9 +109,18 @@ public class EmployeeMenu {
             String message = facade.createEmployee(employeeId, employeeName, grossSalary, gpa);
             System.out.println(message);
         }catch (Exception e){
-            System.out.println("Invalid values for Employee.");
+            System.out.println("Invalid values for Employee." + e);
         }
+    }
 
+    public static void removeEmployee(){
+        String employeeID = UserInput.getInputString("Enter employee's ID to remove: ");
+        try {
+            String message = facade.removeEmployee(employeeID);
+            System.out.println(message);
+        }catch (Exception e){
+            System.out.println("Employee" + employeeID + " was not registered yet.");
+        }
     }
 
 

@@ -1,6 +1,6 @@
 package utility;
 
-import bussinessLogic.Item;
+import bussinessLogic.Item.Item;
 
 import java.util.ArrayList;
 import java.util.List;

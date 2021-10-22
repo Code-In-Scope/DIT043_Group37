@@ -6,8 +6,11 @@ public class Manager extends Employee{
 
     private String degree;
 
-    public Manager(String id, String name, double salary, String degree){
+    public Manager(String id, String name, double salary, String degree) throws Exception{
         super(id, name, salary);
+        if (degree != "BSc" || degree != "MSc"|| degree != "PhD" ){
+            throw new Exception("Degree must be one of the options: BSc, MSc or PhD.");
+        }
         this.degree = degree;
     }
 

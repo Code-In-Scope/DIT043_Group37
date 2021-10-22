@@ -1,4 +1,4 @@
-package bussinessLogic;
+package bussinessLogic.Item;
 
 import utility.Calculate;
 
@@ -31,13 +31,11 @@ class SortByMostGrades implements Comparator<Item> {
 
 public class ItemEntry {
     private ArrayList<Item> itemList;
-    private final TransactionManager transactionManager;
     String s;
     String line;
 
     public ItemEntry() {
       itemList = new ArrayList<>();
-      transactionManager = new TransactionManager();
       this.s = System.lineSeparator();
       this.line ="------------------------------------" + s;
     }

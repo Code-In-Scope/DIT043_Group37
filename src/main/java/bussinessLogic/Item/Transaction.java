@@ -1,4 +1,4 @@
-package bussinessLogic;
+package bussinessLogic.Item;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;

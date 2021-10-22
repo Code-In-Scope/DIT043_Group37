@@ -1,4 +1,4 @@
-package bussinessLogic;
+package bussinessLogic.Item;
 
 public final class Review {
 
