@@ -7,7 +7,7 @@ public class Director extends Manager {
     private String department;
     private final double additionalSalary = 5000;
 
-    public Director(String id, String name, double grossSalary,String degree, String department) throws Exception{
+    public Director(String id, String name, double grossSalary,String degree, String department) throws InvalidDataException{
         super(id, name, grossSalary, degree);
         this.department = department;
     }

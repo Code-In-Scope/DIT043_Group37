@@ -10,22 +10,22 @@ public class Staff {
         employeeList = new ArrayList<>();
     }
 
-    public String createEmployee(String employeeID, String employeeName, double grossSalary) throws Exception {
+    public String createEmployee(String employeeID, String employeeName, double grossSalary) throws InvalidDataException {
         this.employeeList.add(new Employee(employeeID,employeeName, grossSalary));
         return "Employee " + employeeID + " was registered successfully.";
     }
 
-    public String createEmployee(String employeeID, String employeeName, double grossSalary, String degree) throws Exception {
+    public String createEmployee(String employeeID, String employeeName, double grossSalary, String degree) throws InvalidDataException {
         this.employeeList.add(new Manager(employeeID,employeeName, grossSalary, degree));
         return "Employee " + employeeID + " was registered successfully.";
     }
 
-    public String createEmployee(String employeeID, String employeeName, double grossSalary, String degree, String dept) throws Exception {
+    public String createEmployee(String employeeID, String employeeName, double grossSalary, String degree, String dept) throws InvalidDataException {
         this.employeeList.add(new Director(employeeID,employeeName, grossSalary, degree, dept));
         return "Employee " + employeeID + " was registered successfully.";
     }
 
-    public String createEmployee(String employeeID, String employeeName, double grossSalary, int gpa) throws Exception {
+    public String createEmployee(String employeeID, String employeeName, double grossSalary, int gpa) throws InvalidDataException {
         this.employeeList.add(new Intern(employeeID,employeeName, grossSalary, gpa));
         return "Employee " + employeeID + " was registered successfully.";
     }

@@ -1,5 +1,6 @@
 package menu;
 
+import bussinessLogic.Employee.InvalidDataException;
 import facade.Facade;
 import utility.UserInput;
 
@@ -66,10 +67,9 @@ public class EmployeeMenu {
         try {
             String message = facade.createEmployee(employeeId, employeeName, grossSalary);
             System.out.println(message);
-        }catch (Exception e){
-            System.out.println("Invalid values for Employee."+ e);
+        }catch (InvalidDataException exception){
+            System.out.println("Invalid values for Employee."+ exception);
         }
-
     }
 
     public static void addManagerEmployee(){
@@ -80,8 +80,8 @@ public class EmployeeMenu {
         try {
             String message = facade.createEmployee(employeeId, employeeName, grossSalary, degree);
             System.out.println(message);
-        }catch (Exception e){
-            System.out.println("Invalid values for Employee." + e);
+        }catch (InvalidDataException exception){
+            System.out.println("Invalid values for Employee." + exception);
         }
 
     }
@@ -95,8 +95,8 @@ public class EmployeeMenu {
         try {
             String message = facade.createEmployee(employeeId, employeeName, grossSalary, degree, dept);
             System.out.println(message);
-        }catch (Exception e){
-            System.out.println("Invalid values for Employee." + e);
+        }catch (InvalidDataException exception){
+            System.out.println("Invalid values for Employee." + exception);
         }
     }
 
@@ -108,8 +108,8 @@ public class EmployeeMenu {
         try {
             String message = facade.createEmployee(employeeId, employeeName, grossSalary, gpa);
             System.out.println(message);
-        }catch (Exception e){
-            System.out.println("Invalid values for Employee." + e);
+        }catch (InvalidDataException exception){
+            System.out.println("Invalid values for Employee." + exception);
         }
     }
 

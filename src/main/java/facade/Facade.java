@@ -1,5 +1,6 @@
 package facade;
 
+import bussinessLogic.Employee.InvalidDataException;
 import bussinessLogic.Employee.Staff;
 import bussinessLogic.Item.ItemEntry;
 import java.util.List;
@@ -191,7 +192,7 @@ public class Facade {
         return transactionManager.getMostProfitableItem();
 	}
 
-    public String createEmployee(String employeeID, String employeeName, double grossSalary) throws Exception {
+    public String createEmployee(String employeeID, String employeeName, double grossSalary) throws InvalidDataException {
         return staff.createEmployee(employeeID, employeeName, grossSalary);
     }
 
@@ -199,11 +200,11 @@ public class Facade {
         return "";
     }
 
-    public String createEmployee(String employeeID, String employeeName, double grossSalary, String degree) throws Exception {
+    public String createEmployee(String employeeID, String employeeName, double grossSalary, String degree) throws InvalidDataException {
         return staff.createEmployee(employeeID, employeeName, grossSalary, degree);
     }
 
-    public String createEmployee(String employeeID, String employeeName, double grossSalary, int gpa) throws Exception {
+    public String createEmployee(String employeeID, String employeeName, double grossSalary, int gpa) throws InvalidDataException {
         return staff.createEmployee(employeeID, employeeName, grossSalary, gpa);
     }
 
@@ -211,7 +212,7 @@ public class Facade {
         return -1.0;
     }
 
-    public String createEmployee(String employeeID, String employeeName, double grossSalary, String degree, String dept) throws Exception {
+    public String createEmployee(String employeeID, String employeeName, double grossSalary, String degree, String dept) throws InvalidDataException {
         return staff.createEmployee(employeeID, employeeName, grossSalary, degree, dept);
     }
 
