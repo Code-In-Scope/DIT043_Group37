@@ -32,6 +32,7 @@ public class EmployeeMenu {
                     MainMenu.getMainMenuOption();
                     break;
                 case 1:
+                    addRegularEmployee();
                     break;
                 case 2:
                     break;
@@ -59,7 +60,13 @@ public class EmployeeMenu {
         String employeeId = UserInput.getInputString("Enter employee's ID: ");
         String employeeName = UserInput.getInputString("Enter employee's name: ");
         double grossSalary = UserInput.getInputInt("Enter employee's gross salary: ");
-        //String message = facade.createEmployee(employeeId, employeeName, grossSalary);
+        try {
+            String message = facade.createEmployee(employeeId, employeeName, grossSalary);
+            System.out.println(message);
+        }catch (Exception e){
+            System.out.println("Invalid values for Employee.");
+        }
+
     }
 
 

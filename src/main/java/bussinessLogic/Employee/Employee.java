@@ -10,19 +10,20 @@ public class Employee {
   protected double grossSalary;
   protected double tax = 0.1;
 
-  public Employee(String id, String name, double grossSalary){
+  public Employee(String id, String name, double grossSalary)throws Exception{
     if (id.isBlank()){
-      //throw new Exception("ID cannot be blank.");
+      throw new Exception("ID cannot be blank.");
+    }
+    if (name.isBlank()){
+      throw new Exception("Name cannot be blank.");
+    }
+    if (grossSalary < 0){
+      throw new Exception("Salary must be greater than zero.");
     }
     this.EmployeeID = id;
     this.EmployeeName = name;
     this.grossSalary = grossSalary;
-    if (name.isBlank()){
-      //throw new Exception("Name cannot be blank.");
-    }
-    if (grossSalary < 0){
-      //throw new Exception("Salary must be greater than zero.");
-    }
+
   }
 
   public String getEmployeeID() { return this.EmployeeID; }

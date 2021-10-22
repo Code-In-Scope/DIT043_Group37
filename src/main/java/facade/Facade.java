@@ -1,5 +1,6 @@
 package facade;
 
+import bussinessLogic.Employee.Staff;
 import bussinessLogic.ItemEntry;
 import java.util.List;
 import java.util.Map;
@@ -11,11 +12,13 @@ public class Facade {
 
 	ItemEntry itemEntry;
 	TransactionManager transactionManager;
+    Staff staff;
 
 	public Facade()
 	{
 		itemEntry = new ItemEntry();
 		transactionManager = new TransactionManager();
+        staff = new Staff();
 	}
 
 	public boolean containsItem(String itemID)
@@ -190,7 +193,7 @@ public class Facade {
 	}
 
     public String createEmployee(String employeeID, String employeeName, double grossSalary) throws Exception {
-        return "";
+        return staff.createEmployee(employeeID, employeeName, grossSalary);
     }
 
     public String printEmployee(String employeeID) throws Exception {
@@ -198,11 +201,11 @@ public class Facade {
     }
 
     public String createEmployee(String employeeID, String employeeName, double grossSalary, String degree) throws Exception {
-        return "";
+        return staff.createEmployee(employeeID, employeeName, grossSalary, degree);
     }
 
     public String createEmployee(String employeeID, String employeeName, double grossSalary, int gpa) throws Exception {
-        return "";
+        return staff.createEmployee(employeeID, employeeName, grossSalary, gpa);
     }
 
     public double getNetSalary(String employeeID) throws Exception {
@@ -210,7 +213,7 @@ public class Facade {
     }
 
     public String createEmployee(String employeeID, String employeeName, double grossSalary, String degree, String dept) throws Exception {
-        return "";
+        return staff.createEmployee(employeeID, employeeName, grossSalary, degree, dept);
     }
 
     public String removeEmployee(String empID) throws Exception {
