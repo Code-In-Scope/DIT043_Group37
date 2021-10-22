@@ -35,10 +35,13 @@ public class EmployeeMenu {
                     addRegularEmployee();
                     break;
                 case 2:
+                    addManagerEmployee();
                     break;
                 case 3:
+                    addDirectorEmployee();
                     break;
                 case 4:
+                    addInternEmployee();
                     break;
                 case 5:
                     break;
@@ -62,6 +65,49 @@ public class EmployeeMenu {
         double grossSalary = UserInput.getInputInt("Enter employee's gross salary: ");
         try {
             String message = facade.createEmployee(employeeId, employeeName, grossSalary);
+            System.out.println(message);
+        }catch (Exception e){
+            System.out.println("Invalid values for Employee.");
+        }
+
+    }
+
+    public static void addManagerEmployee(){
+        String employeeId = UserInput.getInputString("Enter employee's ID: ");
+        String employeeName = UserInput.getInputString("Enter employee's name: ");
+        double grossSalary = UserInput.getInputInt("Enter employee's gross salary: ");
+        String degree = UserInput.getInputString("Enter employee's degree: ");
+        try {
+            String message = facade.createEmployee(employeeId, employeeName, grossSalary, degree);
+            System.out.println(message);
+        }catch (Exception e){
+            System.out.println("Invalid values for Employee.");
+        }
+
+    }
+
+    public static void addDirectorEmployee(){
+        String employeeId = UserInput.getInputString("Enter employee's ID: ");
+        String employeeName = UserInput.getInputString("Enter employee's name: ");
+        double grossSalary = UserInput.getInputInt("Enter employee's gross salary: ");
+        String degree = UserInput.getInputString("Enter employee's degree: ");
+        String dept = UserInput.getInputString("Enter employee's department: ");
+        try {
+            String message = facade.createEmployee(employeeId, employeeName, grossSalary, degree, dept);
+            System.out.println(message);
+        }catch (Exception e){
+            System.out.println("Invalid values for Employee.");
+        }
+
+    }
+
+    public static void addInternEmployee(){
+        String employeeId = UserInput.getInputString("Enter employee's ID: ");
+        String employeeName = UserInput.getInputString("Enter employee's name: ");
+        double grossSalary = UserInput.getInputInt("Enter employee's gross salary: ");
+        String gpa = UserInput.getInputString("Enter employee's gpa: ");
+        try {
+            String message = facade.createEmployee(employeeId, employeeName, grossSalary, gpa);
             System.out.println(message);
         }catch (Exception e){
             System.out.println("Invalid values for Employee.");

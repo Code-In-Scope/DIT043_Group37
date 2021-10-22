@@ -29,7 +29,4 @@ public class Staff {
         Employee newEmployee = new Intern(employeeID,employeeName, grossSalary, gpa);
         return "Employee " + employeeID + " was registered successfully.";
     }
-
-
-
 }
