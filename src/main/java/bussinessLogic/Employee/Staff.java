@@ -114,7 +114,7 @@ public class Staff {
         employeeList.remove(index);
         employeeList.add(new Manager(id, name, salary,degree));
 
-        return "Employee "+ empID + "Promoted Successfully";
+        return empID + " promoted successfully to Manager.";
     }
 
     public String promoteToDirector(String empID, String degree, String department) throws Exception {
@@ -125,6 +125,6 @@ public class Staff {
         double salary = employee.getBaseSalary();
         employeeList.remove(index);
         employeeList.add(new Director(id, name, salary, degree, department));
-        return "Employee "+ empID + "Promoted Successfully";
+        return empID + " promoted successfully to Director.";
     }
 }
