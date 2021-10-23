@@ -6,17 +6,16 @@ import java.util.List;
 
 import utility.Calculate;
 
-import utility.Utilities;
-
 public class Manager extends Employee {
 
-    private String degree;
+    private final String degree;
     private double grossSalary;
     private double netSalary;
-    private List<String> validDegrees = new ArrayList<>(Arrays.asList("BSc", "MSc", "PhD"));
+    private final List<String> validDegrees;
 
     public Manager(String id, String name, double salary, String degree) throws Exception {
         super(id, name, salary);
+        validDegrees = new ArrayList<>(Arrays.asList("BSc", "MSc", "PhD"));
         if (!validDegrees.contains(degree)) {
             throw new Exception("Degree must be one of the options: BSc, MSc or PhD.");
         }
@@ -25,7 +24,7 @@ public class Manager extends Employee {
     }
 
     public double calculateBonus() {
-        double bonus = 0.0;
+        double bonus = 0;
         if (degree == "BSc") {
             bonus = super.getGrossSalary() * 0.1;
         } else if (degree == "MSc") {
@@ -37,8 +36,8 @@ public class Manager extends Employee {
     }
 
     public void calculateIncome() {
-        grossSalary = super.getGrossSalary() + calculateBonus();
-        netSalary = grossSalary - Calculate.deductTax(grossSalary, tax);
+        netSalary = super.getGrossSalary() + calculateBonus();
+        netSalary = netSalary - Calculate.deductTax(netSalary, tax);
     }
 
     public String setGrossSalary(double newGrossSalary) throws Exception {
@@ -60,8 +59,6 @@ public class Manager extends Employee {
     }
 
     public String toString() {
-        return degree + " " + getEmployeeName() + "'s gross salary is " + Utilities.formatDouble(grossSalary)
-                + " SEK per month.";
+        return degree + " " + super.toString();
     }
-
 }

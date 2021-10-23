@@ -38,8 +38,8 @@ public class Employee {
   }
 
   public void checkSalary(double salary) throws Exception {
-    if (salary <= 0.0) {
-      throw new Exception("Salary must be greater than zero.");
+    if (salary <= 0) {
+        throw new Exception("Salary must be greater than zero.");
     }
   }
 
@@ -69,7 +69,7 @@ public class Employee {
   }
 
   public void calculateIncome() {
-    netSalary = grossSalary - Calculate.deductTax(grossSalary, tax);
+    this.netSalary = grossSalary - Calculate.deductTax(grossSalary, tax);
   }
 
   public double getNetIncome() {

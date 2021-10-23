@@ -3,15 +3,24 @@ package bussinessLogic.Employee;
 import utility.Calculate;
 import utility.Utilities;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Director extends Manager {
 
-    private String department;
+    private final String department;
     private final double additionalSalary = 5000;
     private double grossSalary;
     private double netSalary;
+    private final List<String> validDepartment;
 
     public Director(String id, String name, double grossSalary, String degree, String department) throws Exception {
         super(id, name, grossSalary, degree);
+        validDepartment = new ArrayList<>(Arrays.asList("Business", "Human Resources", "Technical"));
+        if (!validDepartment.contains(degree)) {
+            throw new Exception("Department must be one of the options: Business, Human Resources or Technical.");
+        }
         this.department = department;
         calculateIncome();
 
@@ -53,9 +62,6 @@ public class Director extends Manager {
     }
 
     public String toString() {
-        String print = super.toString();
-        print = getDegree() + " " + getEmployeeName() + "'s gross salary is " + Utilities.formatDouble(grossSalary)
-                + " SEK per month." + " Dept: " + department;
-        return print;
+        return super.toString() + department;
     }
 }

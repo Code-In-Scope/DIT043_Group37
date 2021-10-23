@@ -11,6 +11,9 @@ public class Intern extends Employee {
 
     public Intern(String id, String name, double grossSalary, int GPA) throws Exception {
         super(id, name, grossSalary);
+        if (GPA < 0 || GPA > 11){
+            throw new Exception( GPA + " outside range. Must be between 0-10.");
+        }
         this.GPA = GPA;
         calculateIncome();
     }
@@ -41,7 +44,6 @@ public class Intern extends Employee {
     }
 
     public String toString() {
-        return getEmployeeName() + "'s gross salary is " + Utilities.formatDouble(getGrossSalary())
-                + " SEK per month. GPA: " + GPA;
+        return super.toString() +  GPA;
     }
 }

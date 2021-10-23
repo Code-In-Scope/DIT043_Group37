@@ -45,10 +45,13 @@ public class EmployeeMenu {
                     addInternEmployee();
                     break;
                 case 5:
+                    removeEmployee();
                     break;
                 case 6:
+                    printSpecificEmployee();
                     break;
                 case 7:
+                    printAllEmployee();
                     break;
                 case 8:
                     break;
@@ -63,53 +66,52 @@ public class EmployeeMenu {
     public static void addRegularEmployee(){
         String employeeId = UserInput.getInputString("Enter employee's ID: ");
         String employeeName = UserInput.getInputString("Enter employee's name: ");
-        double grossSalary = UserInput.getInputInt("Enter employee's gross salary: ");
+        double grossSalary = UserInput.getInputDouble("Enter employee's gross salary: ");
         try {
             String message = facade.createEmployee(employeeId, employeeName, grossSalary);
             System.out.println(message);
         }catch (Exception exception){
-            System.out.println("Invalid values for Employee."+ exception);
+            System.out.println(exception);
         }
     }
 
     public static void addManagerEmployee(){
         String employeeId = UserInput.getInputString("Enter employee's ID: ");
         String employeeName = UserInput.getInputString("Enter employee's name: ");
-        double grossSalary = UserInput.getInputInt("Enter employee's gross salary: ");
+        double grossSalary = UserInput.getInputDouble("Enter employee's gross salary: ");
         String degree = UserInput.getInputString("Enter employee's degree: ");
         try {
             String message = facade.createEmployee(employeeId, employeeName, grossSalary, degree);
             System.out.println(message);
         }catch (Exception exception){
-            System.out.println("Invalid values for Employee." + exception);
+            System.out.println(exception);
         }
-
     }
 
     public static void addDirectorEmployee(){
         String employeeId = UserInput.getInputString("Enter employee's ID: ");
         String employeeName = UserInput.getInputString("Enter employee's name: ");
-        double grossSalary = UserInput.getInputInt("Enter employee's gross salary: ");
+        double grossSalary = UserInput.getInputDouble("Enter employee's gross salary: ");
         String degree = UserInput.getInputString("Enter employee's degree: ");
         String dept = UserInput.getInputString("Enter employee's department: ");
         try {
             String message = facade.createEmployee(employeeId, employeeName, grossSalary, degree, dept);
             System.out.println(message);
         }catch (Exception exception){
-            System.out.println("Invalid values for Employee." + exception);
+            System.out.println(exception);
         }
     }
 
     public static void addInternEmployee(){
         String employeeId = UserInput.getInputString("Enter employee's ID: ");
         String employeeName = UserInput.getInputString("Enter employee's name: ");
-        double grossSalary = UserInput.getInputInt("Enter employee's gross salary: ");
+        double grossSalary = UserInput.getInputDouble("Enter employee's gross salary: ");
         String gpa = UserInput.getInputString("Enter employee's gpa: ");
         try {
             String message = facade.createEmployee(employeeId, employeeName, grossSalary, gpa);
             System.out.println(message);
         }catch (Exception exception){
-            System.out.println("Invalid values for Employee." + exception);
+            System.out.println(exception);
         }
     }
 
@@ -122,6 +124,27 @@ public class EmployeeMenu {
             System.out.println("Employee" + employeeID + " was not registered yet.");
         }
     }
+
+    public static void printSpecificEmployee(){
+        String employeeId = UserInput.getInputString("Enter employee's ID to print: ");
+        try {
+            String print = facade.printAllEmployees();
+            System.out.println(print);
+        }catch (Exception exception){
+            System.out.println("Employee " + employeeId + " was not registered yet.");
+        }
+    }
+
+    public static void printAllEmployee(){
+        try {
+            String print = facade.printAllEmployees();
+            System.out.println(print);
+        }catch (Exception exception){
+            System.out.println("No employee has been registered yet.");
+        }
+    }
+
+
 
 
 }

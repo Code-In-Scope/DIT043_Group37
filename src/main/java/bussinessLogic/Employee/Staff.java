@@ -13,6 +13,7 @@ public class Staff {
 
     public String createEmployee(String employeeID, String employeeName, double grossSalary) throws Exception {
         this.employeeList.add(new Employee(employeeID, employeeName, grossSalary));
+        System.out.println(employeeList.get(0));
         return "Employee " + employeeID + " was registered successfully.";
     }
 
