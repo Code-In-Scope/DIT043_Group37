@@ -2,6 +2,8 @@ package bussinessLogic.Employee;
 
 import java.util.ArrayList;
 import utility.Calculate;
+import utility.Utilities;
+
 import java.util.Comparator;
 
 class SortByGrossSalary implements Comparator<Employee> {
@@ -68,7 +70,10 @@ public class Staff {
 
     public String printSortedEmployees() throws Exception {
         employeeList.sort(new SortByGrossSalary());
-        return employeeList.toString();
+        String s = System.lineSeparator();
+        String print = "Employees sorted by gross salary (ascending order):" + s;
+        print = print + Utilities.printList(employeeList);
+        return print;
     }
 
     public String printEmployee(String employeeID) throws Exception {
@@ -82,9 +87,7 @@ public class Staff {
         } else {
             String s = System.lineSeparator();
             String print = "All registered employees:" + s;
-            for (int i = 0; i < employeeList.size(); i++) {
-                print = print + employeeList.get(i).toString() + s;
-            }
+            print = print + Utilities.printList(employeeList);
             return print;
         }
     }

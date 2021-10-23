@@ -17,9 +17,10 @@ public class Utilities {
 
 	public static String printList(List<?> list) {
 		StringBuilder result = new StringBuilder();
+		String s = System.lineSeparator();
 
 		for (int i = 0; i < list.size(); i++) {
-			result.append(list.get(i));
+			result.append(list.get(i) + s);
 		}
 		return result.toString();
 	}
