@@ -2,9 +2,12 @@ package bussinessLogic.Employee;
 
 import java.util.ArrayList;
 import utility.Calculate;
-
+import java.util.Map;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Arrays;
+import java.util.Collections;
 
 class SortByGrossSalary implements Comparator<Employee> {
     public int compare(Employee a, Employee b) {
@@ -100,17 +103,38 @@ public class Staff {
         return employeeList.get(index).toString();
     }
 
-    public String printAllEmployees() throws Exception{
-        if (employeeList.isEmpty()){
-            throw new Exception("No employees registered yet.");
-        }else {
-            String s = System.lineSeparator();
-            String print = "All registered employees:" + s;
-            for (int i = 0; i < employeeList.size(); i++) {
-                print = print + employeeList.get(i).toString() + s;
-            }
-            return print;
+    public String printAllEmployees() throws Exception {
+        checkEmployeeList();
+        String s = System.lineSeparator();
+        String print = "All registered employees:" + s;
+        for (int i = 0; i < employeeList.size(); i++) {
+            print = print + employeeList.get(i).toString() + s;
         }
+        return print;
+    }
+
+    public Map<String, Integer> mapEachDegree() throws Exception {
+        checkEmployeeList();
+        Map<String, Integer> degreeMap = new HashMap<>();
+        List<String> validDegrees = new ArrayList<>(Arrays.asList("BSc", "MSc", "PhD"));
+        List<String> degrees = new ArrayList<>();
+        for (int i = 0; i < employeeList.size(); i++) {
+            try {
+                Manager temp = (Manager) employeeList.get(i);
+                degrees.add(temp.getDegree());
+            } catch (Exception e) {
+                // if the employee type is not manager don't do anything
+            }
+        }
+
+        for (String degree : validDegrees) {
+            int countOfDegree = Collections.frequency(degrees, degree);
+            if (countOfDegree > 0) {
+                degreeMap.put(degree, countOfDegree);
+            }
+        }
+
+        return degreeMap;
     }
 
     public double getNetSalary(String employeeID) throws Exception {
@@ -132,23 +156,22 @@ public class Staff {
 
     public String updateInternGPA(String empID, int newGPA) throws Exception {
         int index = employeeIDExists(empID);
-        Intern employee = (Intern)employeeList.get(index);
+        Intern employee = (Intern) employeeList.get(index);
         employee.setGPA(newGPA);
 
         return "Employee " + empID + " was updated successfully";
     }
 
-
     public String updateManagerDegree(String empID, String newDegree) throws Exception {
         int index = employeeIDExists(empID);
-        Manager temp = (Manager)employeeList.get(index);
-            temp.setDegree(newDegree);
+        Manager temp = (Manager) employeeList.get(index);
+        temp.setDegree(newDegree);
         return "Employee " + empID + " was updated successfully";
     }
 
     public String updateDirectorDept(String empID, String newDepartment) throws Exception {
         int index = employeeIDExists(empID);
-        Director temp = (Director)employeeList.get(index);
+        Director temp = (Director) employeeList.get(index);
         temp.setDepartment(newDepartment);
         return "Employee " + empID + " was updated successfully";
     }
@@ -160,7 +183,7 @@ public class Staff {
         String name = employee.getEmployeeName();
         double salary = employee.getBaseSalary();
         employeeList.remove(index);
-        employeeList.add(new Manager(id, name, salary,degree));
+        employeeList.add(new Manager(id, name, salary, degree));
 
         return empID + " promoted successfully to Manager.";
     }

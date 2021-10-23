@@ -235,7 +235,7 @@ public class Facade {
     }
 
     public String updateInternGPA(String empID, int newGPA) throws Exception {
-        return staff.updateInternGPA(empID,newGPA);
+        return staff.updateInternGPA(empID, newGPA);
     }
 
     public String updateManagerDegree(String empID, String newDegree) throws Exception {
@@ -251,15 +251,15 @@ public class Facade {
     }
 
     public Map<String, Integer> mapEachDegree() throws Exception {
-        return null;
+        return staff.mapEachDegree();
     }
 
     public String promoteToManager(String empID, String degree) throws Exception {
-        return staff.promoteToManager(empID,degree);
+        return staff.promoteToManager(empID, degree);
     }
 
     public String promoteToDirector(String empID, String degree, String department) throws Exception {
-        return staff.promoteToDirector(empID,degree,department);
+        return staff.promoteToDirector(empID, degree, department);
     }
 
     public String promoteToIntern(String empID, int gpa) throws Exception {
