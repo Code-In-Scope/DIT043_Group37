@@ -241,11 +241,11 @@ public class Facade {
     }
 
     public String updateManagerDegree(String empID, String newDegree) throws Exception {
-        return "";
+        return staff.updateManagerDegree(empID, newDegree);
     }
 
     public String updateDirectorDept(String empID, String newDepartment) throws Exception {
-        return "";
+        return staff.updateDirectorDept(empID, newDepartment);
     }
 
     public String updateGrossSalary(String empID, double newSalary) throws Exception {

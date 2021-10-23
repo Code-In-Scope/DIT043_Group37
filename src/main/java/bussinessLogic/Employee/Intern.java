@@ -25,6 +25,10 @@ public class Intern extends Employee {
         return salary;
     }
 
+    public double getNetIncome(){
+        return getGrossSalary();
+    }
+
     public String toString() {
         return super.toString() + " GPA: " + GPA;
     }

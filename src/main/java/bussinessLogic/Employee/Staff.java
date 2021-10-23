@@ -90,4 +90,18 @@ public class Staff {
             return totalNetSalary;
         }
     }
+
+    public String updateManagerDegree(String empID, String newDegree) throws Exception {
+        int index = employeeIDExists(empID);
+        Manager temp = (Manager)employeeList.get(index);
+            temp.setDegree(newDegree);
+        return "Employee " + empID + " was updated successfully.";
+    }
+
+    public String updateDirectorDept(String empID, String newDepartment) throws Exception {
+        int index = employeeIDExists(empID);
+        Director temp = (Director)employeeList.get(index);
+        temp.setDepartment(newDepartment);
+        return "Employee " + empID + " was updated successfully.";
+    }
 }
