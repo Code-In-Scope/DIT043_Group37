@@ -15,6 +15,15 @@ public class Utilities {
 
 	}
 
+	public static String printList(List<?> list) {
+		StringBuilder result = new StringBuilder();
+
+		for (int i = 0; i < list.size(); i++) {
+			result.append(list.get(i));
+		}
+		return result.toString();
+	}
+
 	public static String formatDouble(double value) {
 		String stringValue = String.valueOf(value);
 		// If in case the string does not have sufficent values after decimal points

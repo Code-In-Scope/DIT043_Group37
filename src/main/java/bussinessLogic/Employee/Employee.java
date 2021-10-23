@@ -36,7 +36,7 @@ public class Employee {
 
   public void checkSalary(double salary) throws Exception {
     if (salary <= 0) {
-        throw new Exception("Salary must be greater than zero.");
+      throw new Exception("Salary must be greater than zero.");
     }
   }
 
