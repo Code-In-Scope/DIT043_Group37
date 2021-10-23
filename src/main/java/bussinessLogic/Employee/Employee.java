@@ -74,6 +74,10 @@ public class Employee {
     return netIncome;
   }
 
+  public double getBaseSalary(){
+    return this.grossSalary;
+  }
+
   public boolean checkEmployeeId(String employeeID) {
     return (this.employeeID.equals(employeeID));
   }

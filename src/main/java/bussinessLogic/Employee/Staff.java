@@ -104,4 +104,27 @@ public class Staff {
         temp.setDepartment(newDepartment);
         return "Employee " + empID + " was updated successfully.";
     }
+
+    public String promoteToManager(String empID, String degree) throws Exception {
+        int index = employeeIDExists(empID);
+        Employee employee = employeeList.get(index);
+        String id = employee.getEmployeeID();
+        String name = employee.getEmployeeName();
+        double salary = employee.getBaseSalary();
+        employeeList.remove(index);
+        employeeList.add(new Manager(id, name, salary,degree));
+
+        return "Employee "+ empID + "Promoted Successfully";
+    }
+
+    public String promoteToDirector(String empID, String degree, String department) throws Exception {
+        int index = employeeIDExists(empID);
+        Employee employee = employeeList.get(index);
+        String id = employee.getEmployeeID();
+        String name = employee.getEmployeeName();
+        double salary = employee.getBaseSalary();
+        employeeList.remove(index);
+        employeeList.add(new Director(id, name, salary, degree, department));
+        return "Employee "+ empID + "Promoted Successfully";
+    }
 }

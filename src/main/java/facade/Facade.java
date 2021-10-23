@@ -257,12 +257,11 @@ public class Facade {
     }
 
     public String promoteToManager(String empID, String degree) throws Exception {
-        return "";
-
+        return staff.promoteToManager(empID,degree);
     }
 
     public String promoteToDirector(String empID, String degree, String department) throws Exception {
-        return "";
+        return staff.promoteToDirector(empID,degree,department);
     }
 
     public String promoteToIntern(String empID, int gpa) throws Exception {
