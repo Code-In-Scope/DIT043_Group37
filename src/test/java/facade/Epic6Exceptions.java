@@ -13,17 +13,17 @@ public class Epic6Exceptions {
     private Facade facade;
 
     @BeforeAll
-    public static void setupSystem(){
+    public static void setupSystem() {
         Locale.setDefault(Locale.US);
     }
 
     @BeforeEach
-    public void setupFacade(){
+    public void setupFacade() {
         facade = new Facade();
     }
 
     @Test
-    public void shouldThrowExceptionForNoEmployees(){
+    public void shouldThrowExceptionForNoEmployees() {
         String expectedMessage = "No employees registered yet.";
 
         Exception exceptionPrintAll = assertThrows(Exception.class, () -> {
@@ -160,11 +160,11 @@ public class Epic6Exceptions {
         assertEquals("Name cannot be blank.", exceptionInvalidName.getMessage());
         assertEquals("Salary must be greater than zero.", exceptionNegativeSalary.getMessage());
         assertEquals("Salary must be greater than zero.", exceptionUpdSal.getMessage());
-        assertEquals("Degree must be one of the options: PhD, MSc or PhD.", exceptionInvalidDegree.getMessage());
+        assertEquals("Degree must be one of the options: BSc, MSc or PhD.", exceptionInvalidDegree.getMessage());
 
         assertEquals("Name cannot be blank.", exceptionUpdName.getMessage());
         assertEquals("Salary must be greater than zero.", exceptionUpdSal.getMessage());
-        assertEquals("Degree must be one of the options: PhD, MSc or PhD.", exceptionUpdDegree.getMessage());
+        assertEquals("Degree must be one of the options: BSc, MSc or PhD.", exceptionUpdDegree.getMessage());
     }
 
     @Test
@@ -204,13 +204,15 @@ public class Epic6Exceptions {
         assertEquals("Name cannot be blank.", exceptionInvalidName.getMessage());
         assertEquals("Salary must be greater than zero.", exceptionNegativeSalary.getMessage());
         assertEquals("Salary must be greater than zero.", exceptionUpdSal.getMessage());
-        assertEquals("Degree must be one of the options: PhD, MSc or PhD.", exceptionInvalidDegree.getMessage());
-        assertEquals("Department must be one of the options: Business, Human Resources or Technical.", exceptionInvalidDept.getMessage());
+        assertEquals("Degree must be one of the options: BSc, MSc or PhD.", exceptionInvalidDegree.getMessage());
+        assertEquals("Department must be one of the options: Business, Human Resources or Technical.",
+                exceptionInvalidDept.getMessage());
 
         assertEquals("Name cannot be blank.", exceptionUpdName.getMessage());
         assertEquals("Salary must be greater than zero.", exceptionUpdSal.getMessage());
-        assertEquals("Degree must be one of the options: PhD, MSc or PhD.", exceptionUpdDegree.getMessage());
-        assertEquals("Department must be one of the options: Business, Human Resources or Technical.", exceptionUpdDept.getMessage());
+        assertEquals("Degree must be one of the options: BSc, MSc or PhD.", exceptionUpdDegree.getMessage());
+        assertEquals("Department must be one of the options: Business, Human Resources or Technical.",
+                exceptionUpdDept.getMessage());
     }
 
     @Test

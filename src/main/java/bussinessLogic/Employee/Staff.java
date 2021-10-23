@@ -147,11 +147,9 @@ public class Staff {
         checkEmployeeList();
         double totalNetSalary = 0.0;
         for (Employee employee : employeeList) {
-            totalNetSalary = totalNetSalary + employee.getGrossSalary();
-            Calculate.truncateDouble(totalNetSalary, 2);
-
+            totalNetSalary = totalNetSalary + employee.getNetIncome();
         }
-        return totalNetSalary;
+        return Calculate.truncateDouble(totalNetSalary, 2);
     }
 
     public String updateInternGPA(String empID, int newGPA) throws Exception {

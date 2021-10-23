@@ -20,7 +20,7 @@ public class Manager extends Employee {
         this.bonus = calculateBonus();
     }
 
-    public void checkValidDegree(String degree)throws Exception{
+    public void checkValidDegree(String degree) throws Exception {
         if (!validDegrees.contains(degree)) {
             throw new Exception("Degree must be one of the options: BSc, MSc or PhD.");
         }
@@ -32,13 +32,13 @@ public class Manager extends Employee {
             bonus = salary * 0.10;
         } else if (degree == "MSc") {
             bonus = salary * 0.20;
-        } else{
+        } else {
             bonus = salary * 0.35;
         }
         return bonus;
     }
 
-    public double getGrossSalary(){
+    public double getGrossSalary() {
         return super.getGrossSalary() + this.bonus;
     }
 
@@ -46,7 +46,7 @@ public class Manager extends Employee {
         double netIncome;
         netIncome = super.getGrossSalary() + calculateBonus();
         netIncome = netIncome - Calculate.deductTax(netIncome, getTax());
-        netIncome = Calculate.truncateDouble(netIncome, 2);
+
         return netIncome;
     }
 
@@ -54,9 +54,10 @@ public class Manager extends Employee {
         return degree;
     }
 
-    public void setDegree(String updateDegree)throws Exception{
+    public void setDegree(String updateDegree) throws Exception {
         checkValidDegree(updateDegree);
         this.degree = updateDegree;
+        this.bonus = calculateBonus();
     }
 
     public String toString() {

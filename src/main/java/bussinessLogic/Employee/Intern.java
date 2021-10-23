@@ -7,10 +7,14 @@ public class Intern extends Employee {
 
     public Intern(String id, String name, double grossSalary, int GPA) throws Exception {
         super(id, name, grossSalary);
+        checkGPA(GPA);
+        this.GPA = GPA;
+    }
+
+    public void checkGPA(int GPA) throws Exception {
         if (GPA < 0 || GPA > 11) {
             throw new Exception(GPA + " outside range. Must be between 0-10.");
         }
-        this.GPA = GPA;
     }
 
     public double getGrossSalary() {
@@ -29,11 +33,12 @@ public class Intern extends Employee {
         return getGrossSalary();
     }
 
-    public int getGPA(){
+    public int getGPA() {
         return this.GPA;
     }
 
-    public void setGPA(int newGPA){
+    public void setGPA(int newGPA) throws Exception {
+        checkGPA(newGPA);
         this.GPA = newGPA;
     }
 

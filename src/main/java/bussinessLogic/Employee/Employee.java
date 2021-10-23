@@ -37,7 +37,7 @@ public class Employee {
     }
   }
 
-  public double getTax(){
+  public double getTax() {
     return this.tax;
   }
 
@@ -65,11 +65,11 @@ public class Employee {
 
   public double getNetIncome() {
     double netIncome = grossSalary - Calculate.deductTax(grossSalary, tax);
-    netIncome = Calculate.truncateDouble(netIncome, 2);
+
     return netIncome;
   }
 
-  public double getBaseSalary(){
+  public double getBaseSalary() {
     return this.grossSalary;
   }
 
@@ -94,6 +94,7 @@ public class Employee {
   }
 
   public String toString() {
-    return employeeName + "'s gross salary is " + Calculate.formatDouble(getGrossSalary()) + " SEK per month.";
+    String grossSalary = Calculate.formatDouble(getGrossSalary());
+    return employeeName + "'s gross salary is " + grossSalary + " SEK per month.";
   }
 }
