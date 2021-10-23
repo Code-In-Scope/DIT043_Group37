@@ -2,6 +2,13 @@ package bussinessLogic.Employee;
 
 import java.util.ArrayList;
 import utility.Calculate;
+import java.util.Comparator;
+
+class SortByGrossSalary implements Comparator<Employee> {
+    public int compare(Employee a, Employee b) {
+        return Double.compare(a.getGrossSalary(), b.getGrossSalary());
+    }
+}
 
 public class Staff {
 
@@ -36,12 +43,14 @@ public class Staff {
 
     public String updateEmployeeName(String empID, String newName) throws Exception {
         int index = employeeIDExists(empID);
-        return employeeList.get(index).setEmployeeName(newName);
+        employeeList.get(index).setEmployeeName(newName);
+        return "Employee " + empID + " was updated successfully";
     }
 
     public String updateGrossSalary(String empID, double newSalary) throws Exception {
         int index = employeeIDExists(empID);
-        return employeeList.get(index).setGrossSalary(newSalary);
+        employeeList.get(index).setGrossSalary(newSalary);
+        return "Employee " + empID + " was updated successfully";
     }
 
     public int employeeIDExists(String employeeID) throws Exception {
@@ -51,6 +60,17 @@ public class Staff {
             }
         }
         throw new Exception("Employee " + employeeID + " was not registered yet.");
+    }
+
+    public String removeEmployee(String empID) throws Exception {
+        int index = employeeIDExists(empID);
+        employeeList.remove(index);
+        return "Employee " + empID + " was successfully removed.";
+    }
+
+    public String printSortedEmployees() throws Exception {
+        employeeList.sort(new SortByGrossSalary());
+        return employeeList.toString();
     }
 
     public String printEmployee(String employeeID) throws Exception {
@@ -91,18 +111,27 @@ public class Staff {
         }
     }
 
+    public String updateInternGPA(String empID, int newGPA) throws Exception {
+        int index = employeeIDExists(empID);
+        Intern employee = (Intern)employeeList.get(index);
+        employee.setGPA(newGPA);
+
+        return "Employee " + empID + " was updated successfully";
+    }
+
+
     public String updateManagerDegree(String empID, String newDegree) throws Exception {
         int index = employeeIDExists(empID);
         Manager temp = (Manager)employeeList.get(index);
             temp.setDegree(newDegree);
-        return "Employee " + empID + " was updated successfully.";
+        return "Employee " + empID + " was updated successfully";
     }
 
     public String updateDirectorDept(String empID, String newDepartment) throws Exception {
         int index = employeeIDExists(empID);
         Director temp = (Director)employeeList.get(index);
         temp.setDepartment(newDepartment);
-        return "Employee " + empID + " was updated successfully.";
+        return "Employee " + empID + " was updated successfully";
     }
 
     public String promoteToManager(String empID, String degree) throws Exception {
@@ -126,5 +155,16 @@ public class Staff {
         employeeList.remove(index);
         employeeList.add(new Director(id, name, salary, degree, department));
         return empID + " promoted successfully to Director.";
+    }
+
+    public String promoteToIntern(String empID, int gpa) throws Exception {
+        int index = employeeIDExists(empID);
+        Employee employee = employeeList.get(index);
+        String id = employee.getEmployeeID();
+        String name = employee.getEmployeeName();
+        double salary = employee.getBaseSalary();
+        employeeList.remove(index);
+        employeeList.add(new Intern(id, name, salary, gpa));
+        return empID + " promoted successfully to Intern.";
     }
 }
