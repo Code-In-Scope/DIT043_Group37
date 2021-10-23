@@ -8,7 +8,6 @@ public class Employee {
   private String employeeID;
   private String employeeName;
   private double grossSalary;
-  private double netSalary;
   public double tax = 0.1;
   private String updateMessage;
 
@@ -16,7 +15,6 @@ public class Employee {
     checkID(id);
     checkName(name);
     checkSalary(grossSalary);
-    calculateIncome();
 
     this.employeeID = id;
     this.employeeName = name;
@@ -64,16 +62,12 @@ public class Employee {
   public String setGrossSalary(double newGrossSalary) throws Exception {
     checkSalary(newGrossSalary);
     this.grossSalary = newGrossSalary;
-    calculateIncome();
     return updateMessage;
   }
 
-  public void calculateIncome() {
-    this.netSalary = grossSalary - Calculate.deductTax(grossSalary, tax);
-  }
-
   public double getNetIncome() {
-    return netSalary;
+    double netIncome = grossSalary - Calculate.deductTax(grossSalary, tax);
+    return netIncome;
   }
 
   public boolean checkEmployeeId(String employeeID) {

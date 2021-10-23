@@ -1,7 +1,6 @@
 package bussinessLogic.Employee;
 
 import utility.Calculate;
-import utility.Utilities;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,8 +10,6 @@ public class Director extends Manager {
 
     private final String department;
     private final double additionalSalary = 5000;
-    private double grossSalary;
-    private double netSalary;
     private final List<String> validDepartment;
 
     public Director(String id, String name, double grossSalary, String degree, String department) throws Exception {
@@ -22,43 +19,29 @@ public class Director extends Manager {
             throw new Exception("Department must be one of the options: Business, Human Resources or Technical.");
         }
         this.department = department;
-        calculateIncome();
-
     }
 
-    public void calculateIncome() {
+    public double getNetIncome() {
+        double netIncome;
         double mediumTax = 0.2;
         double highTax = 0.4;
         double highSalary = 50000;
         double lowSalary = 30000;
 
-        grossSalary = super.getGrossSalary() + additionalSalary;
+        netIncome = super.getGrossSalary() + additionalSalary;
 
-        if (grossSalary < lowSalary) {
-            netSalary = grossSalary - Calculate.deductTax(grossSalary, this.tax);
-        } else if (grossSalary < highSalary) {
-            netSalary = grossSalary - Calculate.deductTax(grossSalary, mediumTax);
+        if (netIncome < lowSalary) {
+            netIncome = netIncome - Calculate.deductTax(netIncome, this.tax);
+        } else if (netIncome < highSalary) {
+            netIncome = netIncome - Calculate.deductTax(netIncome, mediumTax);
         } else {
             double minimumSalary = lowSalary - Calculate.deductTax(lowSalary, mediumTax);
-            double exceedSalary = grossSalary - lowSalary;
+            double exceedSalary = netIncome - lowSalary;
             double exceedingSalary = exceedSalary - Calculate.deductTax(exceedSalary, highTax);
 
-            netSalary = minimumSalary + exceedingSalary;
+            netIncome = minimumSalary + exceedingSalary;
         }
-    }
-
-    public String setGrossSalary(double newGrossSalary) throws Exception {
-        String message = super.setGrossSalary(newGrossSalary);
-        calculateIncome();
-        return message;
-    }
-
-    public double getGrossSalary() {
-        return grossSalary;
-    }
-
-    public double getNetIncome() {
-        return netSalary;
+        return netIncome;
     }
 
     public String toString() {

@@ -144,6 +144,17 @@ public class EmployeeMenu {
         }
     }
 
+    public static void getNetSalary(){
+        double netSalary;
+        String employeeId = UserInput.getInputString("Enter employee's Id to get net salary: ");
+        try {
+            netSalary = facade.getNetSalary(employeeId);
+            System.out.println(netSalary);
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
+    }
+
 
 
 

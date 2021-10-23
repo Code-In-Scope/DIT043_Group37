@@ -61,6 +61,6 @@ public class Staff {
     public double getNetSalary(String employeeID) throws Exception {
         int index = employeeIDExists(employeeID);
         double netIncome = employeeList.get(index).getNetIncome();
-        return Calculate.truncateDouble(netIncome, 1);
+        return Calculate.truncateDouble(netIncome, 2);
     }
 }
