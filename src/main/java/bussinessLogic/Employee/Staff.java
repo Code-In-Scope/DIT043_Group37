@@ -58,9 +58,34 @@ public class Staff {
         return employeeList.get(index).toString();
     }
 
+    public String printAllEmployees() throws Exception{
+        if (employeeList.isEmpty()){
+            throw new Exception("No employees registered yet.");
+        }else {
+            String print = "";
+            String s = System.lineSeparator();
+            for (int i = 0; i < employeeList.size(); i++) {
+                print = employeeList.get(i).toString() + s;
+            }
+            return print;
+        }
+    }
+
     public double getNetSalary(String employeeID) throws Exception {
         int index = employeeIDExists(employeeID);
         double netIncome = employeeList.get(index).getNetIncome();
         return Calculate.truncateDouble(netIncome, 2);
+    }
+
+    public double getTotalNetSalary() throws Exception{
+        if (employeeList.isEmpty()){
+            throw new Exception("No employees registered yet.");
+        }else{
+            double totalNetSalary = 0.00;
+            for (Employee employee : employeeList){
+                totalNetSalary += employee.getNetIncome();
+            }
+            return totalNetSalary;
+        }
     }
 }

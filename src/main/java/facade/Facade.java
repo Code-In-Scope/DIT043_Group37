@@ -221,11 +221,11 @@ public class Facade {
     }
 
     public String printAllEmployees() throws Exception {
-        return "";
+        return staff.printAllEmployees();
     }
 
     public double getTotalNetSalary() throws Exception {
-        return -1.0;
+        return staff.getTotalNetSalary();
     }
 
     public String printSortedEmployees() throws Exception {

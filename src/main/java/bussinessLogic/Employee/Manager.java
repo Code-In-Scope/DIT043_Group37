@@ -8,26 +8,31 @@ import utility.Calculate;
 
 public class Manager extends Employee {
 
-    private final String degree;
-    private final List<String> validDegrees;
+    private String degree;
+    private List<String> validDegrees;
 
     public Manager(String id, String name, double salary, String degree) throws Exception {
         super(id, name, salary);
         validDegrees = new ArrayList<>(Arrays.asList("BSc", "MSc", "PhD"));
-        if (!validDegrees.contains(degree)) {
-            throw new Exception("Degree must be one of the options: BSc, MSc or PhD.");
-        }
+        checkValidDegree(degree);
         this.degree = degree;
     }
 
+    public void checkValidDegree(String degree)throws Exception{
+        if (!validDegrees.contains(degree)) {
+            throw new Exception("Degree must be one of the options: BSc, MSc or PhD.");
+        }
+    }
+
     public double calculateBonus() {
-        double bonus;
+        double bonus = 0;
+        double salary = super.getGrossSalary();
         if (degree == "BSc") {
-            bonus = super.getGrossSalary() * 0.1;
+            bonus = salary * 0.1;
         } else if (degree == "MSc") {
-            bonus = super.getGrossSalary() * 0.2;
-        } else {
-            bonus = super.getGrossSalary() * 0.35;
+            bonus = salary * 0.2;
+        } else if (degree == "PhD"){
+            bonus = salary * 0.35;
         }
         return bonus;
     }
@@ -41,6 +46,11 @@ public class Manager extends Employee {
 
     public String getDegree() {
         return degree;
+    }
+
+    public void setDegree(String updateDegree)throws Exception{
+        checkValidDegree(updateDegree);
+        this.degree = updateDegree;
     }
 
     public String toString() {

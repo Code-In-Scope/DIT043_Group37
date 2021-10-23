@@ -121,17 +121,17 @@ public class EmployeeMenu {
             String message = facade.removeEmployee(employeeID);
             System.out.println(message);
         }catch (Exception e){
-            System.out.println("Employee" + employeeID + " was not registered yet.");
+            System.out.println(e);
         }
     }
 
     public static void printSpecificEmployee(){
         String employeeId = UserInput.getInputString("Enter employee's ID to print: ");
         try {
-            String print = facade.printAllEmployees();
+            String print = facade.printEmployee(employeeId);
             System.out.println(print);
         }catch (Exception exception){
-            System.out.println("Employee " + employeeId + " was not registered yet.");
+            System.out.println(exception);
         }
     }
 
@@ -140,7 +140,7 @@ public class EmployeeMenu {
             String print = facade.printAllEmployees();
             System.out.println(print);
         }catch (Exception exception){
-            System.out.println("No employee has been registered yet.");
+            System.out.println(exception);
         }
     }
 
