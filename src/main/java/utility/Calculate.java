@@ -12,12 +12,18 @@ public class Calculate{
 
     public static double truncateDouble(double number, int decimalPlace){
         int truncateNum = (int)(number * Math.pow(10, decimalPlace));
-        double truncatedNumber = (double) truncateNum / Math.pow(10, decimalPlace);
-        return truncatedNumber;
+        return (double) truncateNum / Math.pow(10, decimalPlace);
+    }
+
+    public static String formatDouble(double value) {
+        String stringValue = String.valueOf(value);
+        // If in case the string does not have sufficient values after decimal points
+        stringValue += "00";
+        int index = stringValue.lastIndexOf(".") + 3;
+        return stringValue.substring(0, index);
     }
 
     public static double deductTax(double salary, double tax){
-        double deduction = (salary * tax );
-        return deduction;
+        return (salary * tax );
     }
 }

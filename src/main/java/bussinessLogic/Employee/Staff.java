@@ -2,9 +2,9 @@ package bussinessLogic.Employee;
 
 import java.util.ArrayList;
 import utility.Calculate;
-import utility.Utilities;
 
 import java.util.Comparator;
+import java.util.List;
 
 class SortByGrossSalary implements Comparator<Employee> {
     public int compare(Employee a, Employee b) {
@@ -76,12 +76,22 @@ public class Staff {
         return "Employee " + empID + " was successfully removed.";
     }
 
+    public static String printList(List<?> list) {
+        StringBuilder result = new StringBuilder();
+        String s = System.lineSeparator();
+
+        for (int i = 0; i < list.size(); i++) {
+            result.append(list.get(i) + s);
+        }
+        return result.toString();
+    }
+
     public String printSortedEmployees() throws Exception {
         checkEmployeeList();
         employeeList.sort(new SortByGrossSalary());
         String s = System.lineSeparator();
         String print = "Employees sorted by gross salary (ascending order):" + s;
-        print = print + Utilities.printList(employeeList);
+        print = print + printList(employeeList);
         return print;
     }
 

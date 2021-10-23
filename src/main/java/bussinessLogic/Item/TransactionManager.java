@@ -5,7 +5,6 @@ import utility.Calculate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import utility.Utilities;
 
 class SortByTotalProfit implements Comparator<ItemRegistration> {
     public int compare(ItemRegistration a, ItemRegistration b) {
@@ -173,7 +172,7 @@ public class TransactionManager {
         String s = System.lineSeparator();
         String line = "------------------------------------" + s;
         String printTransactions = "All purchases made: " + s + "Total profit: "
-                + Utilities.formatDouble(getTotalProfit()) + " SEK" + s + "Total items sold: " + totalSoldItems
+                + Calculate.formatDouble(getTotalProfit()) + " SEK" + s + "Total items sold: " + totalSoldItems
                 + " units" + s + "Total purchases made: " + totalTransactions + " transactions" + s + line;
         printTransactions += getAllTransactions() + line;
         return printTransactions;
@@ -190,7 +189,7 @@ public class TransactionManager {
             mostProfitableRegisteredItems.sort(new SortByTotalProfit());
             double highestProfit = mostProfitableRegisteredItems.get(0).getTotalProfit();
             String itemInfo = mostProfitableRegisteredItems.get(0).getItemInfo();
-            stringBuilder.append("Total profit: " + Utilities.formatDouble(highestProfit) + " SEK" + s + itemInfo + s);
+            stringBuilder.append("Total profit: " + Calculate.formatDouble(highestProfit) + " SEK" + s + itemInfo + s);
         }
         return stringBuilder.toString();
     }

@@ -1,12 +1,13 @@
 package facade;
 
-import bussinessLogic.Employee.InvalidDataException;
 import bussinessLogic.Employee.Staff;
+import bussinessLogic.Item.Item;
 import bussinessLogic.Item.ItemEntry;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import bussinessLogic.Item.TransactionManager;
-import utility.Utilities;
 
 public class Facade {
 
@@ -79,12 +80,21 @@ public class Facade {
         return itemEntry.printMostReviewedItems();
     }
 
+    public static List<String> retrieveItemIDs(List<Item> reviewedList) {
+        List<String> list = new ArrayList<>();
+        for (Item item : reviewedList) {
+            list.add(item.getItemID());
+        }
+        return list;
+
+    }
+
     public List<String> getMostReviewedItems() {
-        return Utilities.retrieveItemIDs(itemEntry.getMostReviewedItems());
+        return retrieveItemIDs(itemEntry.getMostReviewedItems());
     }
 
     public List<String> getLeastReviewedItems() {
-        return Utilities.retrieveItemIDs(itemEntry.getLeastReviewedItems());
+        return retrieveItemIDs(itemEntry.getLeastReviewedItems());
     }
 
     public String printLeastReviewedItems() {
@@ -151,11 +161,11 @@ public class Facade {
     }
 
     public List<String> getWorseReviewedItems() {
-        return Utilities.retrieveItemIDs(itemEntry.getWorstReviewedItems());
+        return retrieveItemIDs(itemEntry.getWorstReviewedItems());
     }
 
     public List<String> getBestReviewedItems() {
-        return Utilities.retrieveItemIDs(itemEntry.getBestReviewedItems());
+        return retrieveItemIDs(itemEntry.getBestReviewedItems());
     }
 
     public String printAllReviews() {

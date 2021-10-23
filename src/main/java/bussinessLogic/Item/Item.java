@@ -1,10 +1,8 @@
 package bussinessLogic.Item;
 
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import utility.Utilities;
 
 import utility.Calculate;
 
@@ -89,7 +87,7 @@ public class Item {
   public String printAllReview() {
     StringBuilder result = new StringBuilder();
     String newLine = System.lineSeparator();
-    result.append("Review(s) for " + this.itemID + ": " + this.itemName + ". " + Utilities.formatDouble(this.unitPrice)
+    result.append("Review(s) for " + this.itemID + ": " + this.itemName + ". " + Calculate.formatDouble(this.unitPrice)
         + " SEK" + newLine);
     if (reviewList.isEmpty()) {
       result.append("The item " + this.itemName + " has not been reviewed yet.");
@@ -155,7 +153,7 @@ public class Item {
   @Override
   public String toString() {
 
-    String printItem = this.itemID + ": " + this.itemName + ". " + Utilities.formatDouble(this.unitPrice) + " SEK";
+    String printItem = this.itemID + ": " + this.itemName + ". " + Calculate.formatDouble(this.unitPrice) + " SEK";
     return printItem;
   }
 }

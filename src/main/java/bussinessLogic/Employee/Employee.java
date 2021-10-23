@@ -2,7 +2,6 @@ package bussinessLogic.Employee;
 
 import utility.Calculate;
 import java.util.Objects;
-import utility.Utilities;
 
 public class Employee {
   private String employeeID;
@@ -95,6 +94,6 @@ public class Employee {
   }
 
   public String toString() {
-    return employeeName + "'s gross salary is " + Utilities.formatDouble(getGrossSalary()) + " SEK per month.";
+    return employeeName + "'s gross salary is " + Calculate.formatDouble(getGrossSalary()) + " SEK per month.";
   }
 }

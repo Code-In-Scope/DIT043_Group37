@@ -1,7 +1,6 @@
 package bussinessLogic.Item;
 
-import java.math.RoundingMode;
-import utility.Utilities;
+import utility.Calculate;
 
 public class Transaction {
     private String itemID;
@@ -33,7 +32,7 @@ public class Transaction {
     }
 
     public String toString(){
-        String printTransaction = itemID + ": "+ amountOfItem + " item(s). " + Utilities.formatDouble(totalPrice)  + " SEK";
+        String printTransaction = itemID + ": "+ amountOfItem + " item(s). " + Calculate.formatDouble(totalPrice)  + " SEK";
         return printTransaction;
     }
 
