@@ -25,6 +25,10 @@ public class Director extends Manager {
         }
     }
 
+    public double getGrossSalary(){
+        return super.getGrossSalary() + ADDITIONAL_SALARY;
+    }
+
     public String getDepartment(){
         return this.department;
     }
@@ -45,7 +49,7 @@ public class Director extends Manager {
 
         if (netIncome < lowSalary) {
             netIncome = netIncome - Calculate.deductTax(netIncome, this.tax);
-        } else if (netIncome < highSalary) {
+        } else if (netIncome <= highSalary) {
             netIncome = netIncome - Calculate.deductTax(netIncome, mediumTax);
         } else {
             double minimumSalary = lowSalary - Calculate.deductTax(lowSalary, mediumTax);
@@ -58,6 +62,6 @@ public class Director extends Manager {
     }
 
     public String toString() {
-        return super.toString() + department;
+        return super.toString() + " Dept: " + department;
     }
 }

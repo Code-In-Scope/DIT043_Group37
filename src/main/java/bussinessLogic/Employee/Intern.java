@@ -13,19 +13,19 @@ public class Intern extends Employee {
         this.GPA = GPA;
     }
 
-    public double getNetIncome() {
-        double netIncome = getGrossSalary();
+    public double getGrossSalary() {
+        double salary = 0;
         if (GPA <= 5) {
-            netIncome = 0;
+            salary = 0;
         } else if (GPA < 8) {
-            netIncome = super.getGrossSalary();
+            salary = super.getGrossSalary();
         } else if (GPA < 11) {
-            netIncome = super.getGrossSalary() + reward;
+            salary = super.getGrossSalary() + reward;
         }
-        return netIncome;
+        return salary;
     }
 
     public String toString() {
-        return super.toString() + GPA;
+        return super.toString() + " GPA: " + GPA;
     }
 }

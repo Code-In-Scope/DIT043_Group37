@@ -9,6 +9,7 @@ import utility.Calculate;
 public class Manager extends Employee {
 
     private String degree;
+    double bonus;
     private List<String> validDegrees;
 
     public Manager(String id, String name, double salary, String degree) throws Exception {
@@ -16,6 +17,7 @@ public class Manager extends Employee {
         validDegrees = new ArrayList<>(Arrays.asList("BSc", "MSc", "PhD"));
         checkValidDegree(degree);
         this.degree = degree;
+        this.bonus = calculateBonus();
     }
 
     public void checkValidDegree(String degree)throws Exception{
@@ -25,16 +27,19 @@ public class Manager extends Employee {
     }
 
     public double calculateBonus() {
-        double bonus = 0;
         double salary = super.getGrossSalary();
         if (degree == "BSc") {
-            bonus = salary * 0.1;
+            bonus = salary * 0.10;
         } else if (degree == "MSc") {
-            bonus = salary * 0.2;
-        } else if (degree == "PhD"){
+            bonus = salary * 0.20;
+        } else{
             bonus = salary * 0.35;
         }
         return bonus;
+    }
+
+    public double getGrossSalary(){
+        return super.getGrossSalary() + this.bonus;
     }
 
     public double getNetIncome() {

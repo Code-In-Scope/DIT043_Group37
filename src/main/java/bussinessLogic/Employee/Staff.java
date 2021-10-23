@@ -62,10 +62,10 @@ public class Staff {
         if (employeeList.isEmpty()){
             throw new Exception("No employees registered yet.");
         }else {
-            String print = "";
             String s = System.lineSeparator();
+            String print = "All registered employees:" + s;
             for (int i = 0; i < employeeList.size(); i++) {
-                print = employeeList.get(i).toString() + s;
+                print = print + employeeList.get(i).toString() + s;
             }
             return print;
         }
@@ -83,8 +83,9 @@ public class Staff {
         }else{
             double totalNetSalary = 0.00;
             for (Employee employee : employeeList){
-                totalNetSalary += employee.getNetIncome();
+                totalNetSalary = totalNetSalary + employee.getNetIncome();
             }
+            Calculate.truncateDouble(totalNetSalary, 2);
             return totalNetSalary;
         }
     }

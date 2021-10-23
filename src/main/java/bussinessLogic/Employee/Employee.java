@@ -20,7 +20,6 @@ public class Employee {
     this.employeeName = name;
     this.grossSalary = grossSalary;
     this.updateMessage = "Employee " + this.employeeID + " was updated successfully";
-
   }
 
   public void checkName(String employeeName) throws Exception {
@@ -91,6 +90,6 @@ public class Employee {
   }
 
   public String toString() {
-    return employeeName + "'s gross salary is " + Utilities.formatDouble(grossSalary) + " SEK per month.";
+    return employeeName + "'s gross salary is " + Utilities.formatDouble(getGrossSalary()) + " SEK per month.";
   }
 }
