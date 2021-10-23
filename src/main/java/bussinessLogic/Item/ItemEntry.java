@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import utility.Utilities;
+
 class SortByMostReviews implements Comparator<Item> {
   public int compare(Item a, Item b) {
     return b.getNumberOfReviews() - a.getNumberOfReviews();
@@ -185,10 +187,7 @@ public class ItemEntry {
     if (itemList.isEmpty()) {
       return "No items registered yet.";
     } else {
-      for (Item item : itemList) {
-        stringGenerator.append(item);
-        stringGenerator.append(s);
-      }
+      stringGenerator.append(Utilities.printList(itemList));
       return stringGenerator.toString();
     }
   }
@@ -299,9 +298,7 @@ public class ItemEntry {
       List<Item> worstReviewedItemList = getWorstReviewedItems();
       meanGrade = worstReviewedItemList.get(0).meanGrade();
       stringGenerator.append("Items with worst mean reviews:" + s + "Grade: " + meanGrade + s);
-      for (Item item : worstReviewedItemList) {
-        stringGenerator.append(item + s);
-      }
+      stringGenerator.append(Utilities.printList(worstReviewedItemList));
       output = stringGenerator.toString();
     } else {
       output = "No items were reviewed yet.";
@@ -320,9 +317,7 @@ public class ItemEntry {
       List<Item> bestReviewedItemList = getBestReviewedItems();
       meanGrade = bestReviewedItemList.get(0).meanGrade();
       stringGenerator.append("Items with best mean reviews:" + s + "Grade: " + meanGrade + s);
-      for (Item item : bestReviewedItemList) {
-        stringGenerator.append(item + s);
-      }
+      stringGenerator.append(Utilities.printList(bestReviewedItemList));
       output = stringGenerator.toString();
     } else {
       output = "No items were reviewed yet.";
@@ -341,9 +336,7 @@ public class ItemEntry {
       List<Item> leastReviewedList = getLeastReviewedItems();
       numberOfReviews = leastReviewedList.get(0).getNumberOfReviews();
       stringGenerator.append("Least reviews: " + numberOfReviews + " review(s) each." + s);
-      for (Item item : leastReviewedList) {
-        stringGenerator.append(item + s);
-      }
+      stringGenerator.append(Utilities.printList(leastReviewedList));
       output = stringGenerator.toString();
     } else {
       output = "No items were reviewed yet.";
@@ -362,9 +355,7 @@ public class ItemEntry {
       List<Item> mostReviewedList = getMostReviewedItems();
       numberOfReviews = mostReviewedList.get(0).getNumberOfReviews();
       stringGenerator.append("Most reviews: " + numberOfReviews + " review(s) each." + s);
-      for (Item item : mostReviewedList) {
-        stringGenerator.append(item + s);
-      }
+      stringGenerator.append(Utilities.printList(mostReviewedList));
       output = stringGenerator.toString();
 
     } else {

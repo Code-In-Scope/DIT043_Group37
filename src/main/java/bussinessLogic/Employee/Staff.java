@@ -2,6 +2,8 @@ package bussinessLogic.Employee;
 
 import java.util.ArrayList;
 import utility.Calculate;
+import utility.Utilities;
+
 import java.util.Comparator;
 
 class SortByGrossSalary implements Comparator<Employee> {
@@ -16,6 +18,12 @@ public class Staff {
 
     public Staff() {
         employeeList = new ArrayList<>();
+    }
+
+    public void checkEmployeeList() throws Exception {
+        if (employeeList.isEmpty()) {
+            throw new Exception("No employees registered yet.");
+        }
     }
 
     public String createEmployee(String employeeID, String employeeName, double grossSalary) throws Exception {
@@ -69,8 +77,12 @@ public class Staff {
     }
 
     public String printSortedEmployees() throws Exception {
+        checkEmployeeList();
         employeeList.sort(new SortByGrossSalary());
-        return employeeList.toString();
+        String s = System.lineSeparator();
+        String print = "Employees sorted by gross salary (ascending order):" + s;
+        print = print + Utilities.printList(employeeList);
+        return print;
     }
 
     public String printEmployee(String employeeID) throws Exception {
@@ -97,18 +109,15 @@ public class Staff {
         return Calculate.truncateDouble(netIncome, 2);
     }
 
-    public double getTotalNetSalary() throws Exception{
-        if (employeeList.isEmpty()){
-            throw new Exception("No employees registered yet.");
-        }else{
-            double totalNetSalary = 0.0;
-            for (Employee employee : employeeList){
-                totalNetSalary = totalNetSalary + employee.getGrossSalary();
-                Calculate.truncateDouble(totalNetSalary, 2);
+    public double getTotalNetSalary() throws Exception {
+        checkEmployeeList();
+        double totalNetSalary = 0.0;
+        for (Employee employee : employeeList) {
+            totalNetSalary = totalNetSalary + employee.getGrossSalary();
+            Calculate.truncateDouble(totalNetSalary, 2);
 
-            }
-            return totalNetSalary;
         }
+        return totalNetSalary;
     }
 
     public String updateInternGPA(String empID, int newGPA) throws Exception {
