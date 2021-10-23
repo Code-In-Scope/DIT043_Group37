@@ -20,6 +20,12 @@ public class Staff {
         employeeList = new ArrayList<>();
     }
 
+    public void checkEmployeeList() throws Exception {
+        if (employeeList.isEmpty()) {
+            throw new Exception("No employees registered yet.");
+        }
+    }
+
     public String createEmployee(String employeeID, String employeeName, double grossSalary) throws Exception {
         this.employeeList.add(new Employee(employeeID, employeeName, grossSalary));
         System.out.println(employeeList.get(0));
@@ -69,6 +75,7 @@ public class Staff {
     }
 
     public String printSortedEmployees() throws Exception {
+        checkEmployeeList();
         employeeList.sort(new SortByGrossSalary());
         String s = System.lineSeparator();
         String print = "Employees sorted by gross salary (ascending order):" + s;
@@ -82,14 +89,11 @@ public class Staff {
     }
 
     public String printAllEmployees() throws Exception {
-        if (employeeList.isEmpty()) {
-            throw new Exception("No employees registered yet.");
-        } else {
-            String s = System.lineSeparator();
-            String print = "All registered employees:" + s;
-            print = print + Utilities.printList(employeeList);
-            return print;
-        }
+        checkEmployeeList();
+        String s = System.lineSeparator();
+        String print = "All registered employees:" + s;
+        print = print + Utilities.printList(employeeList);
+        return print;
     }
 
     public double getNetSalary(String employeeID) throws Exception {
@@ -99,17 +103,14 @@ public class Staff {
     }
 
     public double getTotalNetSalary() throws Exception {
-        if (employeeList.isEmpty()) {
-            throw new Exception("No employees registered yet.");
-        } else {
-            double totalNetSalary = 0.0;
-            for (Employee employee : employeeList) {
-                totalNetSalary = totalNetSalary + employee.getGrossSalary();
-                Calculate.truncateDouble(totalNetSalary, 2);
+        checkEmployeeList();
+        double totalNetSalary = 0.0;
+        for (Employee employee : employeeList) {
+            totalNetSalary = totalNetSalary + employee.getGrossSalary();
+            Calculate.truncateDouble(totalNetSalary, 2);
 
-            }
-            return totalNetSalary;
         }
+        return totalNetSalary;
     }
 
     public String updateManagerDegree(String empID, String newDegree) throws Exception {
