@@ -45,7 +45,8 @@ public class Manager extends Employee {
     public double getNetIncome() {
         double netIncome;
         netIncome = super.getGrossSalary() + calculateBonus();
-        netIncome = netIncome - Calculate.deductTax(netIncome, tax);
+        netIncome = netIncome - Calculate.deductTax(netIncome, getTax());
+        netIncome = Calculate.truncateDouble(netIncome, 2);
         return netIncome;
     }
 

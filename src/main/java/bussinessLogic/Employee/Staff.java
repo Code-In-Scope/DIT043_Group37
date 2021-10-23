@@ -81,11 +81,12 @@ public class Staff {
         if (employeeList.isEmpty()){
             throw new Exception("No employees registered yet.");
         }else{
-            double totalNetSalary = 0.00;
+            double totalNetSalary = 0.0;
             for (Employee employee : employeeList){
-                totalNetSalary = totalNetSalary + employee.getNetIncome();
+                totalNetSalary = totalNetSalary + employee.getGrossSalary();
+                Calculate.truncateDouble(totalNetSalary, 2);
+
             }
-            Calculate.truncateDouble(totalNetSalary, 2);
             return totalNetSalary;
         }
     }

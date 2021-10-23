@@ -45,19 +45,17 @@ public class Director extends Manager {
         double highSalary = 50000;
         double lowSalary = 30000;
 
-        netIncome = super.getGrossSalary() + ADDITIONAL_SALARY;
+        netIncome = getGrossSalary();
 
         if (netIncome < lowSalary) {
-            netIncome = netIncome - Calculate.deductTax(netIncome, this.tax);
+            netIncome = netIncome - Calculate.deductTax(netIncome, getTax());
         } else if (netIncome <= highSalary) {
             netIncome = netIncome - Calculate.deductTax(netIncome, mediumTax);
         } else {
-            double minimumSalary = lowSalary - Calculate.deductTax(lowSalary, mediumTax);
             double exceedSalary = netIncome - lowSalary;
-            double exceedingSalary = exceedSalary - Calculate.deductTax(exceedSalary, highTax);
-
-            netIncome = minimumSalary + exceedingSalary;
+            netIncome = netIncome - Calculate.deductTax(lowSalary, mediumTax) - Calculate.deductTax(exceedSalary, highTax);
         }
+        netIncome = Calculate.truncateDouble(netIncome, 2);
         return netIncome;
     }
 

@@ -8,7 +8,7 @@ public class Employee {
   private String employeeID;
   private String employeeName;
   private double grossSalary;
-  public double tax = 0.1;
+  private double tax = 0.1;
   private String updateMessage;
 
   public Employee(String id, String name, double grossSalary) throws Exception {
@@ -18,7 +18,7 @@ public class Employee {
 
     this.employeeID = id;
     this.employeeName = name;
-    this.grossSalary = grossSalary;
+    this.grossSalary = Calculate.truncateDouble(grossSalary, 2);
     this.updateMessage = "Employee " + this.employeeID + " was updated successfully";
   }
 
@@ -38,6 +38,10 @@ public class Employee {
     if (salary <= 0) {
         throw new Exception("Salary must be greater than zero.");
     }
+  }
+
+  public double getTax(){
+    return this.tax;
   }
 
   public String getEmployeeID() {
@@ -66,6 +70,7 @@ public class Employee {
 
   public double getNetIncome() {
     double netIncome = grossSalary - Calculate.deductTax(grossSalary, tax);
+    netIncome = Calculate.truncateDouble(netIncome, 2);
     return netIncome;
   }
 
