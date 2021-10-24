@@ -79,22 +79,16 @@ public class Staff {
         return "Employee " + empID + " was successfully removed.";
     }
 
-    public static String printList(List<?> list) {
-        StringBuilder result = new StringBuilder();
-        String s = System.lineSeparator();
-
-        for (int i = 0; i < list.size(); i++) {
-            result.append(list.get(i) + s);
-        }
-        return result.toString();
-    }
+    
 
     public String printSortedEmployees() throws Exception {
         checkEmployeeList();
         employeeList.sort(new SortByGrossSalary());
         String s = System.lineSeparator();
         String print = "Employees sorted by gross salary (ascending order):" + s;
-        print = print + printList(employeeList);
+        for (Employee employee : employeeList) {
+            print = print + employee +s;
+        }
         return print;
     }
 
