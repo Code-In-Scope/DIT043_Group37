@@ -24,12 +24,4 @@ public class Utilities {
 		}
 		return result.toString();
 	}
-
-	public static String formatDouble(double value) {
-		String stringValue = String.valueOf(value);
-		// If in case the string does not have sufficent values after decimal points
-		stringValue += "00";
-		int index = stringValue.lastIndexOf(".") + 3;
-		return stringValue.substring(0, index);
-	}
 }

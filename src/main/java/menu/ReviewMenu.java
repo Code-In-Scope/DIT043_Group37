@@ -126,15 +126,15 @@ public class ReviewMenu {
         System.out.println(print);
     }
 
-    public static void printItemWithBestMeanGrade(){
+    public static void printItemWithBestMeanGrade() {
         String print;
-        //print = facade.getItemMeanGrade();
-        //System.out.println(print);
+        print = facade.printBestReviewedItems();
+        System.out.println(print);
     }
 
-    public static void printItemWithWorstMeanGrade(){
+    public static void printItemWithWorstMeanGrade() {
         String print;
-        //print = facade.;
-        //System.out.println(print);
+        print = facade.printWorseReviewedItems();
+        System.out.println(print);
     }
 }

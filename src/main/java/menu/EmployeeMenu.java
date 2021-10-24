@@ -1,6 +1,5 @@
 package menu;
 
-import bussinessLogic.Employee.InvalidDataException;
 import facade.Facade;
 import utility.UserInput;
 
