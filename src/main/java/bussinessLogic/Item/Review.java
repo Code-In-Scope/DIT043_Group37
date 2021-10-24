@@ -24,6 +24,7 @@ public final class Review {
     }
     return output;
   }
+
   public int getGrade() { return grade; }
 
   public boolean hasComment() { return !noReviewComment; }

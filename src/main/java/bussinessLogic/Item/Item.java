@@ -152,8 +152,6 @@ public class Item {
 
   @Override
   public String toString() {
-
-    String printItem = this.itemID + ": " + this.itemName + ". " + Calculate.formatDouble(this.unitPrice) + " SEK";
-    return printItem;
+    return this.itemID + ": " + this.itemName + ". " + Calculate.formatDouble(this.unitPrice) + " SEK";
   }
 }

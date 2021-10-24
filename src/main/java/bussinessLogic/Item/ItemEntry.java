@@ -397,9 +397,7 @@ public class ItemEntry {
   }
 
   public int getNumberOfReviews(String itemID) {
-
     int index = itemIndexExists(itemID);
-
     return itemList.get(index).getNumberOfReviews();
   }
 }

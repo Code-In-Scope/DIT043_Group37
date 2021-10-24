@@ -54,10 +54,6 @@ public class TransactionManager {
         updateItemRegister(itemID, amountOfItem, totalPrice, itemInfo);
     }
 
-    public boolean containRegistration(String itemId) {
-        return getRegistrationIndex(itemId) == -1;
-    }
-
     public int getRegistrationIndex(String itemID) {
         for (int i = 0; i < registrationList.size(); i++) {
             ItemRegistration current = registrationList.get(i);

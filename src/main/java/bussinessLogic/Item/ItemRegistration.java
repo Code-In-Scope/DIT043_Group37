@@ -37,20 +37,4 @@ public class ItemRegistration {
         return this.itemID.equals(itemID);
     }
 
-    /*public boolean equals(Object anotherObject) {
-        if (this == anotherObject) {
-            return true;
-        }
-        if (anotherObject == null || !(anotherObject instanceof ItemRegistration)) {
-            return false;
-        } else {
-            ItemRegistration itemProfit = (ItemRegistration) anotherObject;
-            return itemID == itemProfit.itemID;
-        }
-    }
-
-    public int hashCode() {
-        return Objects.hash(itemID);
-    }*/
-
 }

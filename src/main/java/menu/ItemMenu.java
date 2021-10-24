@@ -83,12 +83,14 @@ public class ItemMenu {
         double totalPrice = facade.buyItem(inputID, inputAmount);
         System.out.println(totalPrice);
     }
+
     public static void updateItemName(){
         String inputID = UserInput.getInputString("Enter item ID to update the name of the item.");
         String itemName= UserInput.getInputString("Enter item name.");
         String message = facade.updateItemName(inputID,itemName);
         System.out.print(message);
     }
+
     public static void updateItemPrice(){
         String itemID = UserInput.getInputString("Enter item ID to update the price of the item. ");
         double itemPrice = UserInput.getInputDouble("Enter price of the item.");
@@ -100,5 +102,4 @@ public class ItemMenu {
         String message = facade.printAllItems();
         System.out.println(message);
     }
-
 }

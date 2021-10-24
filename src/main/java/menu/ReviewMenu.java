@@ -35,26 +35,35 @@ public class ReviewMenu {
                     MainMenu.getMainMenuOption();
                     break;
                 case 1:
-                    //reviewItem();
+                    reviewItem();
                     break;
                 case 2:
                     specificReview();
                     break;
                 case 3:
+                    printAllItemsReviews();
                     break;
                 case 4:
                     meanGrade();
                     break;
                 case 5:
-                    //printItemsComments();
+                    printItemsComments();
                     break;
                 case 6:
                     printReviews();
                     break;
-                case 7: break;
-                case 8: break;
-                case 9: break;
-                case 10: break;
+                case 7:
+                    printItemWithMostReviews();
+                    break;
+                case 8:
+                    printItemWithLeastReviews();
+                    break;
+                case 9:
+                    printItemWithBestMeanGrade();
+                    break;
+                case 10:
+                    printItemWithWorstMeanGrade();
+                    break;
                 default:
                     System.out.println("Invalid menu option. Please type another option.");
             }
@@ -93,13 +102,39 @@ public class ReviewMenu {
         System.out.println(specificReview);
     }
 
-    public static void printItemsReviews(){
-        
+    public static void printAllItemsReviews(){
+        String print;
+        print = facade.printAllReviews();
+        System.out.println(print);
     }
 
     public static void printReviews(){
         String itemID = UserInput.getInputString("Enter item's ID to see reviews: ");
         String reviews = facade.getPrintedReviews(itemID);
         System.out.println(reviews);
+    }
+
+    public static void printItemWithMostReviews(){
+        String print;
+        print = facade.printMostReviewedItems();
+        System.out.println(print);
+    }
+
+    public static void printItemWithLeastReviews(){
+        String print;
+        print = facade.printLeastReviewedItems();
+        System.out.println(print);
+    }
+
+    public static void printItemWithBestMeanGrade(){
+        String print;
+        //print = facade.getItemMeanGrade();
+        //System.out.println(print);
+    }
+
+    public static void printItemWithWorstMeanGrade(){
+        String print;
+        //print = facade.;
+        //System.out.println(print);
     }
 }

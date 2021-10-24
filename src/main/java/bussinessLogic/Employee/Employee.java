@@ -92,7 +92,6 @@ public class Employee {
   public int hashCode() {
     return Objects.hash(employeeID);
   }
-
   public String toString() {
     String grossSalary = Calculate.formatDouble(getGrossSalary());
     return employeeName + "'s gross salary is " + grossSalary + " SEK per month.";

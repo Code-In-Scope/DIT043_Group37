@@ -53,6 +53,7 @@ public class TransactionMenu {
                     printItemTransaction();
                     break;
                 case 8:
+                    printItemWithHighestProfit();
                     break;
                 default:
                     System.out.println("Invalid menu option. Please type another option.");
@@ -102,9 +103,8 @@ public class TransactionMenu {
         System.out.println(soldUnits);
     }
 
-    public static void printHighestProfit(){
+    public static void printItemWithHighestProfit(){
         String print = facade.printMostProfitableItems();
         System.out.println(print);
     }
-
 }

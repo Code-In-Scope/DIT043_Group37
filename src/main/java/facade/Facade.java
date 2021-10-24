@@ -86,7 +86,6 @@ public class Facade {
             list.add(item.getItemID());
         }
         return list;
-
     }
 
     public List<String> getMostReviewedItems() {

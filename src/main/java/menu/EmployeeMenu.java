@@ -54,8 +54,10 @@ public class EmployeeMenu {
                     printAllEmployee();
                     break;
                 case 8:
+                    getTotalExpenses();
                     break;
                 case 9:
+                    printSortedEmployee();
                     break;
                 default:
                     System.out.println("Invalid menu option. Please type another option.");
@@ -144,12 +146,21 @@ public class EmployeeMenu {
         }
     }
 
-    public static void getNetSalary(){
+    public static void getTotalExpenses(){
         double netSalary;
-        String employeeId = UserInput.getInputString("Enter employee's Id to get net salary: ");
         try {
-            netSalary = facade.getNetSalary(employeeId);
+            netSalary = facade.getTotalNetSalary();
             System.out.println(netSalary);
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
+    }
+
+    public static void printSortedEmployee(){
+        String print;
+        try{
+            print = facade.printSortedEmployees();
+            System.out.println(print);
         }catch (Exception exception){
             System.out.println(exception);
         }
